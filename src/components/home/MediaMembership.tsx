@@ -22,11 +22,14 @@ export async function MediaSection({
   news,
   locale,
   showExampleBadge,
+  spaced = false,
 }: {
   data: NonNullable<Home['media']>
   news: News[]
   locale: Locale
   showExampleBadge: boolean
+  /** Corporate басты бетінде алдындағы бөлім жиекті (border) болғандықтан, үстінен де шегініс керек */
+  spaced?: boolean
 }) {
   if (news.length === 0) return null
   const t = await getTranslations({ locale })
@@ -38,7 +41,7 @@ export async function MediaSection({
   const image = mediaOf(featured.image)
 
   return (
-    <section className="pb-[var(--section-y)]">
+    <section className={spaced ? 'section-y' : 'pb-[var(--section-y)]'}>
       <div className="wrap">
         <Reveal>
           <SectionHead

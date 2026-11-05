@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { AudienceCards, ResultsSection } from '@/components/home/AudienceResults'
+import { CorporateHome } from '@/components/home/CorporateHome'
 import { Hero } from '@/components/home/Hero'
 import { MediaSection, MembershipSection } from '@/components/home/MediaMembership'
 import { CorridorsSection, ProjectsSection } from '@/components/home/ProjectsCorridors'
@@ -21,6 +22,7 @@ import {
   getServices,
   getSettings,
 } from '@/lib/content'
+import { isCorporate } from '@/lib/mode'
 import { alternatesFor } from '@/lib/seo'
 
 // Мазмұн Payload дерекқорынан: құрастыру кезінде (next build) дерекқорға тәуелді статикалық бет жасалмайды, әр сұраныста оқылады
@@ -41,6 +43,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const { locale } = await params
   if (!hasLocale(routing.locales, locale)) notFound()
   setRequestLocale(locale)
+
+  // Corporate режимінде инвестициялық блоктарсыз басқа құрам (src/components/home/CorporateHome.tsx)
+  if (isCorporate()) return <CorporateHome locale={locale} />
 
   const [home, settings] = await Promise.all([getHome(locale), getSettings(locale)])
   if (!home) return <MissingTranslation locale={locale} />

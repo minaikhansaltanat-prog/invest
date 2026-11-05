@@ -3,6 +3,7 @@ import Image from 'next/image'
 import heroImage from '@/assets/images/hero_web.jpg'
 import { Button } from '@/components/ui/Button'
 import { AccentText, Eyebrow, NoBreak } from '@/components/ui/typography'
+import { cn } from '@/lib/cn'
 import { str } from '@/lib/format'
 import type { Home } from '@/payload-types'
 
@@ -10,9 +11,27 @@ import type { Home } from '@/payload-types'
  * Hero (ТТ 6, 3-блок): нави фон, Астана фотосы (LCP), тік қытайша атау, H1, 2 батырма, 3 факт.
  * Фото: next/image, AVIF/WebP, priority. Мәтін бет жүктелгенде кезекпен шығады (transform/opacity, 700 ms).
  */
-export function Hero({ data, zhName }: { data: NonNullable<Home['hero']>; zhName: string }) {
+export type HeroCta = { label: string; href: string }
+
+/**
+ * `compact`: corporate басты бетінде аудитория карточкалары hero-ны қабаттамайды, сондықтан төменгі шегініс аз.
+ * `ctas`: батырмаларды сырттан беру (corporate-та жасырын бетке апаратын CMS сілтемесі орнына байланыс/қызметтер); берілмесе, CMS мәтіні.
+ */
+export function Hero({
+  data,
+  zhName,
+  compact = false,
+  ctas,
+}: {
+  data: NonNullable<Home['hero']>
+  zhName: string
+  compact?: boolean
+  ctas?: { primary?: HeroCta | null; secondary?: HeroCta | null }
+}) {
   const facts = data.facts ?? []
   const title = str(data.title)
+  const primary = ctas ? ctas.primary : data.primaryCtaLabel ? { label: data.primaryCtaLabel, href: data.primaryCtaHref ?? '/investors' } : null
+  const secondary = ctas ? ctas.secondary : data.secondaryCtaLabel ? { label: data.secondaryCtaLabel, href: data.secondaryCtaHref ?? '/projects/submit' } : null
 
   return (
     <section data-surface="dark" className="on-dark grain relative isolate overflow-hidden bg-navy-900 text-white">
@@ -61,7 +80,12 @@ export function Hero({ data, zhName }: { data: NonNullable<Home['hero']>; zhName
       </span>
 
       <div className="wrap relative z-10">
-        <div className="grid items-center pb-[140px] pt-[300px] lg:min-h-[700px] lg:grid-cols-[minmax(0,640px)_1fr] lg:pb-[190px] lg:pt-[90px]">
+        <div
+          className={cn(
+            'grid items-center pt-[300px] lg:grid-cols-[minmax(0,640px)_1fr] lg:pt-[90px]',
+            compact ? 'pb-[72px] lg:min-h-[640px] lg:pb-[110px]' : 'pb-[140px] lg:min-h-[700px] lg:pb-[190px]',
+          )}
+        >
           <div>
             {data.eyebrow ? (
               <div className="load-rise" style={{ ['--d' as string]: '0ms' }}>
@@ -85,14 +109,14 @@ export function Hero({ data, zhName }: { data: NonNullable<Home['hero']>; zhName
               className="load-rise mt-[38px] flex flex-col gap-3.5 lg:flex-row"
               style={{ ['--d' as string]: '290ms' }}
             >
-              {data.primaryCtaLabel ? (
-                <Button href={data.primaryCtaHref ?? '/investors'} arrow className="max-lg:w-full">
-                  {data.primaryCtaLabel}
+              {primary ? (
+                <Button href={primary.href} arrow className="max-lg:w-full">
+                  {primary.label}
                 </Button>
               ) : null}
-              {data.secondaryCtaLabel ? (
-                <Button href={data.secondaryCtaHref ?? '/projects/submit'} variant="ghost" className="max-lg:w-full">
-                  {data.secondaryCtaLabel}
+              {secondary ? (
+                <Button href={secondary.href} variant="ghost" className="max-lg:w-full">
+                  {secondary.label}
                 </Button>
               ) : null}
             </div>
