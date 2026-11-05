@@ -17,9 +17,10 @@ export type MobileMenuLabels = {
   menu: string
   mainNav: string
   openSection: string
-  apply: string
-  account: string
 }
+
+/** Панельдегі түйме: corporate-та «Байланысу», full режимінде «Өтініш беру» мен «Жеке кабинет» (SiteHeader береді) */
+export type MenuCta = { label: string; href: string }
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
@@ -35,11 +36,15 @@ export function MobileMenu({
   labels,
   brand,
   phone,
+  primaryCta,
+  secondaryCta,
 }: {
   items: ResolvedNavItem[]
   labels: MobileMenuLabels
   brand: ReactNode
   phone?: { label: string; href: string }
+  primaryCta: MenuCta
+  secondaryCta?: MenuCta | null
 }) {
   const pathname = usePathname()
   // Мәзір «қай бетте ашылды» деп сақталады: бет ауысқанда ашық күй өздігінен жоғалады (effect-сіз)
@@ -205,12 +210,14 @@ export function MobileMenu({
         <div className="mt-7 grid gap-5">
           <LangSwitcher variant="panel" onNavigate={() => close(false)} />
           <div className="grid gap-3">
-            <Button href="/investors/apply" full arrow onClick={() => close(false)}>
-              {labels.apply}
+            <Button href={primaryCta.href} full arrow onClick={() => close(false)}>
+              {primaryCta.label}
             </Button>
-            <Button href="/account" variant="ghost" full onClick={() => close(false)}>
-              {labels.account}
-            </Button>
+            {secondaryCta ? (
+              <Button href={secondaryCta.href} variant="ghost" full onClick={() => close(false)}>
+                {secondaryCta.label}
+              </Button>
+            ) : null}
           </div>
           {phone ? (
             <a

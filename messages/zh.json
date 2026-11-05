@@ -74,7 +74,8 @@
         "press": "新闻稿",
         "analytics": "分析与研究"
       }
-    }
+    },
+    "contactCta": "联系我们"
   },
   "util": {
     "wechat": "微信",
@@ -102,7 +103,9 @@
     "bin": "企业识别号",
     "copyright": "© {year} {name}",
     "privacy": "隐私政策",
-    "terms": "使用条款"
+    "terms": "使用条款",
+    "services": "服务",
+    "allServices": "全部服务"
   },
   "common": {
     "readMore": "了解更多",
@@ -382,5 +385,35 @@
     "denied": "无访问权限。系统将核验保密协议、投资者等级与 2FA。",
     "backToProject": "返回项目页面",
     "selectFile": "请选择文件"
+  },
+  "corporate": {
+    "hero": {
+      "primary": "我们的服务",
+      "secondary": "联系我们"
+    },
+    "about": {
+      "eyebrow": "关于协会",
+      "title": "连接哈萨克斯坦与外国资本的可信桥梁",
+      "lead": "协会以公开、合法、专业的方式推动外国资本与哈萨克斯坦之间的合作。",
+      "principles": "我们的原则",
+      "more": "了解更多",
+      "mission": "使命与原则"
+    },
+    "partners": {
+      "eyebrow": "合作伙伴",
+      "title": "与我们合作的机构",
+      "all": "全部合作伙伴",
+      "emptyTitle": "合作伙伴名单筹备中",
+      "emptyText": "合作伙伴名称与标志在取得书面同意后发布。如有合作意向，请与我们联系。",
+      "emptyCta": "成为合作伙伴"
+    },
+    "contact": {
+      "eyebrow": "联系方式",
+      "title": "有疑问？欢迎联系我们",
+      "text": "关于协会服务、会员资格或合作的问题，请给我们留言，我们会回复您的消息。",
+      "cta": "发送留言",
+      "phone": "电话",
+      "email": "邮箱"
+    }
   }
 }

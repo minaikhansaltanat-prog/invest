@@ -24,6 +24,7 @@ import { ServiceCell } from '@/components/ui/ServiceCell'
 import { Stepper } from '@/components/ui/Stepper'
 import { AccentText, Eyebrow, Ornament } from '@/components/ui/typography'
 import { routing } from '@/i18n/routing'
+import { isCorporate } from '@/lib/mode'
 import { tokenContrast, tokens, type TokenName } from '@/lib/contrast'
 
 import baiterek from '@/assets/images/news_baiterek.jpg'
@@ -56,6 +57,8 @@ function Block({ id, title, children, dark = false }: { id: string; title: strin
 export default async function StyleguidePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   if (!hasLocale(routing.locales, locale)) notFound()
+  // Дизайн анықтамасы ішкі бет: corporate өндірісінде жария сайтта жоқ (әзірлеуде және full режимінде ашық)
+  if (isCorporate() && process.env.NODE_ENV === 'production') notFound()
   setRequestLocale(locale)
   const t = await getTranslations()
   const lang = locale as SeedLocale

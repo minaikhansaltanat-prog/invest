@@ -1,6 +1,8 @@
 // Навигация құрылымы (ТТ 5): жоғарғы мәзірде 7 тармақ және «Өтініш беру». Слагтар барлық тілде бірдей (ағылшынша).
 // Белгілер messages/*.json ішінде: nav.<key> және nav.sub.<key>.<item>. Қызметтердің ішкі тізімі Payload-тан келеді.
 
+import { isPathVisible } from '@/lib/mode'
+
 export type NavSubItem = { id: string; href: string }
 
 export type NavSection = {
@@ -85,3 +87,10 @@ export type ResolvedNavItem = {
 
 export const isActivePath = (pathname: string, href: string) =>
   href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href}/`)
+
+/** Ағымдағы режимде көрінетін мәзір бөлімдері: corporate-та инвесторлар мен жобалар бөлімі, нәтижелер, мүшелік өтініші мен тізілімі жоқ */
+export function visibleNavSections(): NavSection[] {
+  return navSections
+    .filter((section) => isPathVisible(section.href))
+    .map((section) => ({ ...section, children: section.children?.filter((child) => isPathVisible(child.href)) }))
+}

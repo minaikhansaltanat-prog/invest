@@ -3,7 +3,8 @@ import { getTranslations } from 'next-intl/server'
 import { Button } from '@/components/ui/Button'
 import type { Locale } from '@/i18n/config'
 import { getServices, getSettings } from '@/lib/content'
-import { navSections, type ResolvedNavItem } from '@/lib/nav'
+import { isCorporate } from '@/lib/mode'
+import { type ResolvedNavItem, visibleNavSections } from '@/lib/nav'
 
 import { Brand } from './Brand'
 import { DesktopNav } from './DesktopNav'
@@ -23,7 +24,7 @@ export async function SiteHeader({ locale }: { locale: Locale }) {
   ])
   const tr = t as unknown as Translate
 
-  const items: ResolvedNavItem[] = navSections.map((section) => ({
+  const items: ResolvedNavItem[] = visibleNavSections().map((section) => ({
     key: section.key,
     label: tr(section.key),
     href: section.href,
@@ -40,6 +41,11 @@ export async function SiteHeader({ locale }: { locale: Locale }) {
           })),
   }))
 
+  // Corporate режимінде «Өтініш беру» мен «Жеке кабинет» жоқ: бір «Байланысу» түймесі (src/lib/mode.ts)
+  const corporate = isCorporate()
+  const primaryCta = corporate ? { label: t('contactCta'), href: '/contacts' } : { label: t('apply'), href: '/investors/apply' }
+  const secondaryCta = corporate ? null : { label: t('account'), href: '/account' }
+
   const phone = settings.phone
     ? { label: settings.phone, href: `tel:${settings.phone.replace(/[^\d+]/g, '')}` }
     : undefined
@@ -53,22 +59,22 @@ export async function SiteHeader({ locale }: { locale: Locale }) {
           <DesktopNav items={items} label={a11y('mainNav')} />
           <div className="flex shrink-0 items-center gap-3.5">
             <div className="hidden lg:block">
-              <Button href="/investors/apply" className="lg:px-5 xl:px-[26px]">
-                {t('apply')}
+              <Button href={primaryCta.href} className="lg:px-5 xl:px-[26px]">
+                {primaryCta.label}
               </Button>
             </div>
             <MobileMenu
               items={items}
               phone={phone}
               brand={<Brand settings={settings} onDark priority={false} />}
+              primaryCta={primaryCta}
+              secondaryCta={secondaryCta}
               labels={{
                 open: a11y('openMenu'),
                 close: a11y('closeMenu'),
                 menu: t('menuTitle'),
                 mainNav: a11y('mobileNav'),
                 openSection: a11y('openSection'),
-                apply: t('apply'),
-                account: t('account'),
               }}
             />
           </div>

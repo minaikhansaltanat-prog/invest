@@ -8,6 +8,7 @@ import { DataTable } from '@/components/ui/Table'
 import { NoBreak } from '@/components/ui/typography'
 import { Link } from '@/i18n/navigation'
 import { cn } from '@/lib/cn'
+import { visibleHref } from '@/lib/mode'
 import { parseRich, type RichInline } from '@/lib/rich'
 import type { Page } from '@/payload-types'
 
@@ -122,7 +123,9 @@ function BlockView({ block, id }: { block: PageBlock; id: string }) {
         <div>
           <Head id={id} heading={block.heading} lead={block.lead} />
           <ul className={cn('grid gap-5 lg:gap-6', columnClass[columns])}>
-            {(block.items ?? []).map((item, index) => {
+            {(block.items ?? []).map((rawItem, index) => {
+              // Corporate режимінде жасырын бетке апаратын сілтеме жоқ: карточка статикалық болады
+              const item = { ...rawItem, href: visibleHref(rawItem.href) }
               const inner = (
                 <>
                   <span className="flex items-start justify-between gap-3">
@@ -290,26 +293,32 @@ function BlockView({ block, id }: { block: PageBlock; id: string }) {
         <div>
           <Head id={id} heading={block.heading} />
           <ul className="grid max-w-[860px] divide-y divide-line rounded-card border border-line bg-paper shadow-card">
-            {(block.items ?? []).map((item, index) => (
-              <li key={item.id ?? index}>
-                {item.href ? (
-                  <AnyLink
-                    href={item.href}
-                    className="group flex min-h-14 cursor-pointer items-center justify-between gap-5 px-5 py-4 transition-colors duration-200 hover:bg-ivory lg:px-7"
-                  >
-                    <span className="grid gap-0.5">
-                      <span className="text-base font-semibold text-navy-900">{item.label}</span>
-                      {item.text ? <span className="text-[15px] leading-snug text-muted">{item.text}</span> : null}
-                    </span>
-                    <Icon
-                      name="arrow-right"
-                      size={18}
-                      className="shrink-0 text-gold-700 transition-transform duration-200 ease-out-expo group-hover:translate-x-1 rtl:rotate-180"
-                    />
-                  </AnyLink>
-                ) : null}
-              </li>
-            ))}
+            {(block.items ?? []).map((rawItem, index) => {
+              // Corporate режимінде жасырын бетке апаратын жол тізімнен алынады
+              const href = visibleHref(rawItem.href)
+              if (rawItem.href && !href) return null
+              const item = { ...rawItem, href }
+              return (
+                <li key={item.id ?? index}>
+                  {item.href ? (
+                    <AnyLink
+                      href={item.href}
+                      className="group flex min-h-14 cursor-pointer items-center justify-between gap-5 px-5 py-4 transition-colors duration-200 hover:bg-ivory lg:px-7"
+                    >
+                      <span className="grid gap-0.5">
+                        <span className="text-base font-semibold text-navy-900">{item.label}</span>
+                        {item.text ? <span className="text-[15px] leading-snug text-muted">{item.text}</span> : null}
+                      </span>
+                      <Icon
+                        name="arrow-right"
+                        size={18}
+                        className="shrink-0 text-gold-700 transition-transform duration-200 ease-out-expo group-hover:translate-x-1 rtl:rotate-180"
+                      />
+                    </AnyLink>
+                  ) : null}
+                </li>
+              )
+            })}
           </ul>
         </div>
       )

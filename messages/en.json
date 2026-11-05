@@ -74,7 +74,8 @@
         "press": "Press releases",
         "analytics": "Analytics and research"
       }
-    }
+    },
+    "contactCta": "Contact us"
   },
   "util": {
     "wechat": "WeChat",
@@ -102,7 +103,9 @@
     "bin": "BIN",
     "copyright": "© {year} {name}",
     "privacy": "Privacy policy",
-    "terms": "Terms of use"
+    "terms": "Terms of use",
+    "services": "Services",
+    "allServices": "All services"
   },
   "common": {
     "readMore": "Learn more",
@@ -382,5 +385,35 @@
     "denied": "No access. The NDA, investor level and 2FA are checked.",
     "backToProject": "Back to the project",
     "selectFile": "Select a document"
+  },
+  "corporate": {
+    "hero": {
+      "primary": "Our services",
+      "secondary": "Contact us"
+    },
+    "about": {
+      "eyebrow": "About the Association",
+      "title": "A trusted bridge between Kazakhstan and foreign capital",
+      "lead": "The Association builds partnership between foreign capital and Kazakhstan on an open, lawful and professional basis.",
+      "principles": "Our principles",
+      "more": "More about us",
+      "mission": "Mission and principles"
+    },
+    "partners": {
+      "eyebrow": "Partners",
+      "title": "Organisations we work with",
+      "all": "All partners",
+      "emptyTitle": "The partner list is being prepared",
+      "emptyText": "Partner names and logos are published once written consent is received. To become a partner, write to us.",
+      "emptyCta": "Become a partner"
+    },
+    "contact": {
+      "eyebrow": "Contacts",
+      "title": "Have a question? Write to us",
+      "text": "Send us a question about the Association's services, membership or partnership and we will reply to your message.",
+      "cta": "Send a message",
+      "phone": "Phone",
+      "email": "Email"
+    }
   }
 }

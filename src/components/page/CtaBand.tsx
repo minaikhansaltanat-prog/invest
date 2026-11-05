@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/Button'
 import { Reveal } from '@/components/ui/Reveal'
 import { NoBreak } from '@/components/ui/typography'
+import { visibleHref } from '@/lib/mode'
 
 /** Бет соңындағы шақыру: нави карточка, ою-өрнек, алтын батырма. Мәтін бос болса, ештеңе көрсетілмейді. */
 export function CtaBand({
@@ -8,7 +9,9 @@ export function CtaBand({
 }: {
   cta?: { title?: string | null; text?: string | null; label?: string | null; href?: string | null } | null
 }) {
-  if (!cta?.title || !cta.label || !cta.href) return null
+  // Corporate режимінде жасырын бетке (инвестор өтініші, жоба т.б.) апаратын шақыру көрсетілмейді
+  const href = visibleHref(cta?.href)
+  if (!cta?.title || !cta.label || !href) return null
   return (
     <section className="pt-14 lg:pt-[88px]">
       <div className="wrap">
@@ -30,7 +33,7 @@ export function CtaBand({
                   </p>
                 ) : null}
               </div>
-              <Button href={cta.href} arrow className="max-lg:w-full">
+              <Button href={href} arrow className="max-lg:w-full">
                 {cta.label}
               </Button>
             </div>

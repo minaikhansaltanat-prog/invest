@@ -4,7 +4,8 @@ import { getTranslations } from 'next-intl/server'
 import emblem from '@/assets/images/emblem.png'
 import type { Locale } from '@/i18n/config'
 import { Link } from '@/i18n/navigation'
-import { getSettings } from '@/lib/content'
+import { getServices, getSettings } from '@/lib/content'
+import { isCorporate } from '@/lib/mode'
 
 type FooterLink = { href: string; label: string; lang?: string; locale?: Locale }
 
@@ -32,7 +33,15 @@ function Column({ title, links }: { title: string; links: FooterLink[] }) {
 
 /** Футер (ТТ 6, 14-блок): логотип, ұран, 3 сілтеме бағаны, екі мекенжай, БСН, жауапкершілікті шектеу мәтіні */
 export async function SiteFooter({ locale }: { locale: Locale }) {
-  const [settings, t] = await Promise.all([getSettings(locale), getTranslations({ locale, namespace: 'footer' })])
+  const corporate = isCorporate()
+  const [settings, t, navT, services] = await Promise.all([
+    getSettings(locale),
+    getTranslations({ locale, namespace: 'footer' }),
+    getTranslations({ locale, namespace: 'nav' }),
+    corporate ? getServices(locale) : Promise.resolve([]),
+  ])
+  const nav = navT as unknown as (key: string) => string
+  const zhVersion: FooterLink[] = locale === 'zh' ? [] : [{ href: '/', locale: 'zh', label: t('zhVersion'), lang: 'zh-CN' }]
   const lines = (settings.brandName ?? '').split('\n')
   const year = new Date().getFullYear()
 
@@ -71,24 +80,49 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
               { href: '/about/reports', label: t('reports') },
             ]}
           />
-          <Column
-            title={t('forInvestors')}
-            links={[
-              { href: '/projects', label: t('projectPool') },
-              { href: '/investors/apply', label: t('investorApplication') },
-              { href: '/services/market-entry', label: t('marketEntry') },
-              ...(locale === 'zh' ? [] : [{ href: '/', locale: 'zh' as const, label: t('zhVersion'), lang: 'zh-CN' }]),
-            ]}
-          />
-          <Column
-            title={t('forMembers')}
-            links={[
-              { href: '/membership', label: t('categories') },
-              { href: '/membership/apply', label: t('membershipApplication') },
-              { href: '/account', label: t('account') },
-              { href: '/media', label: t('media') },
-            ]}
-          />
+          {corporate ? (
+            <>
+              {/* Corporate режимі: инвестор/мүше бағандары жоқ, орнына қызметтер мен медиа (src/lib/mode.ts) */}
+              <Column
+                title={t('services')}
+                links={[
+                  ...services.slice(0, 4).map((service) => ({ href: `/services/${service.slug}`, label: service.title ?? '' })),
+                  { href: '/services', label: t('allServices') },
+                ]}
+              />
+              <Column
+                title={t('media')}
+                links={[
+                  { href: '/media/news', label: nav('sub.media.news') },
+                  { href: '/media/events', label: nav('sub.media.events') },
+                  { href: '/partners', label: nav('sub.about.partners') },
+                  { href: '/contacts', label: nav('contacts') },
+                  ...zhVersion,
+                ]}
+              />
+            </>
+          ) : (
+            <>
+              <Column
+                title={t('forInvestors')}
+                links={[
+                  { href: '/projects', label: t('projectPool') },
+                  { href: '/investors/apply', label: t('investorApplication') },
+                  { href: '/services/market-entry', label: t('marketEntry') },
+                  ...zhVersion,
+                ]}
+              />
+              <Column
+                title={t('forMembers')}
+                links={[
+                  { href: '/membership', label: t('categories') },
+                  { href: '/membership/apply', label: t('membershipApplication') },
+                  { href: '/account', label: t('account') },
+                  { href: '/media', label: t('media') },
+                ]}
+              />
+            </>
+          )}
 
           <div className="col-span-2 grid content-start gap-3.5 lg:col-span-1">
             {settings.legalAddress ? (

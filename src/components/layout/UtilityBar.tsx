@@ -1,6 +1,7 @@
 import { getTranslations } from 'next-intl/server'
 
 import { Link } from '@/i18n/navigation'
+import { isCorporate } from '@/lib/mode'
 import type { Setting } from '@/payload-types'
 
 import { LangSwitcher } from './LangSwitcher'
@@ -37,13 +38,18 @@ export async function UtilityBar({ settings }: { settings: Setting }) {
         </div>
         <div className="flex items-center gap-3">
           <LangSwitcher variant="bar" />
-          <Sep />
-          <Link
-            href="/account"
-            className="inline-flex min-h-11 items-center rounded-sm px-1 hover:text-white lg:min-h-8"
-          >
-            {t('account')}
-          </Link>
+          {/* Corporate режимінде жеке кабинет жоқ */}
+          {isCorporate() ? null : (
+            <>
+              <Sep />
+              <Link
+                href="/account"
+                className="inline-flex min-h-11 items-center rounded-sm px-1 hover:text-white lg:min-h-8"
+              >
+                {t('account')}
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </div>

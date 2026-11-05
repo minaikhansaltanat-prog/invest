@@ -4,6 +4,7 @@ import type { ReactNode } from 'react'
 import { PageHero } from '@/components/page/PageHero'
 import type { Locale } from '@/i18n/config'
 import { cn } from '@/lib/cn'
+import { isCorporate } from '@/lib/mode'
 
 /** Кабинет беттерінің ортақ қабығы: тақырып жолағы + орталықтандырылған карточка(лар). Іздеу жүйелеріне жабық (беттер noindex). */
 export async function AccountShell({
@@ -26,7 +27,12 @@ export async function AccountShell({
         eyebrow={t('nav.account')}
         title={title}
         description={lead}
-        crumbs={[{ label: t('page.home'), href: '/' }, { label: t('nav.account'), href: '/account' }, { label: title }]}
+        // Corporate режимінде /account беті жоқ (404): нан үгіндісі сілтемесіз, тек әкімшінің 2FA беті осы қабықты қолданады
+        crumbs={[
+          { label: t('page.home'), href: '/' },
+          { label: t('nav.account'), href: isCorporate() ? undefined : '/account' },
+          { label: title },
+        ]}
         crumbLabel={t('a11y.breadcrumbs')}
       />
       <div className="wrap pt-12 lg:pt-16">
