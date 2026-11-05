@@ -1,8 +1,11 @@
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import type { ReactNode } from 'react'
 
+import { RevealObserver, revealBootScript } from '@/components/ui/Reveal'
+import { ToastProvider } from '@/components/ui/Toast'
 import { localeMeta, locales } from '@/i18n/config'
 import { routing } from '@/i18n/routing'
 
@@ -10,6 +13,24 @@ import './globals.css'
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }))
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params
+  if (!hasLocale(routing.locales, locale)) return {}
+  const t = await getTranslations({ locale, namespace: 'meta' })
+  return {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
+    title: { default: t('siteName'), template: `%s | ${t('siteName')}` },
+    description: t('tagline'),
+    icons: {
+      icon: [
+        { url: '/icons/icon-32.png', sizes: '32x32', type: 'image/png' },
+        { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      ],
+      apple: [{ url: '/icons/apple-180.png', sizes: '180x180' }],
+    },
+  }
 }
 
 export default async function LocaleLayout({
@@ -22,11 +43,22 @@ export default async function LocaleLayout({
   const { locale } = await params
   if (!hasLocale(routing.locales, locale)) notFound()
   setRequestLocale(locale)
+  const t = await getTranslations({ locale, namespace: 'a11y' })
 
   return (
-    <html lang={localeMeta[locale].htmlLang} dir={localeMeta[locale].dir}>
+    // suppressHydrationWarning: <head> скрипті html-ге reveal-ready класын гидратацияға дейін қосады
+    <html lang={localeMeta[locale].htmlLang} dir={localeMeta[locale].dir} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: revealBootScript }} />
+      </head>
       <body>
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <a href="#main" className="skip-link">
+          {t('skipToContent')}
+        </a>
+        <NextIntlClientProvider>
+          <ToastProvider closeLabel={t('close')}>{children}</ToastProvider>
+          <RevealObserver />
+        </NextIntlClientProvider>
       </body>
     </html>
   )

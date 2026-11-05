@@ -4,5 +4,171 @@
     "siteNameEn": "Kazakhstan Association of Foreign Capital",
     "tagline": "Вместе за устойчивое развитие",
     "placeholder": "Каркас портала готов. Главная страница будет создана на этапе 2."
+  },
+  "a11y": {
+    "skipToContent": "Перейти к основному содержанию",
+    "home": "Перейти на главную страницу",
+    "openMenu": "Открыть меню",
+    "closeMenu": "Закрыть меню",
+    "mainNav": "Главное меню",
+    "mobileNav": "Мобильное меню",
+    "language": "Выбор языка",
+    "close": "Закрыть",
+    "breadcrumbs": "Навигационная цепочка",
+    "externalLink": "откроется в новой вкладке",
+    "currentPage": "текущая страница",
+    "openSection": "Открыть раздел"
+  },
+  "nav": {
+    "about": "Ассоциация",
+    "services": "Услуги",
+    "investors": "Инвесторам",
+    "projects": "Проекты",
+    "membership": "Членство",
+    "media": "Медиа",
+    "contacts": "Контакты",
+    "apply": "Подать заявку",
+    "account": "Личный кабинет",
+    "menuTitle": "Меню",
+    "sub": {
+      "about": {
+        "aboutUs": "О нас",
+        "mission": "Миссия и принципы",
+        "governance": "Структура управления",
+        "people": "Люди и команда",
+        "documents": "Документы",
+        "reports": "Годовые отчеты",
+        "ethics": "Прозрачность и этика",
+        "results": "Результаты",
+        "partners": "Партнеры"
+      },
+      "services": {
+        "all": "Все услуги"
+      },
+      "investors": {
+        "path": "Путь инвестора",
+        "china": "Китайский центр",
+        "gulf": "Страны Персидского залива",
+        "global": "Европа и Азия",
+        "climate": "Инвестиционный климат",
+        "handbook": "Справочник инвестора",
+        "apply": "Форма заявки"
+      },
+      "projects": {
+        "catalog": "Каталог",
+        "submit": "Предложить проект",
+        "levels": "Уровни проектов"
+      },
+      "membership": {
+        "categories": "Категории",
+        "benefits": "Преимущества",
+        "terms": "Условия и взносы",
+        "apply": "Заявка",
+        "registry": "Реестр членов"
+      },
+      "media": {
+        "news": "Новости",
+        "events": "Календарь мероприятий",
+        "video": "Видеогалерея",
+        "photo": "Фотогалерея",
+        "press": "Пресс-релизы",
+        "analytics": "Аналитика и исследования"
+      }
+    }
+  },
+  "util": {
+    "wechat": "WeChat",
+    "contactUs": "Контакты"
+  },
+  "footer": {
+    "association": "Ассоциация",
+    "forInvestors": "Инвесторам",
+    "forMembers": "Членам",
+    "aboutUs": "О нас",
+    "governance": "Структура управления",
+    "documents": "Документы",
+    "reports": "Годовые отчеты",
+    "projectPool": "Пул проектов",
+    "investorApplication": "Заявка инвестора",
+    "marketEntry": "Выход на рынок",
+    "zhVersion": "中文版",
+    "categories": "Категории",
+    "membershipApplication": "Заявка на членство",
+    "account": "Личный кабинет",
+    "media": "Медиа",
+    "legalAddress": "Юридический адрес",
+    "office": "Офис",
+    "contact": "Контакты",
+    "bin": "БИН",
+    "copyright": "© {year} {name}",
+    "privacy": "Политика конфиденциальности",
+    "terms": "Условия использования"
+  },
+  "common": {
+    "readMore": "Подробнее",
+    "example": "Показано как пример",
+    "all": "Все",
+    "optional": "необязательно",
+    "required": "обязательно",
+    "back": "Назад",
+    "next": "Далее",
+    "submit": "Отправить",
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "none": "Нет данных",
+    "dateFormatNote": "Дата"
+  },
+  "project": {
+    "region": "Регион",
+    "volume": "Объем инвестиций",
+    "model": "Модель",
+    "volumeModel": "Объем · Модель",
+    "ndaLock": "Полные данные по NDA",
+    "passport": "Паспорт проекта",
+    "levelFormat": "Уровень {n} · {title}",
+    "volumeMusd": "{amount} млн $"
+  },
+  "news": {
+    "categories": {
+      "strategy": "Стратегия",
+      "methodology": "Методика",
+      "projects": "Проекты",
+      "china": "Китай",
+      "events": "Мероприятия",
+      "analytics": "Аналитика"
+    }
+  },
+  "lang": {
+    "kk": "Казахский",
+    "ru": "Русский",
+    "en": "Английский",
+    "zh": "Китайский",
+    "switchTo": "Сменить язык: {language}",
+    "missingTranslation": "Перевода этой страницы пока нет. Вы перенаправлены на главную страницу раздела."
+  },
+  "forms": {
+    "requiredField": "Это поле обязательно",
+    "invalidEmail": "Неверный формат электронной почты",
+    "consentRequired": "Для продолжения требуется согласие",
+    "sampleLabel": "Электронная почта",
+    "sampleHint": "Ответ придет на этот адрес",
+    "sampleConsent": "Согласен на обработку персональных данных",
+    "sampleSelect": "Направление интереса",
+    "sampleMessage": "Сообщение"
+  },
+  "styleguide": {
+    "modalOpen": "Открыть модальное окно",
+    "modalTitle": "Модальное окно",
+    "modalText": "Фокус остается внутри окна, клавиша Esc и клик по затемнению закрывают окно.",
+    "toastShow": "Показать уведомление",
+    "toastText": "Заявка успешно отправлена",
+    "emptyTitle": "Ничего не найдено",
+    "emptyText": "Попробуйте изменить фильтр или вернитесь ко всем проектам.",
+    "tableCaption": "Пример таблицы",
+    "colName": "Название",
+    "colStatus": "Статус",
+    "colAmount": "Объем",
+    "statusActive": "Действует",
+    "statusReview": "На проверке"
   }
 }

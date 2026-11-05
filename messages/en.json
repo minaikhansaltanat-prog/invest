@@ -4,5 +4,171 @@
     "siteNameEn": "Kazakhstan Association of Foreign Capital",
     "tagline": "Together for sustainable growth",
     "placeholder": "The portal skeleton is ready. The home page will be built in stage 2."
+  },
+  "a11y": {
+    "skipToContent": "Skip to main content",
+    "home": "Go to the home page",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "mainNav": "Main navigation",
+    "mobileNav": "Mobile navigation",
+    "language": "Choose language",
+    "close": "Close",
+    "breadcrumbs": "Breadcrumbs",
+    "externalLink": "opens in a new tab",
+    "currentPage": "current page",
+    "openSection": "Open section"
+  },
+  "nav": {
+    "about": "Association",
+    "services": "Services",
+    "investors": "Investors",
+    "projects": "Projects",
+    "membership": "Membership",
+    "media": "Media",
+    "contacts": "Contacts",
+    "apply": "Apply",
+    "account": "Account",
+    "menuTitle": "Menu",
+    "sub": {
+      "about": {
+        "aboutUs": "About us",
+        "mission": "Mission and principles",
+        "governance": "Governance structure",
+        "people": "People and team",
+        "documents": "Documents",
+        "reports": "Annual reports",
+        "ethics": "Transparency and ethics",
+        "results": "Results",
+        "partners": "Partners"
+      },
+      "services": {
+        "all": "All services"
+      },
+      "investors": {
+        "path": "Investor pathway",
+        "china": "China centre",
+        "gulf": "Gulf countries",
+        "global": "Europe and Asia",
+        "climate": "Investment climate",
+        "handbook": "Investor handbook",
+        "apply": "Application form"
+      },
+      "projects": {
+        "catalog": "Catalogue",
+        "submit": "Submit a project",
+        "levels": "Project levels"
+      },
+      "membership": {
+        "categories": "Categories",
+        "benefits": "Benefits",
+        "terms": "Terms and fees",
+        "apply": "Application",
+        "registry": "Member registry"
+      },
+      "media": {
+        "news": "News",
+        "events": "Events calendar",
+        "video": "Video gallery",
+        "photo": "Photo gallery",
+        "press": "Press releases",
+        "analytics": "Analytics and research"
+      }
+    }
+  },
+  "util": {
+    "wechat": "WeChat",
+    "contactUs": "Contact"
+  },
+  "footer": {
+    "association": "Association",
+    "forInvestors": "For investors",
+    "forMembers": "For members",
+    "aboutUs": "About us",
+    "governance": "Governance structure",
+    "documents": "Documents",
+    "reports": "Annual reports",
+    "projectPool": "Project pool",
+    "investorApplication": "Investor application",
+    "marketEntry": "Market entry",
+    "zhVersion": "中文版",
+    "categories": "Categories",
+    "membershipApplication": "Apply for membership",
+    "account": "Account",
+    "media": "Media",
+    "legalAddress": "Legal address",
+    "office": "Office",
+    "contact": "Contact",
+    "bin": "BIN",
+    "copyright": "© {year} {name}",
+    "privacy": "Privacy policy",
+    "terms": "Terms of use"
+  },
+  "common": {
+    "readMore": "Learn more",
+    "example": "Shown as an example",
+    "all": "All",
+    "optional": "optional",
+    "required": "required",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "none": "No data",
+    "dateFormatNote": "Date"
+  },
+  "project": {
+    "region": "Region",
+    "volume": "Investment size",
+    "model": "Model",
+    "volumeModel": "Size · Model",
+    "ndaLock": "Full details under NDA",
+    "passport": "Project passport",
+    "levelFormat": "Level {n} · {title}",
+    "volumeMusd": "USD {amount} million"
+  },
+  "news": {
+    "categories": {
+      "strategy": "Strategy",
+      "methodology": "Methodology",
+      "projects": "Projects",
+      "china": "China",
+      "events": "Events",
+      "analytics": "Analytics"
+    }
+  },
+  "lang": {
+    "kk": "Kazakh",
+    "ru": "Russian",
+    "en": "English",
+    "zh": "Chinese",
+    "switchTo": "Switch language: {language}",
+    "missingTranslation": "This page is not translated yet. You were taken to the section home page."
+  },
+  "forms": {
+    "requiredField": "This field is required",
+    "invalidEmail": "Invalid email format",
+    "consentRequired": "Consent is required to continue",
+    "sampleLabel": "Email",
+    "sampleHint": "We will reply to this address",
+    "sampleConsent": "I agree to the processing of personal data",
+    "sampleSelect": "Area of interest",
+    "sampleMessage": "Message"
+  },
+  "styleguide": {
+    "modalOpen": "Open modal window",
+    "modalTitle": "Modal window",
+    "modalText": "Focus stays inside the window. The Esc key and a click on the backdrop close it.",
+    "toastShow": "Show notification",
+    "toastText": "Application submitted successfully",
+    "emptyTitle": "Nothing found",
+    "emptyText": "Try changing the filter or go back to all projects.",
+    "tableCaption": "Sample table",
+    "colName": "Name",
+    "colStatus": "Status",
+    "colAmount": "Size",
+    "statusActive": "Active",
+    "statusReview": "In review"
   }
 }

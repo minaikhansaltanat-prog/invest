@@ -4,5 +4,171 @@
     "siteNameEn": "Kazakhstan Association of Foreign Capital",
     "tagline": "Бірге тұрақты даму үшін",
     "placeholder": "Портал қаңқасы дайын. Басты бет 2-кезеңде жасалады."
+  },
+  "a11y": {
+    "skipToContent": "Негізгі мазмұнға өту",
+    "home": "Басты бетке өту",
+    "openMenu": "Мәзірді ашу",
+    "closeMenu": "Мәзірді жабу",
+    "mainNav": "Негізгі мәзір",
+    "mobileNav": "Мобильді мәзір",
+    "language": "Тілді таңдау",
+    "close": "Жабу",
+    "breadcrumbs": "Бет жолы",
+    "externalLink": "жаңа қойындыда ашылады",
+    "currentPage": "ағымдағы бет",
+    "openSection": "Бөлімді ашу"
+  },
+  "nav": {
+    "about": "Қауымдастық",
+    "services": "Қызметтер",
+    "investors": "Инвесторларға",
+    "projects": "Жобалар",
+    "membership": "Мүшелік",
+    "media": "Медиа",
+    "contacts": "Байланыс",
+    "apply": "Өтініш беру",
+    "account": "Жеке кабинет",
+    "menuTitle": "Мәзір",
+    "sub": {
+      "about": {
+        "aboutUs": "Біз туралы",
+        "mission": "Миссия мен қағидаттар",
+        "governance": "Басқару құрылымы",
+        "people": "Тұлғалар мен команда",
+        "documents": "Құжаттар",
+        "reports": "Жылдық есептер",
+        "ethics": "Ашықтық пен этика",
+        "results": "Нәтижелер",
+        "partners": "Серіктестер"
+      },
+      "services": {
+        "all": "Барлық қызметтер"
+      },
+      "investors": {
+        "path": "Инвестор жолы",
+        "china": "Қытай орталығы",
+        "gulf": "Парсы шығанағы",
+        "global": "Еуропа және Азия",
+        "climate": "Инвестициялық климат",
+        "handbook": "Инвестор анықтамалығы",
+        "apply": "Өтініш формасы"
+      },
+      "projects": {
+        "catalog": "Каталог",
+        "submit": "Жобаны ұсыну",
+        "levels": "Жоба деңгейлері"
+      },
+      "membership": {
+        "categories": "Санаттар",
+        "benefits": "Артықшылықтар",
+        "terms": "Шарттар мен жарналар",
+        "apply": "Өтініш",
+        "registry": "Мүшелер тізілімі"
+      },
+      "media": {
+        "news": "Жаңалықтар",
+        "events": "Іс-шаралар күнтізбесі",
+        "video": "Видеогалерея",
+        "photo": "Фотогалерея",
+        "press": "Баспасөз релиздері",
+        "analytics": "Аналитика мен зерттеулер"
+      }
+    }
+  },
+  "util": {
+    "wechat": "WeChat",
+    "contactUs": "Байланыс"
+  },
+  "footer": {
+    "association": "Қауымдастық",
+    "forInvestors": "Инвесторларға",
+    "forMembers": "Мүшелерге",
+    "aboutUs": "Біз туралы",
+    "governance": "Басқару құрылымы",
+    "documents": "Құжаттар",
+    "reports": "Жылдық есептер",
+    "projectPool": "Жобалар қоры",
+    "investorApplication": "Инвестор өтініші",
+    "marketEntry": "Нарыққа кіру",
+    "zhVersion": "中文版",
+    "categories": "Санаттар",
+    "membershipApplication": "Мүшелікке өтініш",
+    "account": "Жеке кабинет",
+    "media": "Медиа",
+    "legalAddress": "Заңды мекенжай",
+    "office": "Кеңсе",
+    "contact": "Байланыс",
+    "bin": "БСН",
+    "copyright": "© {year} {name}",
+    "privacy": "Құпиялылық саясаты",
+    "terms": "Пайдалану шарттары"
+  },
+  "common": {
+    "readMore": "Толығырақ",
+    "example": "Мысал ретінде көрсетілген",
+    "all": "Барлығы",
+    "optional": "міндетті емес",
+    "required": "міндетті",
+    "back": "Артқа",
+    "next": "Келесі",
+    "submit": "Жіберу",
+    "cancel": "Бас тарту",
+    "save": "Сақтау",
+    "none": "Деректер жоқ",
+    "dateFormatNote": "Күні"
+  },
+  "project": {
+    "region": "Өңір",
+    "volume": "Инвестиция көлемі",
+    "model": "Модель",
+    "volumeModel": "Көлемі · Модель",
+    "ndaLock": "Толық деректер NDA арқылы",
+    "passport": "Жоба паспорты",
+    "levelFormat": "{n}-деңгей · {title}",
+    "volumeMusd": "{amount} млн $"
+  },
+  "news": {
+    "categories": {
+      "strategy": "Стратегия",
+      "methodology": "Әдістеме",
+      "projects": "Жобалар",
+      "china": "Қытай",
+      "events": "Іс-шаралар",
+      "analytics": "Аналитика"
+    }
+  },
+  "lang": {
+    "kk": "Қазақша",
+    "ru": "Орысша",
+    "en": "Ағылшынша",
+    "zh": "Қытайша",
+    "switchTo": "Тілді ауыстыру: {language}",
+    "missingTranslation": "Бұл беттің аудармасы әзірге жоқ. Бөлімнің басты бетіне өттіңіз."
+  },
+  "forms": {
+    "requiredField": "Бұл өріс міндетті",
+    "invalidEmail": "Электрондық пошта форматы дұрыс емес",
+    "consentRequired": "Жалғастыру үшін келісім қажет",
+    "sampleLabel": "Электрондық пошта",
+    "sampleHint": "Жауап осы мекенжайға жіберіледі",
+    "sampleConsent": "Дербес деректерді өңдеуге келісемін",
+    "sampleSelect": "Қызығушылық бағыты",
+    "sampleMessage": "Хабарлама"
+  },
+  "styleguide": {
+    "modalOpen": "Модальды терезені ашу",
+    "modalTitle": "Модаль терезе",
+    "modalText": "Фокус терезе ішінде қалады, Esc пернесі және артқы фонды басу терезені жабады.",
+    "toastShow": "Хабарламаны көрсету",
+    "toastText": "Өтініш сәтті жіберілді",
+    "emptyTitle": "Нәтиже табылмады",
+    "emptyText": "Сүзгіні өзгертіп көріңіз немесе барлық жобаларға оралыңыз.",
+    "tableCaption": "Мысал кесте",
+    "colName": "Атауы",
+    "colStatus": "Мәртебесі",
+    "colAmount": "Көлемі",
+    "statusActive": "Әрекетте",
+    "statusReview": "Тексеруде"
   }
 }

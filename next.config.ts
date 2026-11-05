@@ -18,6 +18,8 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // Dev индикаторы скриншоттарда көрінбесін
+  devIndicators: false,
   images: {
     formats: ['image/avif', 'image/webp'],
     qualities: [60, 75, 82, 90],
