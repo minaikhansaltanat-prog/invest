@@ -14,13 +14,29 @@ import { type L4 } from '@/lib/labels'
 
 type Extra<T> = Partial<Omit<T, 'name' | 'type' | 'label'>>
 
+/** Бос тілге бөлінген өрісте «аударма жоқ» белгісін көрсететін әкімшілік компоненті (NIGHT_TASK 3.4) */
+const missingMarker = '@/components/admin/TranslationMissing#TranslationMissing'
+
+function withMarker<T extends { admin?: { components?: { afterInput?: unknown[] } } }>(extra: T): T {
+  return {
+    ...extra,
+    admin: {
+      ...extra.admin,
+      components: {
+        ...extra.admin?.components,
+        afterInput: [...(extra.admin?.components?.afterInput ?? []), missingMarker],
+      },
+    },
+  }
+}
+
 /** Тілге бөлінген мәтін (4 тілде бөлек сақталады) */
 export const ltext = (name: string, label: L4, extra: Extra<TextField> = {}): TextField =>
-  ({ name, type: 'text', localized: true, label, ...extra }) as TextField
+  ({ name, type: 'text', localized: true, label, ...withMarker(extra) }) as TextField
 
 /** Тілге бөлінген көп жолды мәтін */
 export const ltextarea = (name: string, label: L4, extra: Extra<TextareaField> = {}): TextareaField =>
-  ({ name, type: 'textarea', localized: true, label, ...extra }) as TextareaField
+  ({ name, type: 'textarea', localized: true, label, ...withMarker(extra) }) as TextareaField
 
 /** Барлық тілде бірдей мәтін (сілтеме, код, атау) */
 export const text = (name: string, label: L4, extra: Extra<TextField> = {}): TextField =>

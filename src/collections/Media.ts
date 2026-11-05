@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url'
 
 import type { CollectionConfig } from 'payload'
 
+import { ltext } from '@/fields/helpers'
 import { l } from '@/lib/labels'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -32,13 +33,9 @@ export const Media: CollectionConfig = {
     adminThumbnail: 'thumbnail',
   },
   fields: [
-    {
-      name: 'alt',
-      type: 'text',
-      localized: true,
+    ltext('alt', l('Alt мәтіні (4 тілде)', 'Alt-текст (на 4 языках)', 'Alt text (4 languages)', 'Alt 文本（四种语言）'), {
       required: true,
-      label: l('Alt мәтіні (4 тілде)', 'Alt-текст (на 4 языках)', 'Alt text (4 languages)', 'Alt 文本（四种语言）'),
-    },
+    }),
     {
       name: 'credit',
       type: 'text',

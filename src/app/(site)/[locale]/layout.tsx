@@ -6,6 +6,7 @@ import type { ReactNode } from 'react'
 
 import { SiteFooter } from '@/components/layout/SiteFooter'
 import { SiteHeader } from '@/components/layout/SiteHeader'
+import { TranslationNotice } from '@/components/layout/TranslationNotice'
 import { RevealObserver, revealBootScript } from '@/components/ui/Reveal'
 import { ToastProvider } from '@/components/ui/Toast'
 import { localeMeta, locales } from '@/i18n/config'
@@ -65,6 +66,7 @@ export default async function LocaleLayout({
               {children}
               <SiteFooter locale={locale} />
             </div>
+            <TranslationNotice />
           </ToastProvider>
           <RevealObserver />
         </NextIntlClientProvider>

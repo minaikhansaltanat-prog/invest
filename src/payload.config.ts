@@ -6,7 +6,7 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { en } from '@payloadcms/translations/languages/en'
 import { ru } from '@payloadcms/translations/languages/ru'
 import { zh } from '@payloadcms/translations/languages/zh'
-import { buildConfig } from 'payload'
+import { buildConfig, type Config } from 'payload'
 import sharp from 'sharp'
 
 import { Admins } from './collections/Admins'
@@ -20,6 +20,7 @@ import { Home } from './globals/Home'
 import { KpiTargets } from './globals/KpiTargets'
 import { ScoringConfig } from './globals/ScoringConfig'
 import { Settings } from './globals/Settings'
+import { kk } from './i18n/admin-kk'
 import { defaultLocale, localeMeta, locales } from './i18n/config'
 
 const filename = fileURLToPath(import.meta.url)
@@ -41,6 +42,12 @@ export default buildConfig({
     meta: {
       titleSuffix: ' | KFCA',
     },
+    components: {
+      graphics: {
+        Logo: '@/components/admin/AdminBrand#AdminLogo',
+        Icon: '@/components/admin/AdminBrand#AdminIcon',
+      },
+    },
   },
   collections: [Admins, Users, Media, People, Services, Projects, News],
   globals: [Home, Settings, KpiTargets, ScoringConfig],
@@ -51,10 +58,13 @@ export default buildConfig({
     defaultLocale,
     fallback: false,
   },
-  // Әкімшілік интерфейсінің тілдері. Қазақша аударма 3-кезеңде қосылады (Payload-та kk жоқ).
+  // Әкімшілік интерфейсі төрт тілде (NIGHT_TASK 3.4). Payload-та kk жоқ, сондықтан өз аудармамыз (src/i18n/admin-kk.ts).
+  // Payload Accept-Language ішінен тек өз тізіміндегі тілдерді таниды (kk жоқ), сондықтан kk әдепкі (fallback) болады:
+  // ru/en/zh браузері өз тілін алады, қалғаны және cookie-сіз қонақ қазақша көреді. Тіл «Аккаунт» бетінде ауысады (payload-lng cookie).
   i18n: {
-    supportedLanguages: { en, ru, zh },
-    fallbackLanguage: 'ru',
+    // 'kk' Payload-тың AcceptedLanguages типінде жоқ, бірақ жұмыс уақытында кез келген кілт қабылданады
+    supportedLanguages: { kk, ru, en, zh } as unknown as NonNullable<Config['i18n']>['supportedLanguages'],
+    fallbackLanguage: 'kk' as unknown as NonNullable<Config['i18n']>['fallbackLanguage'],
   },
   secret,
   typescript: {
