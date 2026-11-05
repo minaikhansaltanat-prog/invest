@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { contentEditors, publishedOrStaff, withRoles } from '@/access'
+import { ctaGroup, pageBlocks } from '@/blocks/pageBlocks'
 import { checkbox, ltext, ltextarea, number, select, text } from '@/fields/helpers'
 import { translationStatusField } from '@/fields/translationStatus'
 import { l } from '@/lib/labels'
@@ -46,6 +47,14 @@ export const Services: CollectionConfig = {
     ltextarea('summary', l('Бір сөйлемдік сипаттама', 'Описание в одном предложении', 'One-sentence summary', '一句话简介'), {
       required: true,
     }),
+    {
+      name: 'blocks',
+      type: 'blocks',
+      label: l('Толық бет блоктары', 'Блоки полной страницы', 'Detail page blocks', '详情页内容块'),
+      blocks: pageBlocks(),
+      admin: { initCollapsed: true },
+    },
+    ctaGroup(),
     translationStatusField({ kk: 'approved', ru: 'draft', en: 'draft', zh: 'draft' }),
   ],
 }

@@ -118,6 +118,7 @@ const ui = {
 } satisfies Record<string, ReactNode>
 
 export type IconName = keyof typeof ui
+export const uiIconNames = Object.keys(ui) as IconName[]
 
 export function Icon({ name, size = 20, strokeWidth = 2, ...rest }: SvgProps & { name: IconName; size?: number }) {
   return (
@@ -190,6 +191,7 @@ const service = {
 } satisfies Record<string, ReactNode>
 
 export type ServiceIconName = keyof typeof service
+export const serviceIconNames = Object.keys(service) as ServiceIconName[]
 
 export function ServiceGlyph({ name, size = 38, ...rest }: SvgProps & { name: ServiceIconName; size?: number }) {
   return (

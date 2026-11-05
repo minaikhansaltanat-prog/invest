@@ -71,10 +71,16 @@ export interface Config {
     admins: Admin;
     users: User;
     media: Media;
+    pages: Page;
     people: Person;
     services: Service;
     projects: Project;
     news: News;
+    events: Event;
+    videos: Video;
+    albums: Album;
+    partners: Partner;
+    documents: Document;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -85,10 +91,16 @@ export interface Config {
     admins: AdminsSelect<false> | AdminsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
     people: PeopleSelect<false> | PeopleSelect<true>;
     services: ServicesSelect<false> | ServicesSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     news: NewsSelect<false> | NewsSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
+    videos: VideosSelect<false> | VideosSelect<true>;
+    albums: AlbumsSelect<false> | AlbumsSelect<true>;
+    partners: PartnersSelect<false> | PartnersSelect<true>;
+    documents: DocumentsSelect<false> | DocumentsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -258,6 +270,201 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  /**
+   * For example, /about/mission. Slugs are the same in every language, in English.
+   */
+  path: string;
+  section:
+    | 'about'
+    | 'services'
+    | 'investors'
+    | 'projects'
+    | 'membership'
+    | 'results'
+    | 'partners'
+    | 'media'
+    | 'contacts'
+    | 'legal';
+  title: string;
+  description?: string | null;
+  blocks?:
+    | (
+        | {
+            heading?: string | null;
+            lead?: string | null;
+            /**
+             * Separate paragraphs with a blank line. Lines starting with "- " become a list. **Bold** text is supported.
+             */
+            text: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'paragraphs';
+          }
+        | {
+            heading?: string | null;
+            lead?: string | null;
+            columns?: ('2' | '3' | '4') | null;
+            items?:
+              | {
+                  title: string;
+                  text?: string | null;
+                  icon?:
+                    | (
+                        | 'globe'
+                        | 'layers'
+                        | 'shield-check'
+                        | 'factory'
+                        | 'chart'
+                        | 'columns'
+                        | 'compass'
+                        | 'leaf'
+                        | 'document'
+                        | 'shield'
+                        | 'calendar'
+                        | 'phone'
+                        | 'mail'
+                        | 'pin'
+                        | 'user'
+                        | 'eye'
+                        | 'sparkle'
+                        | 'lock'
+                        | 'video'
+                        | 'image'
+                        | 'wechat'
+                        | 'check'
+                        | 'alert'
+                        | 'info'
+                      )
+                    | null;
+                  /**
+                   * Internal paths are written without a language prefix (for example, /investors/apply). External links start with https://.
+                   */
+                  href?: string | null;
+                  badge?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cards';
+          }
+        | {
+            heading?: string | null;
+            lead?: string | null;
+            items?:
+              | {
+                  title: string;
+                  text?: string | null;
+                  meta?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'steps';
+          }
+        | {
+            heading?: string | null;
+            items?:
+              | {
+                  label: string;
+                  value: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'facts';
+          }
+        | {
+            heading?: string | null;
+            items?:
+              | {
+                  q: string;
+                  a: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faq';
+          }
+        | {
+            heading?: string | null;
+            caption: string;
+            columns?:
+              | {
+                  text: string;
+                  id?: string | null;
+                }[]
+              | null;
+            rows?:
+              | {
+                  cells?:
+                    | {
+                        text?: string | null;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'table';
+          }
+        | {
+            tone: 'info' | 'caution' | 'legal';
+            title?: string | null;
+            text: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'notice';
+          }
+        | {
+            heading?: string | null;
+            items?:
+              | {
+                  label: string;
+                  /**
+                   * Internal paths are written without a language prefix (for example, /investors/apply). External links start with https://.
+                   */
+                  href?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'links';
+          }
+      )[]
+    | null;
+  cta?: {
+    title?: string | null;
+    text?: string | null;
+    label?: string | null;
+    href?: string | null;
+  };
+  /**
+   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
+   */
+  translationStatus?: {
+    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
+    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
+    en?: ('none' | 'draft' | 'review' | 'approved') | null;
+    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "people".
  */
 export interface Person {
@@ -306,6 +513,165 @@ export interface Service {
   highlight?: boolean | null;
   title: string;
   summary: string;
+  blocks?:
+    | (
+        | {
+            heading?: string | null;
+            lead?: string | null;
+            /**
+             * Separate paragraphs with a blank line. Lines starting with "- " become a list. **Bold** text is supported.
+             */
+            text: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'paragraphs';
+          }
+        | {
+            heading?: string | null;
+            lead?: string | null;
+            columns?: ('2' | '3' | '4') | null;
+            items?:
+              | {
+                  title: string;
+                  text?: string | null;
+                  icon?:
+                    | (
+                        | 'globe'
+                        | 'layers'
+                        | 'shield-check'
+                        | 'factory'
+                        | 'chart'
+                        | 'columns'
+                        | 'compass'
+                        | 'leaf'
+                        | 'document'
+                        | 'shield'
+                        | 'calendar'
+                        | 'phone'
+                        | 'mail'
+                        | 'pin'
+                        | 'user'
+                        | 'eye'
+                        | 'sparkle'
+                        | 'lock'
+                        | 'video'
+                        | 'image'
+                        | 'wechat'
+                        | 'check'
+                        | 'alert'
+                        | 'info'
+                      )
+                    | null;
+                  /**
+                   * Internal paths are written without a language prefix (for example, /investors/apply). External links start with https://.
+                   */
+                  href?: string | null;
+                  badge?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cards';
+          }
+        | {
+            heading?: string | null;
+            lead?: string | null;
+            items?:
+              | {
+                  title: string;
+                  text?: string | null;
+                  meta?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'steps';
+          }
+        | {
+            heading?: string | null;
+            items?:
+              | {
+                  label: string;
+                  value: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'facts';
+          }
+        | {
+            heading?: string | null;
+            items?:
+              | {
+                  q: string;
+                  a: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faq';
+          }
+        | {
+            heading?: string | null;
+            caption: string;
+            columns?:
+              | {
+                  text: string;
+                  id?: string | null;
+                }[]
+              | null;
+            rows?:
+              | {
+                  cells?:
+                    | {
+                        text?: string | null;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'table';
+          }
+        | {
+            tone: 'info' | 'caution' | 'legal';
+            title?: string | null;
+            text: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'notice';
+          }
+        | {
+            heading?: string | null;
+            items?:
+              | {
+                  label: string;
+                  /**
+                   * Internal paths are written without a language prefix (for example, /investors/apply). External links start with https://.
+                   */
+                  href?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'links';
+          }
+      )[]
+    | null;
+  cta?: {
+    title?: string | null;
+    text?: string | null;
+    label?: string | null;
+    href?: string | null;
+  };
   /**
    * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
    */
@@ -419,6 +785,148 @@ export interface News {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: number;
+  slug: string;
+  title: string;
+  summary?: string | null;
+  startsAt: string;
+  endsAt?: string | null;
+  format: 'offline' | 'online' | 'hybrid';
+  location?: string | null;
+  registrationUrl?: string | null;
+  image?: (number | null) | Media;
+  isSample?: boolean | null;
+  /**
+   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
+   */
+  translationStatus?: {
+    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
+    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
+    en?: ('none' | 'draft' | 'review' | 'approved') | null;
+    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "videos".
+ */
+export interface Video {
+  id: number;
+  slug: string;
+  title: string;
+  summary?: string | null;
+  file?: (number | null) | Media;
+  poster?: (number | null) | Media;
+  publishedAt: string;
+  /**
+   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
+   */
+  translationStatus?: {
+    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
+    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
+    en?: ('none' | 'draft' | 'review' | 'approved') | null;
+    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "albums".
+ */
+export interface Album {
+  id: number;
+  slug: string;
+  title: string;
+  description?: string | null;
+  cover?: (number | null) | Media;
+  photos?:
+    | {
+        image: number | Media;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  publishedAt: string;
+  /**
+   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
+   */
+  translationStatus?: {
+    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
+    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
+    en?: ('none' | 'draft' | 'review' | 'approved') | null;
+    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partners".
+ */
+export interface Partner {
+  id: number;
+  slug: string;
+  name: string;
+  kind: 'international' | 'state' | 'finance' | 'industry' | 'academic' | 'media';
+  country?: string | null;
+  url?: string | null;
+  description?: string | null;
+  logo?: (number | null) | Media;
+  showLogo?: boolean | null;
+  permissionNote?: string | null;
+  order?: number | null;
+  isSample?: boolean | null;
+  /**
+   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
+   */
+  translationStatus?: {
+    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
+    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
+    en?: ('none' | 'draft' | 'review' | 'approved') | null;
+    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents".
+ */
+export interface Document {
+  id: number;
+  slug: string;
+  title: string;
+  summary?: string | null;
+  category: 'charter' | 'policy' | 'methodology' | 'report' | 'privacy' | 'other';
+  file?: (number | null) | Media;
+  version?: string | null;
+  isDraftMethod?: boolean | null;
+  publishedAt?: string | null;
+  /**
+   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
+   */
+  translationStatus?: {
+    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
+    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
+    en?: ('none' | 'draft' | 'review' | 'approved') | null;
+    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -454,6 +962,10 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
+        relationTo: 'pages';
+        value: number | Page;
+      } | null)
+    | ({
         relationTo: 'people';
         value: number | Person;
       } | null)
@@ -468,6 +980,26 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'news';
         value: number | News;
+      } | null)
+    | ({
+        relationTo: 'events';
+        value: number | Event;
+      } | null)
+    | ({
+        relationTo: 'videos';
+        value: number | Video;
+      } | null)
+    | ({
+        relationTo: 'albums';
+        value: number | Album;
+      } | null)
+    | ({
+        relationTo: 'partners';
+        value: number | Partner;
+      } | null)
+    | ({
+        relationTo: 'documents';
+        value: number | Document;
       } | null);
   globalSlug?: string | null;
   user:
@@ -608,6 +1140,160 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  path?: T;
+  section?: T;
+  title?: T;
+  description?: T;
+  blocks?:
+    | T
+    | {
+        paragraphs?:
+          | T
+          | {
+              heading?: T;
+              lead?: T;
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        cards?:
+          | T
+          | {
+              heading?: T;
+              lead?: T;
+              columns?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    icon?: T;
+                    href?: T;
+                    badge?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        steps?:
+          | T
+          | {
+              heading?: T;
+              lead?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    meta?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        facts?:
+          | T
+          | {
+              heading?: T;
+              items?:
+                | T
+                | {
+                    label?: T;
+                    value?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        faq?:
+          | T
+          | {
+              heading?: T;
+              items?:
+                | T
+                | {
+                    q?: T;
+                    a?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        table?:
+          | T
+          | {
+              heading?: T;
+              caption?: T;
+              columns?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    cells?:
+                      | T
+                      | {
+                          text?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        notice?:
+          | T
+          | {
+              tone?: T;
+              title?: T;
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        links?:
+          | T
+          | {
+              heading?: T;
+              items?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+      };
+  cta?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        label?: T;
+        href?: T;
+      };
+  translationStatus?:
+    | T
+    | {
+        kk?: T;
+        ru?: T;
+        en?: T;
+        zh?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "people_select".
  */
 export interface PeopleSelect<T extends boolean = true> {
@@ -647,6 +1333,139 @@ export interface ServicesSelect<T extends boolean = true> {
   highlight?: T;
   title?: T;
   summary?: T;
+  blocks?:
+    | T
+    | {
+        paragraphs?:
+          | T
+          | {
+              heading?: T;
+              lead?: T;
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        cards?:
+          | T
+          | {
+              heading?: T;
+              lead?: T;
+              columns?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    icon?: T;
+                    href?: T;
+                    badge?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        steps?:
+          | T
+          | {
+              heading?: T;
+              lead?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    meta?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        facts?:
+          | T
+          | {
+              heading?: T;
+              items?:
+                | T
+                | {
+                    label?: T;
+                    value?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        faq?:
+          | T
+          | {
+              heading?: T;
+              items?:
+                | T
+                | {
+                    q?: T;
+                    a?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        table?:
+          | T
+          | {
+              heading?: T;
+              caption?: T;
+              columns?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              rows?:
+                | T
+                | {
+                    cells?:
+                      | T
+                      | {
+                          text?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        notice?:
+          | T
+          | {
+              tone?: T;
+              title?: T;
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        links?:
+          | T
+          | {
+              heading?: T;
+              items?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+      };
+  cta?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        label?: T;
+        href?: T;
+      };
   translationStatus?:
     | T
     | {
@@ -703,6 +1522,138 @@ export interface NewsSelect<T extends boolean = true> {
   featured?: T;
   isSample?: T;
   body?: T;
+  translationStatus?:
+    | T
+    | {
+        kk?: T;
+        ru?: T;
+        en?: T;
+        zh?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  slug?: T;
+  title?: T;
+  summary?: T;
+  startsAt?: T;
+  endsAt?: T;
+  format?: T;
+  location?: T;
+  registrationUrl?: T;
+  image?: T;
+  isSample?: T;
+  translationStatus?:
+    | T
+    | {
+        kk?: T;
+        ru?: T;
+        en?: T;
+        zh?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "videos_select".
+ */
+export interface VideosSelect<T extends boolean = true> {
+  slug?: T;
+  title?: T;
+  summary?: T;
+  file?: T;
+  poster?: T;
+  publishedAt?: T;
+  translationStatus?:
+    | T
+    | {
+        kk?: T;
+        ru?: T;
+        en?: T;
+        zh?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "albums_select".
+ */
+export interface AlbumsSelect<T extends boolean = true> {
+  slug?: T;
+  title?: T;
+  description?: T;
+  cover?: T;
+  photos?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
+  publishedAt?: T;
+  translationStatus?:
+    | T
+    | {
+        kk?: T;
+        ru?: T;
+        en?: T;
+        zh?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partners_select".
+ */
+export interface PartnersSelect<T extends boolean = true> {
+  slug?: T;
+  name?: T;
+  kind?: T;
+  country?: T;
+  url?: T;
+  description?: T;
+  logo?: T;
+  showLogo?: T;
+  permissionNote?: T;
+  order?: T;
+  isSample?: T;
+  translationStatus?:
+    | T
+    | {
+        kk?: T;
+        ru?: T;
+        en?: T;
+        zh?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents_select".
+ */
+export interface DocumentsSelect<T extends boolean = true> {
+  slug?: T;
+  title?: T;
+  summary?: T;
+  category?: T;
+  file?: T;
+  version?: T;
+  isDraftMethod?: T;
+  publishedAt?: T;
   translationStatus?:
     | T
     | {

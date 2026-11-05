@@ -10,12 +10,18 @@ import { buildConfig, type Config } from 'payload'
 import sharp from 'sharp'
 
 import { Admins } from './collections/Admins'
+import { Albums } from './collections/Albums'
+import { Documents } from './collections/Documents'
+import { Events } from './collections/Events'
 import { Media } from './collections/Media'
 import { News } from './collections/News'
+import { Pages } from './collections/Pages'
+import { Partners } from './collections/Partners'
 import { People } from './collections/People'
 import { Projects } from './collections/Projects'
 import { Services } from './collections/Services'
 import { Users } from './collections/Users'
+import { Videos } from './collections/Videos'
 import { Home } from './globals/Home'
 import { KpiTargets } from './globals/KpiTargets'
 import { ScoringConfig } from './globals/ScoringConfig'
@@ -49,7 +55,21 @@ export default buildConfig({
       },
     },
   },
-  collections: [Admins, Users, Media, People, Services, Projects, News],
+  collections: [
+    Admins,
+    Users,
+    Media,
+    Pages,
+    People,
+    Services,
+    Projects,
+    News,
+    Events,
+    Videos,
+    Albums,
+    Partners,
+    Documents,
+  ],
   globals: [Home, Settings, KpiTargets, ScoringConfig],
   editor: lexicalEditor(),
   // Контент 4 тілде. Аударма жоқ жерде қазақша мәтін fallback болып көрінбейді (fallback: false).

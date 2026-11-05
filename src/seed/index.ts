@@ -14,6 +14,8 @@ import { defaultLocale, type Locale, locales } from '@/i18n/config'
 import { kpiSeed, newsSeed, peopleSeed, projectsSeed, scoringSeed, servicesSeed, settingsSeed } from '../../content/seed/data'
 import { homeSeed } from '../../content/seed/home'
 import { pick, t } from '../../content/seed/lib'
+import { allPagesSeed, servicesDetailSeed } from '../../content/seed/pages'
+import { pagePrefix, toPayloadBlocks, toPayloadCta } from '../../content/seed/pages/payload'
 
 type Data = Record<string, unknown>
 
@@ -52,17 +54,18 @@ async function upsertMedia(
   return doc.id
 }
 
-/** slug бойынша жасайды немесе жаңартады; әр тілдің мәтіні өз локалінде жазылады */
-async function upsertBySlug(
+/** Кілт өрісі (slug немесе path) бойынша жасайды немесе жаңартады; әр тілдің мәтіні өз локалінде жазылады */
+async function upsertByKey(
   payload: Payload,
-  collection: 'services' | 'projects' | 'news' | 'people',
-  slug: string,
+  collection: 'services' | 'projects' | 'news' | 'people' | 'pages',
+  key: 'slug' | 'path',
+  value: string,
   shared: Data,
   perLocale: (locale: Locale) => Data,
 ) {
   const found = await payload.find({
     collection,
-    where: { slug: { equals: slug } },
+    where: { [key]: { equals: value } },
     limit: 1,
     depth: 0,
     draft: true,
@@ -76,7 +79,7 @@ async function upsertBySlug(
   if (!id) {
     const created = await payload.create({
       collection,
-      data: withStatus({ slug, ...shared, ...perLocale(defaultLocale) }) as never,
+      data: withStatus({ [key]: value, ...shared, ...perLocale(defaultLocale) }) as never,
       locale: defaultLocale,
     })
     id = created.id
@@ -84,16 +87,24 @@ async function upsertBySlug(
     await payload.update({
       collection,
       id,
-      data: withStatus({ slug, ...shared, ...perLocale(defaultLocale) }) as never,
+      data: withStatus({ [key]: value, ...shared, ...perLocale(defaultLocale) }) as never,
       locale: defaultLocale,
     })
   }
   for (const locale of otherLocales) {
     await payload.update({ collection, id, data: withStatus(perLocale(locale)) as never, locale })
   }
-  log(`${collection}: ${slug}`)
+  log(`${collection}: ${value}`)
   return id
 }
+
+const upsertBySlug = (
+  payload: Payload,
+  collection: 'services' | 'projects' | 'news' | 'people',
+  slug: string,
+  shared: Data,
+  perLocale: (locale: Locale) => Data,
+) => upsertByKey(payload, collection, 'slug', slug, shared, perLocale)
 
 async function main() {
   const payload = await getPayload({ config })
@@ -154,8 +165,9 @@ async function main() {
     }),
   )
 
-  // ---------- Қызметтер ----------
+  // ---------- Қызметтер (карточка + толық бет блоктары) ----------
   for (const service of servicesSeed) {
+    const detail = servicesDetailSeed[service.slug]
     await upsertBySlug(
       payload,
       'services',
@@ -166,7 +178,33 @@ async function main() {
         highlight: service.highlight,
         translationStatus: statuses,
       },
-      (locale) => ({ title: service.title[locale], summary: service.summary[locale] }),
+      (locale) => ({
+        title: service.title[locale],
+        summary: service.summary[locale],
+        ...(detail
+          ? {
+              blocks: toPayloadBlocks(detail.blocks, locale, `s-${service.slug}`),
+              cta: toPayloadCta(detail.cta, locale),
+            }
+          : {}),
+      }),
+    )
+  }
+
+  // ---------- Ішкі беттер (ТТ 7) ----------
+  for (const page of allPagesSeed) {
+    await upsertByKey(
+      payload,
+      'pages',
+      'path',
+      page.path,
+      { section: page.section, translationStatus: statuses },
+      (locale) => ({
+        title: page.title[locale],
+        description: page.description[locale],
+        blocks: toPayloadBlocks(page.blocks, locale, pagePrefix(page.path)),
+        cta: toPayloadCta(page.cta, locale),
+      }),
     )
   }
 
