@@ -234,7 +234,7 @@ export const servicesSeed = [
     highlight: false,
     title: t('Инвесторды тексеру', 'Проверка инвесторов', 'Investor vetting', '投资者审核'),
     summary: t(
-      '100 балдық ішкі бағалау және заңды тәсілдермен жүргізілетін due diligence.',
+      '100 балдық ішкі бағалау және заңды тәсілдермен жүргізілетін тиісті тексеру.',
       'Внутренняя 100-балльная оценка и due diligence законными методами.',
       'A 100-point internal assessment and due diligence conducted by lawful means.',
       '100分内部评估，以及依法开展的尽职调查。',
@@ -452,7 +452,7 @@ export const peopleSeed = [
     monogram: 'ҒЖ',
     languages: 'kk, ru, en, zh',
     order: 1,
-    name: t('Ғалым Жанар', 'Галым Жанар', 'Galym Zhanar', 'Galym Zhanar'),
+    name: t('Ғалым Жанар', 'Галым Жанар', 'Galym Zhanar', '加利姆·扎纳尔（Galym Zhanar）'),
     position: t(
       'Қауымдастық президенті әрі төрағасы',
       'Президент и председатель ассоциации',

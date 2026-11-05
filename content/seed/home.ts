@@ -35,7 +35,7 @@ export const homeSeed = {
       {
         id: 'fact-languages',
         title: t('4 тіл', '4 языка', '4 languages', '4种语言'),
-        text: t('KZ · RU · EN · 中文', 'KZ · RU · EN · 中文', 'KZ · RU · EN · 中文', 'KZ · RU · EN · 中文'),
+        text: t('ҚАЗ · РУС · ENG · 中文', 'KZ · RU · EN · 中文', 'KZ · RU · EN · 中文', 'KZ · RU · EN · 中文'),
       },
       {
         id: 'fact-lines',
@@ -355,7 +355,7 @@ export const homeSeed = {
     title: t('Жаңалықтар мен оқиғалар', 'Новости и события', 'News and events', '新闻与活动'),
     linkLabel: t('Барлық жаңалықтар', 'Все новости', 'All news', '全部新闻'),
     showExampleBadge: true,
-    videoLabel: t('Видеогалерея', 'Видеогалерея', 'Video gallery', '视频库'),
+    videoLabel: t('Бейнегалерея', 'Видеогалерея', 'Video gallery', '视频库'),
     photoLabel: t('Фотогалерея', 'Фотогалерея', 'Photo gallery', '图片库'),
   },
 

@@ -256,7 +256,7 @@ export const Home: GlobalConfig = {
             checkbox('showExampleBadge', l('«Мысал ретінде көрсетілген» белгісі', 'Пометка «Показано как пример»', '"Shown as example" label', '“示例”标记'), {
               defaultValue: true,
             }),
-            ltext('videoLabel', l('Видеогалерея', 'Видеогалерея', 'Video gallery', '视频库')),
+            ltext('videoLabel', l('Бейнегалерея', 'Видеогалерея', 'Video gallery', '视频库')),
             ltext('photoLabel', l('Фотогалерея', 'Фотогалерея', 'Photo gallery', '图片库')),
           ],
         },
