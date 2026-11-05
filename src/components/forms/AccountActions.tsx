@@ -106,7 +106,8 @@ export function TwoFactorPanel({ initial, next }: { initial: Status; next?: stri
   const finish = () => {
     setCode('')
     setSecret(null)
-    if (next && (next.startsWith('/admin') || next.startsWith('/account'))) window.location.assign(next)
+    // тек сайт ішіндегі жол (ашық бағыттау жоқ): "/" басталады, "//" емес
+    if (next && /^\/[^/\\]/.test(next)) window.location.assign(next)
     else router.refresh()
   }
 

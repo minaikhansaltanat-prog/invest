@@ -359,5 +359,28 @@
       "copy": "复制",
       "copied": "已复制"
     }
+  },
+  "dataroom": {
+    "anonymousText": "请使用投资者账户登录后访问数据室。",
+    "signIn": "登录",
+    "notInvestorText": "数据室仅对通过审核的投资者开放。请先提交投资者申请。",
+    "notEligible": "访问权限仅对通过审核的投资者开放。评估结果请在个人中心查看。",
+    "twoFactorSetup": "数据室必须启用双重验证（2FA）。请先启用 2FA。",
+    "twoFactorVerify": "请在本次会话中验证 2FA 验证码以开通访问。",
+    "twoFactorAction": "前往 2FA 页面",
+    "signTitle": "签署保密协议",
+    "signText": "接受保密协议后，数据室开放90天。每次查看都会记入日志，文件带有个人水印（姓名与日期）。",
+    "accept": "我已阅读并同意保密协议条款",
+    "sign": "签署保密协议",
+    "signed": "保密协议已接受",
+    "invalidCode": "2FA 验证码错误或已过期",
+    "open": "进入数据室",
+    "pageTitle": "数据室",
+    "filesTitle": "文件",
+    "noFiles": "该项目尚未上传文件。",
+    "viewOnly": "文件仅供查看；每页均显示您的姓名与日期。",
+    "denied": "无访问权限。系统将核验保密协议、投资者等级与 2FA。",
+    "backToProject": "返回项目页面",
+    "selectFile": "请选择文件"
   }
 }

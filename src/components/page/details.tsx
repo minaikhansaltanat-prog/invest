@@ -2,6 +2,8 @@ import { RichText } from '@payloadcms/richtext-lexical/react'
 import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
 
+import { NdaSignForm } from '@/components/forms/DataroomPanel'
+import type { AccessState } from '@/lib/portal/dataroom'
 import { LevelBadge, Tag } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { Icon } from '@/components/ui/icons'
@@ -14,8 +16,10 @@ import { labelOf, projectLevels, projectModels, projectStages, regions, sectors 
 import type { Album, News, Project } from '@/payload-types'
 
 /** Жоба беті (ашық бөлік): қысқа сипаттама, негізгі деректер. Толық паспорт пен деректер бөлмесі NDA-дан кейін (7-кезең). */
-export async function ProjectBody({ locale, project }: { locale: Locale; project: Project }) {
+export async function ProjectBody({ locale, project, access }: { locale: Locale; project: Project; access: AccessState }) {
   const t = await getTranslations({ locale })
+  // 2FA бетінен кейін қайтатын толық жол (тіл префиксімен): window.location арқылы ашылады
+  const projectPath = `/${locale}/projects/${project.slug}`
   const image = mediaOf(project.image)
   const facts = [
     { label: t('page.project.sector'), value: [labelOf(sectors, project.sector, locale), project.subSector].filter(Boolean).join(' · ') },
@@ -67,11 +71,46 @@ export async function ProjectBody({ locale, project }: { locale: Locale; project
               <span className="grid size-12 place-items-center rounded-full border border-gold-400/60 bg-white/5 text-gold-300">
                 <Icon name="lock" size={22} strokeWidth={1.6} />
               </span>
-              <h2 className="t-h3 text-white">{t('page.project.ndaTitle')}</h2>
-              <p className="text-base leading-[1.65] text-white/70">{t('page.project.ndaText')}</p>
-              <Button href="/investors/apply" arrow full>
-                {t('page.project.ndaAction')}
-              </Button>
+              {access === 'sign-nda' ? (
+                <NdaSignForm projectId={project.id} />
+              ) : (
+                <>
+                  <h2 className="t-h3 text-white">{access === 'ready' ? t('dataroom.pageTitle') : t('page.project.ndaTitle')}</h2>
+                  <p className="text-base leading-[1.65] text-white/70">
+                    {access === 'not-investor'
+                      ? t('dataroom.notInvestorText')
+                      : access === 'not-eligible'
+                        ? t('dataroom.notEligible')
+                        : access === 'two-factor-setup'
+                          ? t('dataroom.twoFactorSetup')
+                          : access === 'two-factor-verify'
+                            ? t('dataroom.twoFactorVerify')
+                            : access === 'ready'
+                              ? t('dataroom.viewOnly')
+                              : t('page.project.ndaText')}
+                  </p>
+                  {access === 'ready' ? (
+                    <Button href={`/account/dataroom/${project.id}`} arrow full>
+                      {t('dataroom.open')}
+                    </Button>
+                  ) : null}
+                  {access === 'two-factor-setup' || access === 'two-factor-verify' ? (
+                    <Button href={`/account/2fa?next=${encodeURIComponent(projectPath)}`} arrow full>
+                      {t('dataroom.twoFactorAction')}
+                    </Button>
+                  ) : null}
+                  {access === 'anonymous' ? (
+                    <Button href={`/account/login?next=${encodeURIComponent(`/projects/${project.slug}`)}`} variant="ghost" full>
+                      {t('dataroom.signIn')}
+                    </Button>
+                  ) : null}
+                  {access === 'anonymous' || access === 'not-investor' ? (
+                    <Button href="/investors/apply" arrow full>
+                      {t('page.project.ndaAction')}
+                    </Button>
+                  ) : null}
+                </>
+              )}
               <Link
                 href="/projects/levels"
                 className="inline-flex min-h-11 items-center text-sm font-semibold text-gold-300 underline decoration-transparent underline-offset-4 transition-[text-decoration-color] duration-200 hover:decoration-gold-300"

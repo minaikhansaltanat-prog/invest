@@ -81,6 +81,7 @@ async function upsertByKey(
       collection,
       data: withStatus({ [key]: value, ...shared, ...perLocale(defaultLocale) }) as never,
       locale: defaultLocale,
+      context: { seed: true },
     })
     id = created.id
   } else {
@@ -89,10 +90,11 @@ async function upsertByKey(
       id,
       data: withStatus({ [key]: value, ...shared, ...perLocale(defaultLocale) }) as never,
       locale: defaultLocale,
+      context: { seed: true },
     })
   }
   for (const locale of otherLocales) {
-    await payload.update({ collection, id, data: withStatus(perLocale(locale)) as never, locale })
+    await payload.update({ collection, id, data: withStatus(perLocale(locale)) as never, locale, context: { seed: true } })
   }
   log(`${collection}: ${value}`)
   return id
@@ -227,6 +229,18 @@ async function main() {
         ...(imageId ? { image: imageId } : {}),
         publishToCatalog: true,
         isSample: true,
+        // Мысал жобалар деңгейіне сай ішкі белгілермен егіледі (нақты тексеру емес: бұл «мысал» деректер)
+        internal: {
+          ownerName: 'Мысал ұйым (нақты емес)',
+          purpose: 'Мысал жоба',
+          need: 'Мысал',
+          documentsVerified: Number(project.level) >= 2,
+          landStatusVerified: Number(project.level) >= 2,
+          initialRisksVerified: Number(project.level) >= 2,
+          committeeDecision: Number(project.level) >= 3 ? 'approved' : 'pending',
+          passportReady: Number(project.level) >= 3,
+          feasibilityStudyReady: Number(project.level) >= 3,
+        },
         translationStatus: statuses,
       },
       (locale) => ({

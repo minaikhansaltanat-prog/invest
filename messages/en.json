@@ -359,5 +359,28 @@
       "copy": "Copy",
       "copied": "Copied"
     }
+  },
+  "dataroom": {
+    "anonymousText": "Sign in with an investor account to open the data room.",
+    "signIn": "Sign in",
+    "notInvestorText": "The data room is open to vetted investors. Please submit an investor application first.",
+    "notEligible": "Access is open to investors who passed vetting. See your assessment result in the cabinet.",
+    "twoFactorSetup": "Two-factor authentication (2FA) is required for the data room. Turn on 2FA first.",
+    "twoFactorVerify": "Verify your 2FA code in this session to unlock access.",
+    "twoFactorAction": "Go to 2FA",
+    "signTitle": "Sign the NDA",
+    "signText": "Once you accept the NDA the data room opens for 90 days. Every view is logged and documents carry a personal watermark (name and date).",
+    "accept": "I have read the NDA terms and agree",
+    "sign": "Sign the NDA",
+    "signed": "NDA accepted",
+    "invalidCode": "The 2FA code is incorrect or expired",
+    "open": "Open the data room",
+    "pageTitle": "Data room",
+    "filesTitle": "Documents",
+    "noFiles": "No documents have been uploaded for this project yet.",
+    "viewOnly": "Documents are view-only; your name and the date appear on every page.",
+    "denied": "No access. The NDA, investor level and 2FA are checked.",
+    "backToProject": "Back to the project",
+    "selectFile": "Select a document"
   }
 }

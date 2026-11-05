@@ -1,6 +1,7 @@
 import { hasLocale } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import type { Metadata } from 'next'
+import { headers } from 'next/headers'
 import { notFound } from 'next/navigation'
 
 import { FormRenderer } from '@/components/forms/FormRenderer'
@@ -26,6 +27,7 @@ import { routing } from '@/i18n/routing'
 import { cn } from '@/lib/cn'
 import { lookupAlbum, lookupNews, lookupPage, lookupProject, lookupService } from '@/lib/content'
 import { contactForm, type FormSpec, investorForm, membershipForm, projectForm } from '@/lib/forms/definitions'
+import { accessStateFor } from '@/lib/portal/dataroom'
 import { alternatesFor } from '@/lib/seo'
 import { redirectMissingTranslation } from '@/lib/translation-redirect'
 import type { Album, News, Page, Project, Service } from '@/payload-types'
@@ -225,7 +227,7 @@ export default async function InnerPage({ params, searchParams }: Props) {
         meta={meta}
       />
 
-      {resolved.kind === 'project' ? <ProjectBody locale={locale} project={resolved.doc} /> : null}
+      {resolved.kind === 'project' ? <ProjectBody locale={locale} project={resolved.doc} access={await accessStateFor(await headers(), resolved.doc.id)} /> : null}
       {resolved.kind === 'news' ? <NewsBody locale={locale} item={resolved.doc} /> : null}
       {resolved.kind === 'album' ? <AlbumBody locale={locale} album={resolved.doc} /> : null}
 

@@ -82,6 +82,17 @@ export interface Config {
     partners: Partner;
     documents: Document;
     submissions: Submission;
+    organizations: Organization;
+    investors: Investor;
+    scorecards: Scorecard;
+    coiDeclarations: CoiDeclaration;
+    matches: Match;
+    ndas: Nda;
+    dataroomFiles: DataroomFile;
+    dataroomLog: DataroomLog;
+    agreements: Agreement;
+    members: Member;
+    issues: Issue;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -103,6 +114,17 @@ export interface Config {
     partners: PartnersSelect<false> | PartnersSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     submissions: SubmissionsSelect<false> | SubmissionsSelect<true>;
+    organizations: OrganizationsSelect<false> | OrganizationsSelect<true>;
+    investors: InvestorsSelect<false> | InvestorsSelect<true>;
+    scorecards: ScorecardsSelect<false> | ScorecardsSelect<true>;
+    coiDeclarations: CoiDeclarationsSelect<false> | CoiDeclarationsSelect<true>;
+    matches: MatchesSelect<false> | MatchesSelect<true>;
+    ndas: NdasSelect<false> | NdasSelect<true>;
+    dataroomFiles: DataroomFilesSelect<false> | DataroomFilesSelect<true>;
+    dataroomLog: DataroomLogSelect<false> | DataroomLogSelect<true>;
+    agreements: AgreementsSelect<false> | AgreementsSelect<true>;
+    members: MembersSelect<false> | MembersSelect<true>;
+    issues: IssuesSelect<false> | IssuesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -765,6 +787,61 @@ export interface Project {
    */
   publishToCatalog?: boolean | null;
   isSample?: boolean | null;
+  internal?: {
+    ownerOrganization?: (number | null) | Organization;
+    ownerName?: string | null;
+    responsibleManager?: (number | null) | Admin;
+    riskLevel?: ('low' | 'medium' | 'high') | null;
+    purpose?: string | null;
+    need?: string | null;
+    documentsVerified?: boolean | null;
+    landStatusVerified?: boolean | null;
+    initialRisksVerified?: boolean | null;
+    committeeDecision?: ('pending' | 'approved' | 'rejected') | null;
+    passportReady?: boolean | null;
+    feasibilityStudyReady?: boolean | null;
+    secretariatChecklistApproved?: boolean | null;
+    interestedInvestorCount?: number | null;
+    intentProtocolSigned?: boolean | null;
+    termSheetSigned?: boolean | null;
+    contractSigned?: boolean | null;
+    productionStarted?: boolean | null;
+    amounts?: {
+      declared?: number | null;
+      loi?: number | null;
+      contract?: number | null;
+      received?: number | null;
+      receivedEvidence?: (number | Media)[] | null;
+      associationContribution?: ('direct' | 'indirect') | null;
+    };
+    stageHistory?:
+      | {
+          stage?: string | null;
+          at?: string | null;
+          by?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    risks?:
+      | {
+          type?: ('legal' | 'financial' | 'technical' | 'market' | 'ecology') | null;
+          description?: string | null;
+          level?: ('low' | 'medium' | 'high') | null;
+          mitigation?: string | null;
+          status?: ('open' | 'mitigated' | 'closed') | null;
+          id?: string | null;
+        }[]
+      | null;
+    pipelineSteps?:
+      | {
+          nextAction?: string | null;
+          dueDate?: string | null;
+          completedAt?: string | null;
+          responsible?: (number | null) | Admin;
+          id?: string | null;
+        }[]
+      | null;
+  };
   /**
    * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
    */
@@ -774,6 +851,34 @@ export interface Project {
     en?: ('none' | 'draft' | 'review' | 'approved') | null;
     zh?: ('none' | 'draft' | 'review' | 'approved') | null;
   };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "organizations".
+ */
+export interface Organization {
+  id: number;
+  name: string;
+  country?: string | null;
+  registrationNumber?: string | null;
+  sector?:
+    | (
+        | 'industry'
+        | 'mining'
+        | 'energy'
+        | 'logistics'
+        | 'agro'
+        | 'infrastructure'
+        | 'technology'
+        | 'real-estate'
+        | 'other'
+      )
+    | null;
+  beneficiary?: string | null;
+  website?: string | null;
+  users?: (number | User)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -994,6 +1099,263 @@ export interface Submission {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "investors".
+ */
+export interface Investor {
+  id: number;
+  displayName: string;
+  organization?: (number | null) | Organization;
+  /**
+   * Data room access goes through this account.
+   */
+  user?: (number | null) | User;
+  kind?: ('corporate' | 'fund' | 'institution') | null;
+  direction?: ('china' | 'gulf' | 'global' | 'other') | null;
+  sectors?:
+    | (
+        | 'industry'
+        | 'mining'
+        | 'energy'
+        | 'logistics'
+        | 'agro'
+        | 'infrastructure'
+        | 'technology'
+        | 'real-estate'
+        | 'other'
+      )[]
+    | null;
+  regions?:
+    | (
+        | 'astana'
+        | 'almaty-city'
+        | 'shymkent'
+        | 'abai'
+        | 'akmola'
+        | 'aktobe'
+        | 'almaty'
+        | 'atyrau'
+        | 'east-kazakhstan'
+        | 'zhambyl'
+        | 'zhetysu'
+        | 'west-kazakhstan'
+        | 'karaganda'
+        | 'kostanay'
+        | 'kyzylorda'
+        | 'mangystau'
+        | 'pavlodar'
+        | 'north-kazakhstan'
+        | 'turkistan'
+        | 'ulytau'
+      )[]
+    | null;
+  models?: ('joint-venture' | 'epc' | 'epc-f' | 'bot' | 'ppp' | 'equity' | 'other')[] | null;
+  minAmountMusd?: number | null;
+  maxAmountMusd?: number | null;
+  riskAppetite?: ('low' | 'medium' | 'high') | null;
+  status?: ('unassessed' | 'stopped' | 'priority' | 'conditional' | 'watch' | 'deferred') | null;
+  grade?: ('A' | 'B' | 'C' | 'D') | null;
+  totalScore?: number | null;
+  lastAssessedAt?: string | null;
+  veto?: {
+    active?: boolean | null;
+    reason?: string | null;
+    setBy?: (number | null) | Admin;
+    setAt?: string | null;
+  };
+  sanctionsCheckedAt?: string | null;
+  responsibleManager?: (number | null) | Admin;
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "scorecards".
+ */
+export interface Scorecard {
+  id: number;
+  investor: number | Investor;
+  entries?:
+    | {
+        dimension:
+          | 'financialPotential'
+          | 'intentAndAuthority'
+          | 'sectorExperience'
+          | 'reputation'
+          | 'localContribution'
+          | 'complianceRisk'
+          | 'planReadiness';
+        points: number;
+        evidenceText?: string | null;
+        evidenceFiles?: (number | Media)[] | null;
+        id?: string | null;
+      }[]
+    | null;
+  assessments?:
+    | {
+        evaluator: number | Admin;
+        role: 'expert' | 'committee-member';
+        comment?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  total?: number | null;
+  grade?: string | null;
+  complete?: boolean | null;
+  finalized?: boolean | null;
+  finalizedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "coiDeclarations".
+ */
+export interface CoiDeclaration {
+  id: number;
+  person: number | Admin;
+  investor?: (number | null) | Investor;
+  project?: (number | null) | Project;
+  organization?: (number | null) | Organization;
+  description?: string | null;
+  declaredAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "matches".
+ */
+export interface Match {
+  id: number;
+  project: number | Project;
+  investor: number | Investor;
+  status: 'proposed' | 'interested' | 'negotiating' | 'declined';
+  response?: string | null;
+  proposedBy?: (number | null) | Admin;
+  proposedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ndas".
+ */
+export interface Nda {
+  id: number;
+  project: number | Project;
+  investor: number | Investor;
+  user?: (number | null) | User;
+  templateVersion?: string | null;
+  method?: ('otp-accept' | 'ecp') | null;
+  signedAt: string;
+  expiresAt: string;
+  ip?: string | null;
+  userAgent?: string | null;
+  revokedAt?: string | null;
+  revokeReason?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dataroomFiles".
+ */
+export interface DataroomFile {
+  id: number;
+  project: number | Project;
+  title: string;
+  category?: ('financial' | 'legal' | 'technical' | 'market' | 'ecology' | 'other') | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dataroomLog".
+ */
+export interface DataroomLog {
+  id: number;
+  at: string;
+  action: 'open' | 'view' | 'download' | 'denied';
+  user: number | User;
+  project: number | Project;
+  file?: (number | null) | DataroomFile;
+  ip?: string | null;
+  /**
+   * Denial reason (not shown to the investor)
+   */
+  reason?: string | null;
+  message?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "agreements".
+ */
+export interface Agreement {
+  id: number;
+  title: string;
+  type: 'memorandum' | 'contract';
+  partner?: (number | null) | Partner;
+  parties?: string | null;
+  signedAt?: string | null;
+  validUntil?: string | null;
+  obligations?: string | null;
+  file?: (number | null) | Media;
+  publishPermission?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "members".
+ */
+export interface Member {
+  id: number;
+  organization: number | Organization;
+  category: 'foreign-investors' | 'institutions' | 'industrial' | 'professional' | 'strategic';
+  status: 'application' | 'vetting' | 'active' | 'suspended' | 'ended';
+  memberSince?: string | null;
+  validUntil?: string | null;
+  fees?:
+    | {
+        year?: number | null;
+        amount?: number | null;
+        paidAt?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  registryConsent?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "issues".
+ */
+export interface Issue {
+  id: number;
+  organization?: (number | null) | Organization;
+  type: 'land' | 'infrastructure' | 'permit' | 'tax' | 'labor' | 'migration';
+  description: string;
+  authority?: string | null;
+  status: 'new' | 'forwarded' | 'resolved' | 'closed';
+  response?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -1071,6 +1433,50 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'submissions';
         value: number | Submission;
+      } | null)
+    | ({
+        relationTo: 'organizations';
+        value: number | Organization;
+      } | null)
+    | ({
+        relationTo: 'investors';
+        value: number | Investor;
+      } | null)
+    | ({
+        relationTo: 'scorecards';
+        value: number | Scorecard;
+      } | null)
+    | ({
+        relationTo: 'coiDeclarations';
+        value: number | CoiDeclaration;
+      } | null)
+    | ({
+        relationTo: 'matches';
+        value: number | Match;
+      } | null)
+    | ({
+        relationTo: 'ndas';
+        value: number | Nda;
+      } | null)
+    | ({
+        relationTo: 'dataroomFiles';
+        value: number | DataroomFile;
+      } | null)
+    | ({
+        relationTo: 'dataroomLog';
+        value: number | DataroomLog;
+      } | null)
+    | ({
+        relationTo: 'agreements';
+        value: number | Agreement;
+      } | null)
+    | ({
+        relationTo: 'members';
+        value: number | Member;
+      } | null)
+    | ({
+        relationTo: 'issues';
+        value: number | Issue;
       } | null);
   globalSlug?: string | null;
   user:
@@ -1601,6 +2007,65 @@ export interface ProjectsSelect<T extends boolean = true> {
   image?: T;
   publishToCatalog?: T;
   isSample?: T;
+  internal?:
+    | T
+    | {
+        ownerOrganization?: T;
+        ownerName?: T;
+        responsibleManager?: T;
+        riskLevel?: T;
+        purpose?: T;
+        need?: T;
+        documentsVerified?: T;
+        landStatusVerified?: T;
+        initialRisksVerified?: T;
+        committeeDecision?: T;
+        passportReady?: T;
+        feasibilityStudyReady?: T;
+        secretariatChecklistApproved?: T;
+        interestedInvestorCount?: T;
+        intentProtocolSigned?: T;
+        termSheetSigned?: T;
+        contractSigned?: T;
+        productionStarted?: T;
+        amounts?:
+          | T
+          | {
+              declared?: T;
+              loi?: T;
+              contract?: T;
+              received?: T;
+              receivedEvidence?: T;
+              associationContribution?: T;
+            };
+        stageHistory?:
+          | T
+          | {
+              stage?: T;
+              at?: T;
+              by?: T;
+              id?: T;
+            };
+        risks?:
+          | T
+          | {
+              type?: T;
+              description?: T;
+              level?: T;
+              mitigation?: T;
+              status?: T;
+              id?: T;
+            };
+        pipelineSteps?:
+          | T
+          | {
+              nextAction?: T;
+              dueDate?: T;
+              completedAt?: T;
+              responsible?: T;
+              id?: T;
+            };
+      };
   translationStatus?:
     | T
     | {
@@ -1791,6 +2256,222 @@ export interface SubmissionsSelect<T extends boolean = true> {
       };
   user?: T;
   notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "organizations_select".
+ */
+export interface OrganizationsSelect<T extends boolean = true> {
+  name?: T;
+  country?: T;
+  registrationNumber?: T;
+  sector?: T;
+  beneficiary?: T;
+  website?: T;
+  users?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "investors_select".
+ */
+export interface InvestorsSelect<T extends boolean = true> {
+  displayName?: T;
+  organization?: T;
+  user?: T;
+  kind?: T;
+  direction?: T;
+  sectors?: T;
+  regions?: T;
+  models?: T;
+  minAmountMusd?: T;
+  maxAmountMusd?: T;
+  riskAppetite?: T;
+  status?: T;
+  grade?: T;
+  totalScore?: T;
+  lastAssessedAt?: T;
+  veto?:
+    | T
+    | {
+        active?: T;
+        reason?: T;
+        setBy?: T;
+        setAt?: T;
+      };
+  sanctionsCheckedAt?: T;
+  responsibleManager?: T;
+  notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "scorecards_select".
+ */
+export interface ScorecardsSelect<T extends boolean = true> {
+  investor?: T;
+  entries?:
+    | T
+    | {
+        dimension?: T;
+        points?: T;
+        evidenceText?: T;
+        evidenceFiles?: T;
+        id?: T;
+      };
+  assessments?:
+    | T
+    | {
+        evaluator?: T;
+        role?: T;
+        comment?: T;
+        id?: T;
+      };
+  total?: T;
+  grade?: T;
+  complete?: T;
+  finalized?: T;
+  finalizedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "coiDeclarations_select".
+ */
+export interface CoiDeclarationsSelect<T extends boolean = true> {
+  person?: T;
+  investor?: T;
+  project?: T;
+  organization?: T;
+  description?: T;
+  declaredAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "matches_select".
+ */
+export interface MatchesSelect<T extends boolean = true> {
+  project?: T;
+  investor?: T;
+  status?: T;
+  response?: T;
+  proposedBy?: T;
+  proposedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ndas_select".
+ */
+export interface NdasSelect<T extends boolean = true> {
+  project?: T;
+  investor?: T;
+  user?: T;
+  templateVersion?: T;
+  method?: T;
+  signedAt?: T;
+  expiresAt?: T;
+  ip?: T;
+  userAgent?: T;
+  revokedAt?: T;
+  revokeReason?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dataroomFiles_select".
+ */
+export interface DataroomFilesSelect<T extends boolean = true> {
+  project?: T;
+  title?: T;
+  category?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dataroomLog_select".
+ */
+export interface DataroomLogSelect<T extends boolean = true> {
+  at?: T;
+  action?: T;
+  user?: T;
+  project?: T;
+  file?: T;
+  ip?: T;
+  reason?: T;
+  message?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "agreements_select".
+ */
+export interface AgreementsSelect<T extends boolean = true> {
+  title?: T;
+  type?: T;
+  partner?: T;
+  parties?: T;
+  signedAt?: T;
+  validUntil?: T;
+  obligations?: T;
+  file?: T;
+  publishPermission?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "members_select".
+ */
+export interface MembersSelect<T extends boolean = true> {
+  organization?: T;
+  category?: T;
+  status?: T;
+  memberSince?: T;
+  validUntil?: T;
+  fees?:
+    | T
+    | {
+        year?: T;
+        amount?: T;
+        paidAt?: T;
+        id?: T;
+      };
+  registryConsent?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "issues_select".
+ */
+export interface IssuesSelect<T extends boolean = true> {
+  organization?: T;
+  type?: T;
+  description?: T;
+  authority?: T;
+  status?: T;
+  response?: T;
   updatedAt?: T;
   createdAt?: T;
 }

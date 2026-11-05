@@ -11,14 +11,23 @@ import sharp from 'sharp'
 
 import { Admins } from './collections/Admins'
 import { Albums } from './collections/Albums'
+import { CoiDeclarations } from './collections/CoiDeclarations'
+import { DataroomFiles } from './collections/DataroomFiles'
+import { DataroomLog } from './collections/DataroomLog'
 import { Documents } from './collections/Documents'
 import { Events } from './collections/Events'
+import { Investors } from './collections/Investors'
+import { Matches } from './collections/Matches'
 import { Media } from './collections/Media'
+import { Ndas } from './collections/Ndas'
 import { News } from './collections/News'
+import { Organizations } from './collections/Organizations'
 import { Pages } from './collections/Pages'
 import { Partners } from './collections/Partners'
 import { People } from './collections/People'
 import { Projects } from './collections/Projects'
+import { Agreements, Issues, Members } from './collections/Registry'
+import { Scorecards } from './collections/Scorecards'
 import { Services } from './collections/Services'
 import { Submissions } from './collections/Submissions'
 import { Users } from './collections/Users'
@@ -71,6 +80,18 @@ export default buildConfig({
     Partners,
     Documents,
     Submissions,
+    // Инвестициялық модуль (ТТ 8, 13.3)
+    Organizations,
+    Investors,
+    Scorecards,
+    CoiDeclarations,
+    Matches,
+    Ndas,
+    DataroomFiles,
+    DataroomLog,
+    Agreements,
+    Members,
+    Issues,
   ],
   globals: [Home, Settings, KpiTargets, ScoringConfig],
   editor: lexicalEditor(),
