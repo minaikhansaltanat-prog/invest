@@ -25,6 +25,8 @@
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "seed": "cross-env NODE_OPTIONS=--no-deprecation payload run src/seed/index.ts",
+    "audit:translations": "tsx scripts/translation-audit.ts",
+    "audit:content": "cross-env NODE_OPTIONS=--no-deprecation payload run src/seed/locale-gaps.ts",
     "create-admin": "cross-env NODE_OPTIONS=--no-deprecation payload run src/seed/create-admin.ts",
     "migrate": "cross-env NODE_OPTIONS=--no-deprecation payload migrate",
     "migrate:create": "cross-env NODE_OPTIONS=--no-deprecation payload migrate:create"
