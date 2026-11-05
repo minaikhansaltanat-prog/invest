@@ -71,6 +71,10 @@ export interface Config {
     admins: Admin;
     users: User;
     media: Media;
+    people: Person;
+    services: Service;
+    projects: Project;
+    news: News;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -81,6 +85,10 @@ export interface Config {
     admins: AdminsSelect<false> | AdminsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    people: PeopleSelect<false> | PeopleSelect<true>;
+    services: ServicesSelect<false> | ServicesSelect<true>;
+    projects: ProjectsSelect<false> | ProjectsSelect<true>;
+    news: NewsSelect<false> | NewsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -91,8 +99,18 @@ export interface Config {
   };
   fallbackLocale:
     ('false' | 'none' | 'null') | false | null | ('kk' | 'ru' | 'en' | 'zh') | ('kk' | 'ru' | 'en' | 'zh')[];
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    home: Home;
+    settings: Setting;
+    kpiTargets: KpiTarget;
+    scoringConfig: ScoringConfig;
+  };
+  globalsSelect: {
+    home: HomeSelect<false> | HomeSelect<true>;
+    settings: SettingsSelect<false> | SettingsSelect<true>;
+    kpiTargets: KpiTargetsSelect<false> | KpiTargetsSelect<true>;
+    scoringConfig: ScoringConfigSelect<false> | ScoringConfigSelect<true>;
+  };
   locale: 'kk' | 'ru' | 'en' | 'zh';
   widgets: {
     collections: CollectionsWidget;
@@ -240,6 +258,167 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "people".
+ */
+export interface Person {
+  id: number;
+  slug: string;
+  name: string;
+  position?: string | null;
+  group: 'leadership' | 'secretariat' | 'experts' | 'representatives';
+  photo?: (number | null) | Media;
+  photoAlt?: string | null;
+  /**
+   * Without this flag the site shows a monogram instead of the photo.
+   */
+  photoConsent?: boolean | null;
+  photoConsentNote?: string | null;
+  photoConsentFile?: (number | null) | Media;
+  /**
+   * e.g. ҒЖ
+   */
+  monogram?: string | null;
+  bio?: string | null;
+  languages?: string | null;
+  order?: number | null;
+  /**
+   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
+   */
+  translationStatus?: {
+    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
+    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
+    en?: ('none' | 'draft' | 'review' | 'approved') | null;
+    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services".
+ */
+export interface Service {
+  id: number;
+  slug: string;
+  number: number;
+  icon: 'globe' | 'layers' | 'shield-check' | 'factory' | 'chart' | 'columns' | 'compass' | 'leaf';
+  highlight?: boolean | null;
+  title: string;
+  summary: string;
+  /**
+   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
+   */
+  translationStatus?: {
+    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
+    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
+    en?: ('none' | 'draft' | 'review' | 'approved') | null;
+    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: number;
+  slug: string;
+  title: string;
+  summary?: string | null;
+  sector:
+    'industry' | 'mining' | 'energy' | 'logistics' | 'agro' | 'infrastructure' | 'technology' | 'real-estate' | 'other';
+  subSector?: string | null;
+  region:
+    | 'astana'
+    | 'almaty-city'
+    | 'shymkent'
+    | 'abai'
+    | 'akmola'
+    | 'aktobe'
+    | 'almaty'
+    | 'atyrau'
+    | 'east-kazakhstan'
+    | 'zhambyl'
+    | 'zhetysu'
+    | 'west-kazakhstan'
+    | 'karaganda'
+    | 'kostanay'
+    | 'kyzylorda'
+    | 'mangystau'
+    | 'pavlodar'
+    | 'north-kazakhstan'
+    | 'turkistan'
+    | 'ulytau';
+  amountMusd?: number | null;
+  model: 'joint-venture' | 'epc' | 'epc-f' | 'bot' | 'ppp' | 'equity' | 'other';
+  level: '1' | '2' | '3' | '4';
+  stage?: ('1' | '2' | '3' | '4' | '5' | '6' | '7' | '8') | null;
+  iconKey?: ('solar' | 'port' | 'factory' | 'wind' | 'agro' | 'rail') | null;
+  image?: (number | null) | Media;
+  /**
+   * Only vetted level 2-3 projects are published. An unvetted project never reaches the public catalogue.
+   */
+  publishToCatalog?: boolean | null;
+  isSample?: boolean | null;
+  /**
+   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
+   */
+  translationStatus?: {
+    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
+    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
+    en?: ('none' | 'draft' | 'review' | 'approved') | null;
+    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news".
+ */
+export interface News {
+  id: number;
+  slug: string;
+  title: string;
+  excerpt?: string | null;
+  category: 'strategy' | 'methodology' | 'projects' | 'china' | 'events' | 'analytics';
+  publishedAt: string;
+  image?: (number | null) | Media;
+  featured?: boolean | null;
+  isSample?: boolean | null;
+  body?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
+   */
+  translationStatus?: {
+    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
+    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
+    en?: ('none' | 'draft' | 'review' | 'approved') | null;
+    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -273,6 +452,22 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'people';
+        value: number | Person;
+      } | null)
+    | ({
+        relationTo: 'services';
+        value: number | Service;
+      } | null)
+    | ({
+        relationTo: 'projects';
+        value: number | Project;
+      } | null)
+    | ({
+        relationTo: 'news';
+        value: number | News;
       } | null);
   globalSlug?: string | null;
   user:
@@ -413,6 +608,115 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "people_select".
+ */
+export interface PeopleSelect<T extends boolean = true> {
+  slug?: T;
+  name?: T;
+  position?: T;
+  group?: T;
+  photo?: T;
+  photoAlt?: T;
+  photoConsent?: T;
+  photoConsentNote?: T;
+  photoConsentFile?: T;
+  monogram?: T;
+  bio?: T;
+  languages?: T;
+  order?: T;
+  translationStatus?:
+    | T
+    | {
+        kk?: T;
+        ru?: T;
+        en?: T;
+        zh?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services_select".
+ */
+export interface ServicesSelect<T extends boolean = true> {
+  slug?: T;
+  number?: T;
+  icon?: T;
+  highlight?: T;
+  title?: T;
+  summary?: T;
+  translationStatus?:
+    | T
+    | {
+        kk?: T;
+        ru?: T;
+        en?: T;
+        zh?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects_select".
+ */
+export interface ProjectsSelect<T extends boolean = true> {
+  slug?: T;
+  title?: T;
+  summary?: T;
+  sector?: T;
+  subSector?: T;
+  region?: T;
+  amountMusd?: T;
+  model?: T;
+  level?: T;
+  stage?: T;
+  iconKey?: T;
+  image?: T;
+  publishToCatalog?: T;
+  isSample?: T;
+  translationStatus?:
+    | T
+    | {
+        kk?: T;
+        ru?: T;
+        en?: T;
+        zh?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news_select".
+ */
+export interface NewsSelect<T extends boolean = true> {
+  slug?: T;
+  title?: T;
+  excerpt?: T;
+  category?: T;
+  publishedAt?: T;
+  image?: T;
+  featured?: T;
+  isSample?: T;
+  body?: T;
+  translationStatus?:
+    | T
+    | {
+        kk?: T;
+        ru?: T;
+        en?: T;
+        zh?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -450,6 +754,560 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home".
+ */
+export interface Home {
+  id: number;
+  /**
+   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
+   */
+  translationStatus?: {
+    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
+    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
+    en?: ('none' | 'draft' | 'review' | 'approved') | null;
+    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
+  };
+  hero?: {
+    eyebrow?: string | null;
+    /**
+     * Mark the gold part with *asterisks*. Line break: \n.
+     */
+    title?: string | null;
+    subtitle?: string | null;
+    primaryCtaLabel?: string | null;
+    /**
+     * Internal link, e.g. /investors. The language prefix is added automatically.
+     */
+    primaryCtaHref?: string | null;
+    secondaryCtaLabel?: string | null;
+    /**
+     * Internal link, e.g. /investors. The language prefix is added automatically.
+     */
+    secondaryCtaHref?: string | null;
+    facts?:
+      | {
+          title?: string | null;
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  audience?: {
+    cards?:
+      | {
+          title?: string | null;
+          text?: string | null;
+          ctaLabel?: string | null;
+          /**
+           * Internal link, e.g. /investors. The language prefix is added automatically.
+           */
+          href?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  results?: {
+    eyebrow?: string | null;
+    /**
+     * Line break (on large screens): \n.
+     */
+    title?: string | null;
+    lead?: string | null;
+    cells?:
+      | {
+          label?: string | null;
+          description?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  services?: {
+    eyebrow?: string | null;
+    /**
+     * Line break (on large screens): \n.
+     */
+    title?: string | null;
+    linkLabel?: string | null;
+  };
+  lifecycle?: {
+    eyebrow?: string | null;
+    /**
+     * Line break (on large screens): \n.
+     */
+    title?: string | null;
+    lead?: string | null;
+    steps?:
+      | {
+          title?: string | null;
+          text?: string | null;
+          done?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    levelsLabel?: string | null;
+    levels?:
+      | {
+          title?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  projects?: {
+    eyebrow?: string | null;
+    /**
+     * Line break (on large screens): \n.
+     */
+    title?: string | null;
+    linkLabel?: string | null;
+    showExampleBadge?: boolean | null;
+    chips?:
+      | {
+          label?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  corridors?: {
+    eyebrow?: string | null;
+    /**
+     * Line break (on large screens): \n.
+     */
+    title?: string | null;
+    china?: {
+      eyebrow?: string | null;
+      /**
+       * Line break (on large screens): \n.
+       */
+      title?: string | null;
+      zhTitle?: string | null;
+      text?: string | null;
+      bullets?:
+        | {
+            text?: string | null;
+            id?: string | null;
+          }[]
+        | null;
+      primaryCtaLabel?: string | null;
+      secondaryCtaLabel?: string | null;
+    };
+    gulf?: {
+      tag?: string | null;
+      /**
+       * Line break (on large screens): \n.
+       */
+      title?: string | null;
+      text?: string | null;
+      linkLabel?: string | null;
+    };
+    global?: {
+      tag?: string | null;
+      /**
+       * Line break (on large screens): \n.
+       */
+      title?: string | null;
+      text?: string | null;
+      linkLabel?: string | null;
+    };
+  };
+  scoring?: {
+    eyebrow?: string | null;
+    /**
+     * Line break (on large screens): \n.
+     */
+    title?: string | null;
+    lead?: string | null;
+    vetoTitle?: string | null;
+    vetoText?: string | null;
+  };
+  leadership?: {
+    quote?: string | null;
+    quoteSource?: string | null;
+    personLinkLabel?: string | null;
+    person?: (number | null) | Person;
+  };
+  media?: {
+    eyebrow?: string | null;
+    /**
+     * Line break (on large screens): \n.
+     */
+    title?: string | null;
+    linkLabel?: string | null;
+    showExampleBadge?: boolean | null;
+    videoLabel?: string | null;
+    photoLabel?: string | null;
+  };
+  membership?: {
+    eyebrow?: string | null;
+    /**
+     * Line break (on large screens): \n.
+     */
+    title?: string | null;
+    text?: string | null;
+    primaryCtaLabel?: string | null;
+    secondaryCtaLabel?: string | null;
+    categories?:
+      | {
+          title?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings".
+ */
+export interface Setting {
+  id: number;
+  legalName: string;
+  brandName: string;
+  brandSubtitle?: string | null;
+  tagline?: string | null;
+  bin: string;
+  /**
+   * 2017-01-17
+   */
+  registeredOn?: string | null;
+  citiesLine?: string | null;
+  legalAddress?: string | null;
+  officeAddress?: string | null;
+  phone: string;
+  wechatId?: string | null;
+  wechatQr?: (number | null) | Media;
+  /**
+   * Leave empty until the corporate domain is ready.
+   */
+  email?: string | null;
+  workingHours?: string | null;
+  disclaimer: string;
+  policy: {
+    translationPolicy: 'allow-draft' | 'approved-only';
+    showExampleBadges?: boolean | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "kpiTargets".
+ */
+export interface KpiTarget {
+  id: number;
+  isTarget?: boolean | null;
+  periodNote: string;
+  databaseCount: number;
+  screenedCount: number;
+  reviewedCount: number;
+  confirmedCount: number;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "scoringConfig".
+ */
+export interface ScoringConfig {
+  id: number;
+  /**
+   * If not approved, the portal marks the methodology as a "draft" (TZ 21).
+   */
+  methodologyApproved?: boolean | null;
+  methodologyVersion?: string | null;
+  dimensions?:
+    | {
+        key:
+          | 'financialPotential'
+          | 'intentAndAuthority'
+          | 'sectorExperience'
+          | 'reputation'
+          | 'localContribution'
+          | 'complianceRisk'
+          | 'planReadiness';
+        label: string;
+        shortLabel?: string | null;
+        weight: number;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  grades?:
+    | {
+        key: 'A' | 'B' | 'C' | 'D';
+        min: number;
+        max: number;
+        rangeLabel?: string | null;
+        title?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home_select".
+ */
+export interface HomeSelect<T extends boolean = true> {
+  translationStatus?:
+    | T
+    | {
+        kk?: T;
+        ru?: T;
+        en?: T;
+        zh?: T;
+      };
+  hero?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        subtitle?: T;
+        primaryCtaLabel?: T;
+        primaryCtaHref?: T;
+        secondaryCtaLabel?: T;
+        secondaryCtaHref?: T;
+        facts?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              id?: T;
+            };
+      };
+  audience?:
+    | T
+    | {
+        cards?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              ctaLabel?: T;
+              href?: T;
+              id?: T;
+            };
+      };
+  results?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        lead?: T;
+        cells?:
+          | T
+          | {
+              label?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  services?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        linkLabel?: T;
+      };
+  lifecycle?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        lead?: T;
+        steps?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              done?: T;
+              id?: T;
+            };
+        levelsLabel?: T;
+        levels?:
+          | T
+          | {
+              title?: T;
+              id?: T;
+            };
+      };
+  projects?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        linkLabel?: T;
+        showExampleBadge?: T;
+        chips?:
+          | T
+          | {
+              label?: T;
+              id?: T;
+            };
+      };
+  corridors?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        china?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              zhTitle?: T;
+              text?: T;
+              bullets?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              primaryCtaLabel?: T;
+              secondaryCtaLabel?: T;
+            };
+        gulf?:
+          | T
+          | {
+              tag?: T;
+              title?: T;
+              text?: T;
+              linkLabel?: T;
+            };
+        global?:
+          | T
+          | {
+              tag?: T;
+              title?: T;
+              text?: T;
+              linkLabel?: T;
+            };
+      };
+  scoring?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        lead?: T;
+        vetoTitle?: T;
+        vetoText?: T;
+      };
+  leadership?:
+    | T
+    | {
+        quote?: T;
+        quoteSource?: T;
+        personLinkLabel?: T;
+        person?: T;
+      };
+  media?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        linkLabel?: T;
+        showExampleBadge?: T;
+        videoLabel?: T;
+        photoLabel?: T;
+      };
+  membership?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primaryCtaLabel?: T;
+        secondaryCtaLabel?: T;
+        categories?:
+          | T
+          | {
+              title?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings_select".
+ */
+export interface SettingsSelect<T extends boolean = true> {
+  legalName?: T;
+  brandName?: T;
+  brandSubtitle?: T;
+  tagline?: T;
+  bin?: T;
+  registeredOn?: T;
+  citiesLine?: T;
+  legalAddress?: T;
+  officeAddress?: T;
+  phone?: T;
+  wechatId?: T;
+  wechatQr?: T;
+  email?: T;
+  workingHours?: T;
+  disclaimer?: T;
+  policy?:
+    | T
+    | {
+        translationPolicy?: T;
+        showExampleBadges?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "kpiTargets_select".
+ */
+export interface KpiTargetsSelect<T extends boolean = true> {
+  isTarget?: T;
+  periodNote?: T;
+  databaseCount?: T;
+  screenedCount?: T;
+  reviewedCount?: T;
+  confirmedCount?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "scoringConfig_select".
+ */
+export interface ScoringConfigSelect<T extends boolean = true> {
+  methodologyApproved?: T;
+  methodologyVersion?: T;
+  dimensions?:
+    | T
+    | {
+        key?: T;
+        label?: T;
+        shortLabel?: T;
+        weight?: T;
+        description?: T;
+        id?: T;
+      };
+  grades?:
+    | T
+    | {
+        key?: T;
+        min?: T;
+        max?: T;
+        rangeLabel?: T;
+        title?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

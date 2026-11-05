@@ -45,7 +45,7 @@ export function Stepper({ steps, className }: { steps: Step[]; className?: strin
               {index + 1}
             </span>
             <h4 className="text-[14.5px] font-semibold leading-snug text-white lg:min-h-[2.6em]">{step.title}</h4>
-            <p className="col-start-2 text-[12.5px] leading-snug text-white/65 lg:col-start-auto">{step.text}</p>
+            <p className="col-start-2 text-base leading-snug text-white/65 lg:col-start-auto lg:text-[12.5px]">{step.text}</p>
           </li>
         )
       })}

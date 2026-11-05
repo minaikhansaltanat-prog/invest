@@ -148,17 +148,20 @@ body {
 :lang(zh) i {
   font-style: normal;
 }
-:lang(zh) .t-display,
-:lang(zh) .t-h2,
-:lang(zh) .t-h3 {
-  font-family: var(--font-zh-serif);
-  letter-spacing: 0;
-  line-height: 1.28;
-}
 
 ::selection {
   background: var(--color-gold-300);
   color: var(--color-navy-950);
+}
+
+/* Дәйексөз белгілері тілге сай: қазақша/орысша «», ағылшынша мен қытайша “” */
+:lang(kk),
+:lang(ru) {
+  quotes: '«' '»' '‹' '›';
+}
+:lang(en),
+:lang(zh) {
+  quotes: '“' '”' '‘' '’';
 }
 
 /* Жіңішке алтын скролл */
@@ -209,20 +212,21 @@ a {
 }
 
 /* ---------- Типографика ---------- */
+/* Үлкен тақырыптарда тығыз әріп аралығы. Қазақ/орыс кириллицасына -0.03em тым тығыз, сондықтан -0.02em (эталондағы -0.01em мен -0.03em арасы) */
 @utility t-display {
   font-family: var(--font-serif);
   font-weight: 600;
   font-size: var(--fs-h1);
   line-height: 1.02;
-  letter-spacing: -0.03em;
-  text-wrap: balance;
+  letter-spacing: -0.025em;
+  text-wrap: pretty;
 }
 @utility t-h2 {
   font-family: var(--font-serif);
   font-weight: 600;
   font-size: var(--fs-h2);
   line-height: 1.08;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   text-wrap: balance;
 }
 @utility t-h3 {
@@ -230,7 +234,7 @@ a {
   font-weight: 600;
   font-size: var(--fs-h3);
   line-height: 1.1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.015em;
   text-wrap: balance;
 }
 @utility t-eyebrow {
@@ -257,6 +261,28 @@ a {
 @utility lining {
   font-variant-numeric: lining-nums tabular-nums;
   font-feature-settings: 'lnum' 1, 'tnum' 1;
+}
+
+/*
+ * Қытай типографикасы (ТТ 11.3): Noto Serif SC тақырып, жол аралығы 1.28 (тақырып) және 1.7 (мәтін), әріп аралығы жоқ.
+ * Бұл ережелер @layer-сіз тұр, сондықтан `.t-display` сияқты утилиталардан басым (қабатсыз CSS қабатты CSS-тен күштірек).
+ */
+:lang(zh) .t-display,
+:lang(zh) .t-h2,
+:lang(zh) .t-h3 {
+  font-family: var(--font-zh-serif);
+  letter-spacing: 0;
+  line-height: 1.28;
+}
+/* Иероглифтер визуалды түрде үлкенірек: бір жолға 10 иероглиф сыюы үшін өлшем азайтылады */
+:lang(zh) .t-display {
+  font-size: calc(var(--fs-h1) * 0.88);
+}
+:lang(zh) .t-h2 {
+  font-size: calc(var(--fs-h2) * 0.92);
+}
+:lang(zh) .t-eyebrow {
+  letter-spacing: 0.14em;
 }
 
 /* ---------- Орналасу ---------- */
@@ -293,10 +319,8 @@ a {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Қазақ ою-өрнегі: қошқар мүйіз спиральдері мен айқас (gold-400, төмен мөлдірлік) */
-@utility ornament {
-  position: relative;
-}
+/* Қазақ ою-өрнегі: қошқар мүйіз спиральдері мен айқас (gold-400, төмен мөлдірлік).
+   Элемент позицияланған (relative/absolute/fixed) болуы тиіс: ::before ата-анасының өлшеміне созылады */
 .ornament::before {
   content: '';
   position: absolute;

@@ -3,6 +3,8 @@ import Image from 'next/image'
 import { Link } from '@/i18n/navigation'
 import { cn } from '@/lib/cn'
 
+import { NoBreak } from './typography'
+
 /** Басты жаңалық: бүкіл карточка сурет, төменгі қара градиент және мәтін */
 export function NewsFeatured({
   href,
@@ -37,7 +39,9 @@ export function NewsFeatured({
       <span aria-hidden="true" className="absolute inset-0 bg-linear-to-t from-navy-950/95 via-navy-950/25 to-transparent" />
       <span className="relative grid gap-3 p-7 lg:p-9">
         <span className="text-[13px] font-semibold uppercase tracking-[0.06em] text-gold-300">{meta}</span>
-        <span className="t-h3 max-w-[560px] text-[28px] leading-[1.08] lg:text-4xl">{title}</span>
+        <span className="t-h3 max-w-[560px] text-[28px] leading-[1.08] lg:text-4xl">
+          <NoBreak text={title} />
+        </span>
       </span>
     </Link>
   )
@@ -52,7 +56,7 @@ export function NewsItem({ href, meta, title }: { href: string; meta: string; ti
     >
       <span className="text-[12.5px] font-semibold uppercase tracking-[0.05em] text-gold-700">{meta}</span>
       <span className="text-[17px] font-semibold leading-snug text-navy-900 underline decoration-transparent decoration-2 underline-offset-4 transition-[text-decoration-color] duration-300 group-hover:decoration-gold-500">
-        {title}
+        <NoBreak text={title} />
       </span>
     </Link>
   )

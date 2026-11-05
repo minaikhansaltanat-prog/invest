@@ -146,6 +146,9 @@
     "switchTo": "Switch language: {language}",
     "missingTranslation": "This page is not translated yet. You were taken to the section home page."
   },
+  "scoring": {
+    "draftBadge": "Methodology draft"
+  },
   "forms": {
     "requiredField": "This field is required",
     "invalidEmail": "Invalid email format",

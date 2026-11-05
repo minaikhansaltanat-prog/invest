@@ -146,6 +146,9 @@
     "switchTo": "切换语言：{language}",
     "missingTranslation": "此页面暂无翻译，已为您跳转到栏目首页。"
   },
+  "scoring": {
+    "draftBadge": "方法论草案"
+  },
   "forms": {
     "requiredField": "此项为必填",
     "invalidEmail": "邮箱格式不正确",

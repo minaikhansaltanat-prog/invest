@@ -2,22 +2,38 @@ import { Fragment, type ReactNode } from 'react'
 
 import { cn } from '@/lib/cn'
 
-/** Белгі (eyebrow): 12.5 px, бас әріп, әріп аралығы 0.18em. Ашық фонда gold-700, қараңғыда gold-300 */
+/**
+ * Белгі (eyebrow): 12.5 px, бас әріп, әріп аралығы 0.18em. Алдында қысқа алтын сызық (бренд түсі, мәтін емес).
+ * Ашық фонда мәтін gold-700 (WCAG AA 4.5:1), қараңғыда gold-300; `hero` нұсқасы дизайн үлгісіндегідей gold-500.
+ */
 export function Eyebrow({
   children,
   onDark = false,
+  tone,
+  rule = true,
   className,
 }: {
   children: ReactNode
   onDark?: boolean
+  tone?: 'hero'
+  rule?: boolean
   className?: string
 }) {
+  const text = tone === 'hero' ? 'text-gold-500' : onDark ? 'text-gold-300' : 'text-gold-700'
+  const line = onDark || tone === 'hero' ? 'bg-gold-400' : 'bg-gold-500'
   return (
-    <span className={cn('t-eyebrow', onDark ? 'text-gold-300' : 'text-gold-700', className)}>{children}</span>
+    <span className={cn('t-eyebrow inline-flex items-center gap-3', text, className)}>
+      {rule ? <i aria-hidden="true" className={cn('h-px w-7 shrink-0', line)} /> : null}
+      <span>{children}</span>
+    </span>
   )
 }
 
-/** Мәтіндегі `\n` белгісін үлкен экранда жаңа жолға айналдырады (мобильдіде бос орын) */
+/**
+ * Мәтіндегі `\n` белгісі: үлкен экранда жаңа жол, мобильдіде бос орын.
+ * Қытай тілінде әрқашан жаңа жол: иероглифті мәтіннің үзілімі «сөзді» (哈萨克斯坦, 账目) бөліп жібермеуі үшін
+ * үзілімді редактор қояды.
+ */
 export function Lines({ text }: { text: string }) {
   const parts = text.split('\n')
   return (
@@ -26,13 +42,37 @@ export function Lines({ text }: { text: string }) {
         <Fragment key={index}>
           {index > 0 ? (
             <>
-              <br className="hidden lg:inline" />
-              <span className="lg:hidden"> </span>
+              <br className="hidden lg:inline [&:lang(zh)]:inline" />
+              <span className="lg:hidden [&:lang(zh)]:hidden"> </span>
             </>
           ) : null}
           {part}
         </Fragment>
       ))}
+    </>
+  )
+}
+
+// Тек латын, кирилл әріптері мен сандар: қытай иероглифтері бар мәтін (2026-2028年战略发展规划) бүтін nowrap болып кетпеуі үшін
+const word = '[\\p{Script=Latin}\\p{Script=Cyrillic}\\p{N}]+'
+const hyphenated = new RegExp(`(${word}(?:-${word})+)`, 'gu')
+
+/**
+ * Дефисті сөздер мен сан аралықтары («іс-шаралар», «2026-2028») жолдың ортасында үзілмейді (nowrap).
+ * Дизайн үлгісінде бұл қолмен жасалған; CMS мәтініне автоматты түрде қолданылады.
+ */
+export function NoBreak({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(hyphenated).map((part, index) =>
+        index % 2 === 1 ? (
+          <span key={index} className="whitespace-nowrap">
+            {part}
+          </span>
+        ) : (
+          <Fragment key={index}>{part}</Fragment>
+        ),
+      )}
     </>
   )
 }
@@ -45,10 +85,12 @@ export function AccentText({ text, accentClassName = 'text-gold-300' }: { text: 
       {parts.map((part, index) =>
         index % 2 === 1 ? (
           <em key={index} className={cn('not-italic', accentClassName)}>
-            {part}
+            <Lines text={part} />
           </em>
         ) : (
-          <Fragment key={index}>{part}</Fragment>
+          <Fragment key={index}>
+            <Lines text={part} />
+          </Fragment>
         ),
       )}
     </>

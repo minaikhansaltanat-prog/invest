@@ -34,7 +34,7 @@ export function AudienceCard({
         {String(index).padStart(2, '0')}
       </span>
       <h3 className="t-h3 text-navy-900">{title}</h3>
-      <p className="text-[15px] leading-relaxed text-muted">{text}</p>
+      <p className="text-base leading-relaxed text-muted lg:text-[15px]">{text}</p>
       <span className="mt-2 flex items-center justify-between gap-4 text-sm font-semibold text-navy-700">
         {cta}
         <span

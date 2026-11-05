@@ -4,6 +4,8 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import type { ReactNode } from 'react'
 
+import { SiteFooter } from '@/components/layout/SiteFooter'
+import { SiteHeader } from '@/components/layout/SiteHeader'
 import { RevealObserver, revealBootScript } from '@/components/ui/Reveal'
 import { ToastProvider } from '@/components/ui/Toast'
 import { localeMeta, locales } from '@/i18n/config'
@@ -56,7 +58,14 @@ export default async function LocaleLayout({
           {t('skipToContent')}
         </a>
         <NextIntlClientProvider>
-          <ToastProvider closeLabel={t('close')}>{children}</ToastProvider>
+          <ToastProvider closeLabel={t('close')}>
+            {/* #site-root: мобильді мәзір ашық кезде осы қабық inert болады (фон басылмайды, фокус кірмейді) */}
+            <div id="site-root">
+              <SiteHeader locale={locale} />
+              {children}
+              <SiteFooter locale={locale} />
+            </div>
+          </ToastProvider>
           <RevealObserver />
         </NextIntlClientProvider>
       </body>

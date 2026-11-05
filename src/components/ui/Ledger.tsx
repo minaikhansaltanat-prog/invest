@@ -49,12 +49,12 @@ export function Ledger({
                 last ? 'text-gold-700' : 'text-navy-900',
               )}
             />
-            <span className="text-sm leading-snug text-muted">{cell.description}</span>
+            <span className="text-base leading-snug text-muted lg:text-sm">{cell.description}</span>
           </div>
         )
       })}
       {note ? (
-        <p className="col-span-full flex items-center gap-2.5 border-t border-line bg-ivory px-[22px] py-3.5 text-[13px] text-muted lg:px-[26px]">
+        <p className="col-span-full flex items-center gap-2.5 border-t border-line bg-ivory px-[22px] py-3.5 text-base text-muted lg:px-[26px] lg:text-[13px]">
           <i aria-hidden="true" className="size-2 shrink-0 rounded-full bg-gold-500" />
           {note}
         </p>

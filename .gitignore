@@ -13,3 +13,9 @@ coverage/
 temporary screenshots/
 .DS_Store
 Thumbs.db
+
+# Жергілікті лог файлдар
+.e2e-*.log
+.seed.log
+.npm-*.log
+*.log

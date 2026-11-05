@@ -11,7 +11,15 @@ import sharp from 'sharp'
 
 import { Admins } from './collections/Admins'
 import { Media } from './collections/Media'
+import { News } from './collections/News'
+import { People } from './collections/People'
+import { Projects } from './collections/Projects'
+import { Services } from './collections/Services'
 import { Users } from './collections/Users'
+import { Home } from './globals/Home'
+import { KpiTargets } from './globals/KpiTargets'
+import { ScoringConfig } from './globals/ScoringConfig'
+import { Settings } from './globals/Settings'
 import { defaultLocale, localeMeta, locales } from './i18n/config'
 
 const filename = fileURLToPath(import.meta.url)
@@ -34,7 +42,8 @@ export default buildConfig({
       titleSuffix: ' | KFCA',
     },
   },
-  collections: [Admins, Users, Media],
+  collections: [Admins, Users, Media, People, Services, Projects, News],
+  globals: [Home, Settings, KpiTargets, ScoringConfig],
   editor: lexicalEditor(),
   // Контент 4 тілде. Аударма жоқ жерде қазақша мәтін fallback болып көрінбейді (fallback: false).
   localization: {

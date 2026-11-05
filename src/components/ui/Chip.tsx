@@ -1,6 +1,35 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react'
 
+import { Link } from '@/i18n/navigation'
 import { cn } from '@/lib/cn'
+
+const chipClass = (selected: boolean) =>
+  cn(
+    'inline-flex min-h-11 cursor-pointer items-center rounded-full border px-4 text-sm font-medium',
+    'transition-[transform,background-color,border-color,color] duration-200 ease-out-expo active:scale-[0.97]',
+    selected
+      ? 'border-navy-900 bg-navy-900 text-white'
+      : 'border-line bg-paper text-ink hover:-translate-y-px hover:border-navy-700 hover:text-navy-700',
+  )
+
+/** Сүзгі чипі сілтеме ретінде (басты беттегі салалар: каталогқа өтеді) */
+export function ChipLink({
+  href,
+  selected = false,
+  children,
+  className,
+}: {
+  href: string
+  selected?: boolean
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <Link href={href} aria-current={selected ? 'true' : undefined} className={cn(chipClass(selected), className)}>
+      {children}
+    </Link>
+  )
+}
 
 /** Сүзгі чипі (сала, өңір, деңгей). Биіктігі кемінде 44 px, `selected` күйі aria-pressed арқылы */
 export function Chip({
@@ -16,14 +45,7 @@ export function Chip({
     <button
       type="button"
       aria-pressed={selected}
-      className={cn(
-        'min-h-11 cursor-pointer rounded-full border px-4 text-sm font-medium',
-        'transition-[transform,background-color,border-color,color] duration-200 ease-out-expo active:scale-[0.97]',
-        selected
-          ? 'border-navy-900 bg-navy-900 text-white'
-          : 'border-line bg-paper text-ink hover:-translate-y-px hover:border-navy-700 hover:text-navy-700',
-        className,
-      )}
+      className={cn(chipClass(selected), className)}
       {...rest}
     >
       {children}

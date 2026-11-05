@@ -44,7 +44,7 @@ export function ServiceCell({
         )}
       />
       <h3 className={cn('text-lg font-semibold leading-snug', highlight ? 'text-white' : 'text-navy-900')}>{title}</h3>
-      <p className={cn('text-[14.5px] leading-relaxed', highlight ? 'text-white/70' : 'text-muted')}>{text}</p>
+      <p className={cn('text-base leading-relaxed lg:text-[14.5px]', highlight ? 'text-white/70' : 'text-muted')}>{text}</p>
     </Link>
   )
 }

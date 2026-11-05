@@ -1,5 +1,6 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react'
 
+import type { Locale } from '@/i18n/config'
 import { Link } from '@/i18n/navigation'
 import { cn } from '@/lib/cn'
 
@@ -34,6 +35,8 @@ type Common = {
 type AsLink = Common & {
   href: string
   external?: boolean
+  /** Басқа тілдегі нұсқаға өту (мысалы, 'zh') */
+  locale?: Locale
 } & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'className' | 'children'>
 
 type AsButton = Common & {
@@ -55,7 +58,7 @@ export function Button(props: AsLink | AsButton) {
   ) : null
 
   if (props.href !== undefined) {
-    const { href, external, variant: _v, arrow: _a, children: _c, className: _cn, full: _f, ...rest } = props as AsLink
+    const { href, external, locale, variant: _v, arrow: _a, children: _c, className: _cn, full: _f, ...rest } = props as AsLink
     if (isExternal(href) || external) {
       return (
         <a
@@ -70,7 +73,7 @@ export function Button(props: AsLink | AsButton) {
       )
     }
     return (
-      <Link href={href} className={classes} {...rest}>
+      <Link href={href} locale={locale} className={classes} {...rest}>
         {children}
         {arrowIcon}
       </Link>

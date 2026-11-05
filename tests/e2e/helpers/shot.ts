@@ -15,12 +15,13 @@ export async function settle(page: Page) {
     }
     window.scrollTo(0, document.documentElement.scrollHeight)
     await new Promise((resolve) => setTimeout(resolve, 200))
-    await Promise.all(
-      [...document.images].map((img) =>
-        img.complete ? null : new Promise((resolve) => ((img.onload = img.onerror = () => resolve(null)), undefined)),
-      ),
-    )
-    await document.fonts.ready
+    // Тек көрінетін суреттерді күтеміз (жасырын контейнердегі lazy сурет ешқашан жүктелмейді), ең көбі 5 секунд
+    const visible = [...document.images].filter((img) => img.offsetParent !== null && !img.complete)
+    await Promise.race([
+      Promise.all(visible.map((img) => new Promise((resolve) => ((img.onload = img.onerror = () => resolve(null)), undefined)))),
+      new Promise((resolve) => setTimeout(resolve, 5000)),
+    ])
+    await Promise.race([document.fonts.ready, new Promise((resolve) => setTimeout(resolve, 5000))])
     window.scrollTo(0, 0)
   })
   await page.waitForTimeout(350)

@@ -65,7 +65,7 @@ export function PersonCard({
       </div>
       <div className="grid gap-1">
         <h4 className="t-h3 text-navy-900 lg:text-[28px]">{name}</h4>
-        <p className="text-sm leading-snug text-muted">{position}</p>
+        <p className="text-base leading-snug text-muted lg:text-sm">{position}</p>
         <Link
           href={href}
           className="group mt-2.5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-navy-700 hover:text-navy-900"
