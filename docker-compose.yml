@@ -1,0 +1,62 @@
+# Әзірлеу және staging орта: Postgres + MinIO.
+# Іске қосу: docker compose up -d
+# Ескерту: бұл файл түнде тексерілген жоқ (Docker сол компьютерде орнатылмаған).
+name: kfca-portal
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: kfca
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-kfca}
+      POSTGRES_DB: kfca
+    ports:
+      - '127.0.0.1:5433:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U kfca -d kfca']
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  minio:
+    image: minio/minio:latest
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-kfca-minio}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-change-me-minio-password}
+    ports:
+      - '127.0.0.1:9000:9000'
+      - '127.0.0.1:9001:9001'
+    volumes:
+      - miniodata:/data
+    healthcheck:
+      test: ['CMD', 'mc', 'ready', 'local']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # Бір реттік тапсырма: ашық және жабық bucket-тер жасайды.
+  # kfca-private: деректер бөлмесі, тек уақытша signed URL арқылы беріледі.
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      mc alias set local http://minio:9000 $${MINIO_ROOT_USER:-kfca-minio} $${MINIO_ROOT_PASSWORD:-change-me-minio-password} &&
+      mc mb --ignore-existing local/${S3_BUCKET_PUBLIC:-kfca-public} &&
+      mc mb --ignore-existing local/${S3_BUCKET_PRIVATE:-kfca-private} &&
+      mc anonymous set none local/${S3_BUCKET_PRIVATE:-kfca-private}
+      "
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-kfca-minio}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-change-me-minio-password}
+
+volumes:
+  pgdata:
+  miniodata:
