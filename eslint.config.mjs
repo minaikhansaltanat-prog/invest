@@ -34,6 +34,8 @@ export default defineConfig([
     'temporary screenshots/**',
     'src/payload-types.ts',
     'src/payload-generated-schema.ts',
+    // Payload `migrate:create` генерациялайтын файлдар (қолмен өңделмейді)
+    'src/migrations/**',
     'src/app/(payload)/**',
   ]),
 ])

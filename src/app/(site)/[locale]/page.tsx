@@ -23,6 +23,9 @@ import {
 } from '@/lib/content'
 import { alternatesFor } from '@/lib/seo'
 
+// Мазмұн Payload дерекқорынан: құрастыру кезінде (next build) дерекқорға тәуелді статикалық бет жасалмайды, әр сұраныста оқылады
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   if (!hasLocale(routing.locales, locale)) return {}

@@ -41,6 +41,7 @@ import { withAudit } from './hooks/audit'
 import { withTranslator } from './hooks/roles'
 import { kk } from './i18n/admin-kk'
 import { defaultLocale, localeMeta, locales } from './i18n/config'
+import { migrations } from './migrations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -134,6 +135,11 @@ export default buildConfig({
     pool: {
       connectionString,
     },
+    // Миграциялар src/migrations ішінде. Өндірісте `push` өшірулі, схема тек миграциядан келеді:
+    // `next start` іске қосылғанда (NODE_ENV=production) күтіп тұрған миграциялар автоматты орындалады.
+    // Схема өзгергенде: `npm run payload -- migrate:create <атау>` және нәтиже файлдарын commit-ке қосу (docs/DEPLOY.md).
+    migrationDir: path.resolve(dirname, 'migrations'),
+    prodMigrations: migrations,
   }),
   sharp,
   plugins: [],

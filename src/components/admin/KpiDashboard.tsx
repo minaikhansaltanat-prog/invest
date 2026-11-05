@@ -70,9 +70,26 @@ export async function KpiDashboard(props: { payload: Payload; user?: { roles?: s
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 12 }}>
         {funnel.map(([name, count], index) => (
-          <div key={name} style={{ ...card, borderLeft: '4px solid var(--theme-success-500, #C49A3C)' }}>
-            <div style={label}>
-              {index + 1}. {name}
+          <div key={name} style={card}>
+            <div style={{ ...label, display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span
+                aria-hidden="true"
+                style={{
+                  display: 'inline-grid',
+                  placeItems: 'center',
+                  width: 20,
+                  height: 20,
+                  borderRadius: 999,
+                  background: 'var(--theme-elevation-100)',
+                  color: 'var(--theme-elevation-800)',
+                  fontSize: 11,
+                  fontWeight: 700,
+                  flexShrink: 0,
+                }}
+              >
+                {index + 1}
+              </span>
+              {name}
             </div>
             <div style={value}>{count}</div>
           </div>
