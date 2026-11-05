@@ -1,17 +1,25 @@
 import type { Access, PayloadRequest } from 'payload'
 
+import { adminTwoFactorRequired } from '@/lib/portal/env'
+import { hasValidTwoFactor } from '@/lib/portal/twofactor'
+
 import type { AdminRole } from './roles'
 
-// Рұқсат функциялары (ТТ 10, 14). Толық матрица 8-кезеңде рөлдер бойынша кеңейтіледі.
+// Рұқсат функциялары (ТТ 10, 14). Барлық қызметкер құқығы `verifiedAdmin` арқылы өтеді: әкімші сессиясы + (талап етілсе) 2FA расталуы.
 
-type AuthedRequest = Pick<PayloadRequest, 'user'>
+type AuthedRequest = Pick<PayloadRequest, 'user'> & { headers?: Headers }
 
-export const isAdminUser = (req: AuthedRequest): boolean => req.user?.collection === 'admins'
-
-export const adminRolesOf = (req: AuthedRequest): AdminRole[] => {
-  const user = req.user as { collection?: string; roles?: AdminRole[] } | null
-  return user?.collection === 'admins' ? (user.roles ?? []) : []
+/** Қызметкер сессиясы. 2FA міндетті болса (ТТ 14.1), cookie-де жарамды белгі болуы тиіс: әйтпесе әкімші «танылмайды» */
+export function verifiedAdmin(req: AuthedRequest): { id: string | number; collection: 'admins'; roles?: AdminRole[] } | null {
+  const user = req.user as { id: string | number; collection?: string; roles?: AdminRole[] } | null | undefined
+  if (user?.collection !== 'admins') return null
+  if (adminTwoFactorRequired() && !hasValidTwoFactor(req.headers ?? new Headers(), { id: user.id, collection: 'admins' })) return null
+  return { id: user.id, collection: 'admins', roles: user.roles }
 }
+
+export const isAdminUser = (req: AuthedRequest): boolean => verifiedAdmin(req) !== null
+
+export const adminRolesOf = (req: AuthedRequest): AdminRole[] => verifiedAdmin(req)?.roles ?? []
 
 /** Супер-администратор әрқашан өтеді. Қалған рөлдерден кемінде біреуі сәйкес келсе, рұқсат беріледі. */
 export const hasAdminRole = (req: AuthedRequest, ...roles: AdminRole[]): boolean => {

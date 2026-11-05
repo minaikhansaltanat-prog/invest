@@ -192,8 +192,7 @@ test.describe('мазмұн және навигация', () => {
       [...new Set([...document.querySelectorAll<HTMLAnchorElement>('header a[href^="/kk"], footer a[href^="/kk"]')].map((a) => a.getAttribute('href')!.split('#')[0]))],
     )
     const fromConfig = navSections.flatMap((section) => [section.href, ...(section.children ?? []).map((child) => child.href)]).map((href) => `/kk${href}`)
-    // /account (жеке кабинет) 6-кезеңде қосылады: сол кезде бұл сүзгі алынады
-    const hrefs = [...new Set([...fromPage, ...fromConfig])].filter((href) => !href.startsWith('/kk/account'))
+    const hrefs = [...new Set([...fromPage, ...fromConfig])]
     expect(hrefs.length).toBeGreaterThan(30)
     for (const href of hrefs) {
       const response = await page.request.get(href)

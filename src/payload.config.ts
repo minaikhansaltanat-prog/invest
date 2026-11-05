@@ -20,6 +20,7 @@ import { Partners } from './collections/Partners'
 import { People } from './collections/People'
 import { Projects } from './collections/Projects'
 import { Services } from './collections/Services'
+import { Submissions } from './collections/Submissions'
 import { Users } from './collections/Users'
 import { Videos } from './collections/Videos'
 import { Home } from './globals/Home'
@@ -69,6 +70,7 @@ export default buildConfig({
     Albums,
     Partners,
     Documents,
+    Submissions,
   ],
   globals: [Home, Settings, KpiTargets, ScoringConfig],
   editor: lexicalEditor(),

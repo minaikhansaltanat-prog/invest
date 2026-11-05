@@ -81,6 +81,7 @@ export interface Config {
     albums: Album;
     partners: Partner;
     documents: Document;
+    submissions: Submission;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -101,6 +102,7 @@ export interface Config {
     albums: AlbumsSelect<false> | AlbumsSelect<true>;
     partners: PartnersSelect<false> | PartnersSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
+    submissions: SubmissionsSelect<false> | SubmissionsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -188,6 +190,17 @@ export interface Admin {
     | 'regional-rep'
     | 'analyst'
   )[];
+  totpEnabled?: boolean | null;
+  totpSecret?: string | null;
+  totpPending?: string | null;
+  loginHistory?:
+    | {
+        at?: string | null;
+        ip?: string | null;
+        agent?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -216,7 +229,30 @@ export interface User {
   id: number;
   name: string;
   roles: ('investor' | 'owner' | 'member')[];
+  status?: ('active' | 'blocked') | null;
   locale?: ('kk' | 'ru' | 'en' | 'zh') | null;
+  organization?: string | null;
+  country?: string | null;
+  phone?: string | null;
+  /**
+   * The consent text version and time are stored (TZ 14.2).
+   */
+  consents?: {
+    privacyAt?: string | null;
+    privacyVersion?: string | null;
+  };
+  totpEnabled?: boolean | null;
+  totpSecret?: string | null;
+  totpPending?: string | null;
+  loginHistory?:
+    | {
+        at?: string | null;
+        ip?: string | null;
+        agent?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  deletionRequestedAt?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -927,6 +963,37 @@ export interface Document {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "submissions".
+ */
+export interface Submission {
+  id: number;
+  reference: string;
+  kind: 'contact' | 'investor' | 'project' | 'membership';
+  status: 'new' | 'in-review' | 'accepted' | 'rejected' | 'spam';
+  contactName?: string | null;
+  email?: string | null;
+  locale?: string | null;
+  data:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  consent: {
+    at: string;
+    version: string;
+    ipHash?: string | null;
+  };
+  user?: (number | null) | User;
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -1000,6 +1067,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'documents';
         value: number | Document;
+      } | null)
+    | ({
+        relationTo: 'submissions';
+        value: number | Submission;
       } | null);
   globalSlug?: string | null;
   user:
@@ -1060,6 +1131,17 @@ export interface PayloadMigration {
 export interface AdminsSelect<T extends boolean = true> {
   name?: T;
   roles?: T;
+  totpEnabled?: T;
+  totpSecret?: T;
+  totpPending?: T;
+  loginHistory?:
+    | T
+    | {
+        at?: T;
+        ip?: T;
+        agent?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -1085,7 +1167,29 @@ export interface AdminsSelect<T extends boolean = true> {
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
   roles?: T;
+  status?: T;
   locale?: T;
+  organization?: T;
+  country?: T;
+  phone?: T;
+  consents?:
+    | T
+    | {
+        privacyAt?: T;
+        privacyVersion?: T;
+      };
+  totpEnabled?: T;
+  totpSecret?: T;
+  totpPending?: T;
+  loginHistory?:
+    | T
+    | {
+        at?: T;
+        ip?: T;
+        agent?: T;
+        id?: T;
+      };
+  deletionRequestedAt?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -1665,6 +1769,30 @@ export interface DocumentsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "submissions_select".
+ */
+export interface SubmissionsSelect<T extends boolean = true> {
+  reference?: T;
+  kind?: T;
+  status?: T;
+  contactName?: T;
+  email?: T;
+  locale?: T;
+  data?: T;
+  consent?:
+    | T
+    | {
+        at?: T;
+        version?: T;
+        ipHash?: T;
+      };
+  user?: T;
+  notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -157,7 +157,46 @@
     "sampleHint": "We will reply to this address",
     "sampleConsent": "I agree to the processing of personal data",
     "sampleSelect": "Area of interest",
-    "sampleMessage": "Message"
+    "sampleMessage": "Message",
+    "submit": "Submit",
+    "submitting": "Sending...",
+    "next": "Next",
+    "back": "Back",
+    "stepOf": "Step {current} of {total}",
+    "stepsLabel": "Form steps",
+    "select": "Select",
+    "consent": "I consent to the collection and processing of my personal data",
+    "consentLink": "Read the consent text",
+    "errorSummary": "Please check the form: {count} fields need attention",
+    "honeypot": "Leave this field empty",
+    "err": {
+      "required": "This field is required",
+      "email": "Enter a valid email address",
+      "url": "Enter a link starting with https://",
+      "number": "Enter a valid number",
+      "tooShort": "The text is too short",
+      "tooLong": "The text is too long",
+      "range": "The minimum must not exceed the maximum",
+      "invalid": "Invalid value",
+      "weak": "At least 12 characters, with letters and digits",
+      "mismatch": "Passwords do not match"
+    },
+    "captcha": {
+      "checking": "Security check in progress...",
+      "ok": "Security check passed",
+      "failed": "The security check failed. Refresh the page and try again."
+    },
+    "server": {
+      "rateLimited": "Too many requests. Please try again in a few minutes.",
+      "error": "Something went wrong. Please try again later or contact us.",
+      "network": "Connection lost. Check your internet and try again."
+    },
+    "success": {
+      "title": "Application received",
+      "text": "Thank you! We will contact you after the initial review.",
+      "reference": "Reference number",
+      "another": "Submit another"
+    }
   },
   "styleguide": {
     "modalOpen": "Open modal window",
@@ -242,6 +281,83 @@
       "ndaText": "The full project passport, financial model and data room open only after the investor is vetted and signs an NDA. This public page shows a short description only.",
       "ndaAction": "Investor application",
       "levelsLink": "How levels are determined"
+    }
+  },
+  "account": {
+    "loginTitle": "Sign in to your account",
+    "registerTitle": "Create an account",
+    "registerLead": "Open a cabinet as an investor, project owner or member. One account can have several roles.",
+    "email": "Email",
+    "password": "Password",
+    "passwordConfirm": "Repeat the password",
+    "passwordHint": "At least 12 characters, with letters and digits",
+    "name": "Full name",
+    "organization": "Organisation",
+    "country": "Country",
+    "phone": "Phone",
+    "rolesLabel": "I am (select all that apply)",
+    "login": "Sign in",
+    "register": "Create account",
+    "noAccount": "No account yet?",
+    "haveAccount": "Already have an account?",
+    "totpCode": "2FA code (6 digits)",
+    "totpNeeded": "Verification required: enter the code from your authenticator app.",
+    "loginFailed": "Incorrect email or password",
+    "locked": "The account is temporarily locked. Try again in 10 minutes.",
+    "totpInvalid": "Incorrect 2FA code",
+    "exists": "An account with this email already exists. Sign in instead.",
+    "registered": "Registration complete. You can now sign in.",
+    "dashboard": {
+      "title": "My account",
+      "welcome": "Welcome, {name}",
+      "roles": "Roles",
+      "submissions": "My submissions",
+      "noSubmissions": "No submissions yet. After you send a form its status will appear here.",
+      "loginHistory": "Recent sign-ins",
+      "logout": "Sign out",
+      "data": "My data",
+      "export": "Download my data (JSON)",
+      "deleteRequest": "Request account deletion",
+      "deleteConfirm": "Send an account deletion request? A staff member will review it.",
+      "deleteSent": "Request sent",
+      "adminNote": "This is a staff account.",
+      "openAdmin": "Open the admin panel",
+      "status": {
+        "new": "New",
+        "in-review": "In review",
+        "accepted": "Accepted",
+        "rejected": "Rejected",
+        "spam": "Closed"
+      },
+      "kind": {
+        "contact": "Enquiry",
+        "investor": "Investor application",
+        "project": "Project submission",
+        "membership": "Membership application"
+      }
+    },
+    "twofa": {
+      "title": "Two-factor authentication (2FA)",
+      "intro": "An authenticator app (Google Authenticator, Microsoft Authenticator, Aegis and others) gives a code that changes every 30 seconds.",
+      "enabled": "2FA is on",
+      "disabled": "2FA is off",
+      "verified": "Verified in this session",
+      "notVerified": "Not verified in this session",
+      "enable": "Turn on 2FA",
+      "secretLabel": "Secret key (enter it manually in the app)",
+      "uriLabel": "otpauth link",
+      "confirmCode": "First code from the app",
+      "confirm": "Confirm and turn on",
+      "verifyTitle": "Verify your code",
+      "verify": "Verify",
+      "disable": "Turn off 2FA",
+      "disableHelp": "Enter your current code to turn it off.",
+      "requiredDataroom": "2FA is required to open a data room.",
+      "requiredAdmin": "2FA is required for the admin panel. Turn it on and verify your code.",
+      "invalid": "The code is incorrect or expired",
+      "done": "2FA is on and verified",
+      "copy": "Copy",
+      "copied": "Copied"
     }
   }
 }

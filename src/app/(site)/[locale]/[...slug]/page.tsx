@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
+import { FormRenderer } from '@/components/forms/FormRenderer'
 import { Blocks, tocItems } from '@/components/page/Blocks'
 import { CtaBand } from '@/components/page/CtaBand'
 import { AlbumBody, NewsBody, ProjectBody } from '@/components/page/details'
@@ -24,6 +25,7 @@ import type { Locale } from '@/i18n/config'
 import { routing } from '@/i18n/routing'
 import { cn } from '@/lib/cn'
 import { lookupAlbum, lookupNews, lookupPage, lookupProject, lookupService } from '@/lib/content'
+import { contactForm, type FormSpec, investorForm, membershipForm, projectForm } from '@/lib/forms/definitions'
 import { alternatesFor } from '@/lib/seo'
 import { redirectMissingTranslation } from '@/lib/translation-redirect'
 import type { Album, News, Page, Project, Service } from '@/payload-types'
@@ -105,6 +107,14 @@ const extraPaths = new Set([
   '/about/documents',
   '/about/reports',
 ])
+
+/** Формасы бар беттер (ТТ 8.1, 9): өтініш формасы статикалық блоктардан кейін көрсетіледі */
+const formByPath: Record<string, FormSpec> = {
+  '/contacts': contactForm,
+  '/investors/apply': investorForm,
+  '/projects/submit': projectForm,
+  '/membership/apply': membershipForm,
+}
 
 function Extras({ path, locale, sector }: { path: string; locale: Locale; sector?: string }) {
   switch (path) {
@@ -200,6 +210,7 @@ export default async function InnerPage({ params, searchParams }: Props) {
   const blocks = resolved.kind === 'page' || resolved.kind === 'service' ? (resolved.doc.blocks ?? []) : []
   const cta = resolved.kind === 'page' || resolved.kind === 'service' ? resolved.doc.cta : null
   const hasExtras = resolved.kind === 'page' && extraPaths.has(resolved.path)
+  const form = resolved.kind === 'page' ? formByPath[resolved.path] : undefined
   const toc = hasExtras ? [] : tocItems(blocks)
   const showToc = toc.length >= 3
 
@@ -226,6 +237,12 @@ export default async function InnerPage({ params, searchParams }: Props) {
             {hasExtras ? (
               <div className={cn(blocks.length > 0 && 'mt-12 border-t border-line pt-12 lg:mt-14 lg:pt-14')}>
                 <Extras path={resolved.path} locale={locale} sector={sector} />
+              </div>
+            ) : null}
+            {form ? (
+              <div id="apply-form" className={cn('scroll-mt-28', blocks.length > 0 && 'mt-12 border-t border-line pt-12 lg:mt-14 lg:pt-14')}>
+                <h2 className="t-h2 mb-8 text-navy-900">{form.title[locale]}</h2>
+                <FormRenderer spec={form} />
               </div>
             ) : null}
           </div>
