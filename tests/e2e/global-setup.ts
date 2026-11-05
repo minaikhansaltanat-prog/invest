@@ -6,7 +6,28 @@
  * Қорғаныс: тесттер тек «бірінші әкімші» күйінде жұмыс істейді (өздері уақытша әкімші жасайды). Егер дерекқорда әкімші
  * қалып қойса (нағыз әкімші бар), ештеңе өшірілмейді.
  */
+import { portalMode } from './helpers/mode'
+
+/** Сервер күтілген режимде жұмыс істеп тұр ма: /api/portal/kpi corporate-та 404 {error:'not-found'}, full-да 401/403 */
+async function assertServerMode() {
+  const base = `http://localhost:${process.env.PORT ?? 3000}`
+  let status = 0
+  let body = ''
+  try {
+    const response = await fetch(`${base}/api/portal/kpi`)
+    status = response.status
+    body = await response.text()
+  } catch {
+    return // сервер әлі жоқ: webServer өзі іске қосады
+  }
+  const serverMode = status === 404 && body.includes('not-found') ? 'corporate' : 'full'
+  if (serverMode !== portalMode) {
+    throw new Error(`Сервер ${serverMode} режимінде, ал тест ${portalMode} режиміне арналған (PORTAL_MODE=${process.env.PORTAL_MODE ?? '(жоқ)'}). Серверді сол айнымалымен қайта іске қосыңыз.`)
+  }
+}
+
 export default async function globalSetup() {
+  await assertServerMode()
   const startedAt = new Date()
 
   return async () => {

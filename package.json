@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "dev:full": "cross-env PORTAL_MODE=full NODE_OPTIONS=--no-deprecation next dev",
     "dev:all": "node scripts/dev-all.mjs",
     "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
@@ -13,6 +14,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:e2e": "playwright test",
+    "test:e2e:full": "cross-env PORTAL_MODE=full playwright test",
     "db:dev": "node scripts/db.mjs start",
     "db:stop": "node scripts/db.mjs stop",
     "fonts": "node scripts/copy-fonts.mjs",

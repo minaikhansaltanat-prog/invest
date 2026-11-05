@@ -2,11 +2,15 @@ import 'dotenv/config'
 
 import { defineConfig, devices } from '@playwright/test'
 
+import { fullOnlySpecs, isFullMode } from './tests/e2e/helpers/mode'
+
 const PORT = Number(process.env.PORT ?? 3000)
 const channel = process.env.PW_CHANNEL ?? (process.platform === 'win32' ? 'msedge' : undefined)
 
 export default defineConfig({
   testDir: './tests/e2e',
+  // Режимге қарай: corporate-та инвестициялық спектер өткізілмейді, full-да corporate.spec өткізілмейді (docs/CORPORATE_MODE.md)
+  testIgnore: isFullMode ? ['**/corporate.spec.ts'] : fullOnlySpecs,
   // Іске қосу соңында аудит журналындағы тест жазбаларын тазалайды (tests/e2e/global-setup.ts)
   globalSetup: './tests/e2e/global-setup.ts',
   timeout: 90_000,
