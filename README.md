@@ -12,7 +12,11 @@ npm run seed       # бастапқы контент 4 тілде (қайта і
 npm run dev        # http://localhost:3000, әкімші: /admin (бірінші әкімшіні өзіңіз жасайсыз)
 ```
 
-Тексеру: `npm run lint && npm run typecheck && npm test` (Vitest) және `npm run test:e2e` (Playwright: сайт, әкімші, REST ережелері; тесттер уақытша әкімші жасап, соңында жояды).
+Тексеру: `npm run lint && npm run typecheck && npm test` (Vitest) және `npm run test:e2e` (Playwright, corporate режимі) немесе `npm run test:e2e:full` (толық нұсқа); тесттер уақытша әкімші жасап, соңында жояды.
+
+## Режимдер (corporate / full)
+
+`PORTAL_MODE=corporate` (әдепкі) қарапайым корпоративтік сайт пен қарапайым әкімші панелін береді, инвестициялық модуль жасырын. `PORTAL_MODE=full` инвестициялық порталдың толық нұсқасы (`npm run dev:full`, `npm run test:e2e:full`). Ештеңе жойылмаған. Толығырақ: [docs/CORPORATE_MODE.md](docs/CORPORATE_MODE.md). Нұсқалар: `full-v1` (тег), `night-build` (толық), `corporate-lite` (осы тармақ).
 
 ## Құрылым
 

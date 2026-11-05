@@ -22,7 +22,7 @@ openssl rand -hex 32   # TWOFA_ENC_KEY
 openssl rand -hex 24   # POSTGRES_PASSWORD
 ```
 
-Міндетті мәндер: `POSTGRES_PASSWORD`, `PAYLOAD_SECRET`, `ALTCHA_HMAC_KEY`, `TWOFA_ENC_KEY`, `NEXT_PUBLIC_SITE_URL` (https://домен), `SITE_DOMAIN` (домен). `ADMIN_2FA` өндірісте әдепкіде `on`. `NOTIFY_EMAILS`: жаңа өтініш туралы хабар алатын қызметкерлер.
+Міндетті мәндер: `POSTGRES_PASSWORD`, `PAYLOAD_SECRET`, `ALTCHA_HMAC_KEY`, `TWOFA_ENC_KEY`, `NEXT_PUBLIC_SITE_URL` (https://домен), `SITE_DOMAIN` (домен). `ADMIN_2FA` өндірісте әдепкіде `on`. `PORTAL_MODE`: `corporate` (әдепкі, қарапайым корпоративтік сайт) немесе `full` (инвестициялық портал), қараңыз [CORPORATE_MODE.md](CORPORATE_MODE.md); режим өзгерсе, қосымша қайта іске қосылады. `NOTIFY_EMAILS`: жаңа өтініш туралы хабар алатын қызметкерлер.
 `TWOFA_ENC_KEY` өзгерсе, бұрын қосылған 2FA кілттері оқылмайды: оны жоғалтпаңыз және өзгертпеңіз.
 
 ## 3. Алғашқы іске қосу
