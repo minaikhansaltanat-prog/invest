@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url'
 
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { en } from '@payloadcms/translations/languages/en'
 import { ru } from '@payloadcms/translations/languages/ru'
 import { zh } from '@payloadcms/translations/languages/zh'
@@ -52,6 +53,12 @@ const isProd = process.env.NODE_ENV === 'production'
 const secret = process.env.PAYLOAD_SECRET || (isProd ? '' : 'dev-only-placeholder-not-a-secret')
 const connectionString =
   process.env.DATABASE_URL || (isProd ? '' : 'postgresql://kfca:kfca@127.0.0.1:54329/kfca')
+
+// Vercel: файлсыз (read-only) серверсіз орта, сондықтан медиа Vercel Blob-та сақталады (docs/DEPLOY_VERCEL.md).
+// BLOB_READ_WRITE_TOKEN жоқ болса (жергілікті әзірлеу, Docker), плагин өшірулі және файлдар `.data/media` ішінде қалады.
+const blobToken = process.env.BLOB_READ_WRITE_TOKEN
+// Serverless-те әр инстанс аз қосылым ашады (Neon pooler қалғанын басқарады); басқа ортада pg әдепкісі (10)
+const poolMax = Number(process.env.DATABASE_POOL_MAX) || (process.env.VERCEL ? 5 : undefined)
 
 // Аудит (ТТ 10.2): барлық жинақтың жасау/өзгерту/өшіру әрекеті журналға түседі (журналдың өзі мен қарау журналы қоспағанда).
 // Аудармашы (ТТ 10.1): контент жинақтарында тек әдепкі емес тілдегі нұсқаны өзгерте алады.
@@ -138,6 +145,7 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString,
+      ...(poolMax ? { max: poolMax } : {}),
     },
     // Миграциялар src/migrations ішінде. Өндірісте `push` өшірулі, схема тек миграциядан келеді:
     // `next start` іске қосылғанда (NODE_ENV=production) күтіп тұрған миграциялар автоматты орындалады.
@@ -146,5 +154,13 @@ export default buildConfig({
     prodMigrations: migrations,
   }),
   sharp,
-  plugins: [],
+  plugins: [
+    vercelBlobStorage({
+      enabled: Boolean(blobToken),
+      token: blobToken,
+      collections: { media: true },
+      // `prefix` өрісі схемаға әрқашан қосылады: сұлба Blob бар/жоқ ортада бірдей, миграция бір
+      alwaysInsertFields: true,
+    }),
+  ],
 })
