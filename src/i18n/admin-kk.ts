@@ -1,10 +1,12 @@
 import type { DefaultTranslationsObject, Language } from '@payloadcms/translations'
 import { ruTranslations } from '@payloadcms/translations/languages/ru'
 
+import { restOverrides } from './admin-kk-rest'
+
 /**
- * Әкімшілік панелінің қазақша интерфейсі (Payload-та kk жоқ). Негізі орысша аударма, ең көп көрінетін
- * жолдар қазақшаға ауыстырылған (түнгі аударма жобасы: ана тілді тілші тексеруі қажет).
- * Аударылмаған кілт орысша көрінеді (қате емес, кілттің өзі шықпайды).
+ * Әкімшілік панелінің қазақша интерфейсі (Payload-та kk жоқ). Негізі орысша аударма, барлық кілт қазақшаға ауыстырылған:
+ * ең көп көрінетін жолдар осы файлда, қалғаны admin-kk-rest.ts-те (түнгі аударма жобасы: ана тілді тілші тексеруі қажет).
+ * Орысша қалатын кілттер тек екі тілде бірдей жазылатын сөздер (Аккаунт, Экспорт, Импорт, Макет), tests/unit/admin-kk.test.ts тексереді.
  */
 type Overrides = { [G in keyof DefaultTranslationsObject]?: Partial<DefaultTranslationsObject[G]> }
 
@@ -63,7 +65,7 @@ const overrides: Overrides = {
     previous: 'Алдыңғы',
     no: 'Жоқ',
     yes: 'Иә',
-    noResults: 'Нәтиже табылмады. Құжат жоқ немесе сүзгіге сәйкес келмейді.',
+    noResults: '{{label}} табылмады. Не {{label}} әлі жоқ, не олар жоғарыда көрсетілген сүзгілерге сәйкес келмейді.',
     notFound: 'Табылмады',
     pageNotFound: 'Бет табылмады',
     nothingFound: 'Ештеңе табылмады',
@@ -224,8 +226,9 @@ const overrides: Overrides = {
 }
 
 const groups = Object.keys(ruTranslations) as Array<keyof DefaultTranslationsObject>
+// Негізі орысша аударма; қалған кілттер admin-kk-rest.ts-тен, ең көрінетін жолдар (жоғарыдағы overrides) оларға басым
 const translations = Object.fromEntries(
-  groups.map((group) => [group, { ...ruTranslations[group], ...(overrides[group] ?? {}) }]),
+  groups.map((group) => [group, { ...ruTranslations[group], ...(restOverrides[group] ?? {}), ...(overrides[group] ?? {}) }]),
 ) as DefaultTranslationsObject
 
 export const kk: Language = {
