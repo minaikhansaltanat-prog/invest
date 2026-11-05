@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation'
 import { RegisterForm } from '@/components/forms/AuthForms'
 import { AccountShell, noIndex } from '@/components/page/AccountShell'
 import { routing } from '@/i18n/routing'
+import { hiddenInCorporate } from '@/lib/portal/guard'
 
 type Props = { params: Promise<{ locale: string }> }
 
@@ -20,6 +21,7 @@ export default async function RegisterPage({ params }: Props) {
   const { locale } = await params
   if (!hasLocale(routing.locales, locale)) notFound()
   setRequestLocale(locale)
+  hiddenInCorporate() // corporate режимінде кабинет беттері жоқ (404)
   const t = await getTranslations({ locale, namespace: 'account' })
 
   return (

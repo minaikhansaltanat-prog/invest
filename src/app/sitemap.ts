@@ -5,6 +5,7 @@ import { getPayload } from 'payload'
 import { isVisibleInLocale, type TranslationStatusMap } from '@/fields/translationStatus'
 import { type Locale, localeMeta, locales } from '@/i18n/config'
 import { getTranslationPolicy } from '@/lib/content'
+import { isCorporate, isPathVisible } from '@/lib/mode'
 import { localizedPath } from '@/lib/seo'
 
 const siteUrl = () => (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000').replace(/\/$/, '')
@@ -32,8 +33,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...(await find('pages', '', 'path')),
     ...(await find('services', '/services', 'slug')),
     ...(await find('news', '/media/news', 'slug')),
-    ...(await find('projects', '/projects', 'slug')),
-  ]
+    // Corporate режимінде жобалар каталогы жоқ: жобалар да, инвестор беттері де картаға кірмейді
+    ...(isCorporate() ? [] : await find('projects', '/projects', 'slug')),
+  ].filter((item) => isPathVisible(item.path))
 
   return items.flatMap((item) => {
     const visible = locales.filter((locale) => isVisibleInLocale(item.status as TranslationStatusMap, locale, policy))

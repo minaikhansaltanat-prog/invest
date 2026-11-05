@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/Button'
 import { Icon } from '@/components/ui/icons'
 import { redirect } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
+import { hiddenInCorporate } from '@/lib/portal/guard'
 import { formatDate } from '@/lib/format'
 import { hasValidTwoFactor } from '@/lib/portal/twofactor'
 import { sessionOf } from '@/lib/portal/http'
@@ -37,6 +38,7 @@ export default async function AccountPage({ params }: Props) {
   const { locale } = await params
   if (!hasLocale(routing.locales, locale)) notFound()
   setRequestLocale(locale)
+  hiddenInCorporate() // corporate режимінде кабинет беттері жоқ (404)
   const requestHeaders = await headers()
   const { payload, user } = await sessionOf(requestHeaders)
   if (!user) redirect({ href: '/account/login', locale })

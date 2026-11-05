@@ -28,6 +28,7 @@ import { routing } from '@/i18n/routing'
 import { cn } from '@/lib/cn'
 import { lookupAlbum, lookupNews, lookupPage, lookupProject, lookupService } from '@/lib/content'
 import { contactForm, type FormSpec, investorForm, membershipForm, projectForm } from '@/lib/forms/definitions'
+import { isPathVisible } from '@/lib/mode'
 import { accessStateFor } from '@/lib/portal/dataroom'
 import { alternatesFor } from '@/lib/seo'
 import { redirectMissingTranslation } from '@/lib/translation-redirect'
@@ -51,6 +52,8 @@ type Resolved =
  */
 async function resolve(locale: Locale, segments: string[]): Promise<Resolved> {
   const path = `/${segments.join('/')}`
+  // Corporate режимі: инвесторлар, жобалар каталогы, нәтижелер, мүшелік өтініші мен тізілімі жоқ (404, src/lib/mode.ts)
+  if (!isPathVisible(path)) notFound()
   const page = await lookupPage(locale, path)
   if (page.doc) {
     if (!page.visible) redirectMissingTranslation(locale, path)

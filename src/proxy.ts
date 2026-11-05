@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 import createMiddleware from 'next-intl/middleware'
 
 import { routing } from './i18n/routing'
+import { isCorporate, isHiddenApi } from './lib/mode'
 import { adminTwoFactorRequired } from './lib/portal/env'
 import { TWO_FACTOR_COOKIE, verifyTwoFactor } from './lib/portal/twofactor'
 
@@ -24,6 +25,12 @@ function sessionClaims(token: string): { id: string | number; collection: string
 export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
+  // Corporate режимі: /api/portal/* ішінен тек байланыс формасы, ALTCHA және әкімші 2FA қалады (src/lib/mode.ts), қалғаны 404
+  if (pathname.startsWith('/api/')) {
+    if (isCorporate() && isHiddenApi(pathname)) return NextResponse.json({ error: 'not-found' }, { status: 404 })
+    return NextResponse.next() // API жолдарына тіл маршрутизациясы қолданылмайды
+  }
+
   if (pathname === '/admin' || pathname.startsWith('/admin/')) {
     if (!adminTwoFactorRequired() || openAdminViews.test(pathname)) return NextResponse.next()
     const token = request.cookies.get('payload-token')?.value
@@ -37,7 +44,7 @@ export default function proxy(request: NextRequest) {
   return intl(request)
 }
 
-// /api, _next және файлдар (нүктесі барлар) қамтылмайды; /admin тек 2FA қақпасы үшін
+// /api, _next және файлдар (нүктесі барлар) қамтылмайды; /admin тек 2FA қақпасы үшін; /api/portal тек corporate режимінің жабық тізімі үшін
 export const config = {
-  matcher: ['/admin', '/admin/:path*', '/((?!api|admin|_next|_vercel|.*\\..*).*)'],
+  matcher: ['/admin', '/admin/:path*', '/api/portal/:path*', '/((?!api|admin|_next|_vercel|.*\\..*).*)'],
 }

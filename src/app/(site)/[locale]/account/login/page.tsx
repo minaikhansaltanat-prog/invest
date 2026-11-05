@@ -8,6 +8,7 @@ import { LoginForm } from '@/components/forms/AuthForms'
 import { AccountShell, noIndex } from '@/components/page/AccountShell'
 import { redirect } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
+import { hiddenInCorporate } from '@/lib/portal/guard'
 import { sessionOf } from '@/lib/portal/http'
 
 type Props = { params: Promise<{ locale: string }>; searchParams: Promise<{ next?: string }> }
@@ -23,6 +24,7 @@ export default async function LoginPage({ params, searchParams }: Props) {
   const { locale } = await params
   if (!hasLocale(routing.locales, locale)) notFound()
   setRequestLocale(locale)
+  hiddenInCorporate() // corporate режимінде кабинет беттері жоқ (404)
   const { next } = await searchParams
   const { user } = await sessionOf(await headers())
   if (user) redirect({ href: next && next.startsWith('/') ? next : '/account', locale })

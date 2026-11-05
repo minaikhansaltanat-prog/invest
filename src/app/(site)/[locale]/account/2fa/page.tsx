@@ -2,12 +2,13 @@ import { hasLocale } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import type { Metadata } from 'next'
 import { headers } from 'next/headers'
-import { notFound } from 'next/navigation'
+import { notFound, redirect as redirectTo } from 'next/navigation'
 
 import { TwoFactorPanel } from '@/components/forms/AccountActions'
 import { AccountShell, noIndex } from '@/components/page/AccountShell'
 import { redirect } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
+import { isCorporate } from '@/lib/mode'
 import { adminTwoFactorRequired } from '@/lib/portal/env'
 import { sessionOf } from '@/lib/portal/http'
 import { hasValidTwoFactor } from '@/lib/portal/twofactor'
@@ -29,6 +30,11 @@ export default async function TwoFactorPage({ params, searchParams }: Props) {
   const { next } = await searchParams
   const requestHeaders = await headers()
   const { payload, user } = await sessionOf(requestHeaders)
+  if (isCorporate()) {
+    // Corporate режимінде бұл бет тек әкімшіге (2FA қосу және растау): кабинет жоқ. Сессиясыз болса, әкімші кіруіне, басқа пайдаланушыға 404
+    if (!user) redirectTo('/admin')
+    if (user!.collection !== 'admins') notFound()
+  }
   if (!user) redirect({ href: { pathname: '/account/login', query: next ? { next: `/account/2fa?next=${encodeURIComponent(next)}` } : undefined }, locale })
   const t = await getTranslations({ locale, namespace: 'account.twofa' })
 

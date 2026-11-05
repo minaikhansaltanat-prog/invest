@@ -6,6 +6,7 @@ import { checkbox, ltext, ltextarea, number, rows, select, text } from '@/fields
 import { projectBusinessRules } from '@/hooks/investment'
 import { translationStatusField } from '@/fields/translationStatus'
 import { l } from '@/lib/labels'
+import { isCorporate } from '@/lib/mode'
 import { projectLevels, projectModels, projectStages, regions, sectors, toOptions } from '@/lib/taxonomy'
 
 export const projectIcons = ['solar', 'port', 'factory', 'wind', 'agro', 'rail'] as const
@@ -33,7 +34,8 @@ export const Projects: CollectionConfig = {
   },
   access: {
     read: ({ req }) => {
-      if (!isAdminUser(req)) return publicCatalogWhere
+      // Corporate режимінде ашық каталог жоқ: жариялануға белгіленген жобалар да REST арқылы жария көрінбейді (src/lib/mode.ts)
+      if (!isAdminUser(req)) return isCorporate() ? false : publicCatalogWhere
       // Өңірлік өкіл тек өз өңірінің жобаларын көреді (ТТ 10)
       if (hasAdminRole(req, 'chair', 'secretariat', 'expert', 'compliance', 'auditor', 'analyst', 'content-manager', 'translator')) return true
       const region = (req.user as { region?: string } | null)?.region

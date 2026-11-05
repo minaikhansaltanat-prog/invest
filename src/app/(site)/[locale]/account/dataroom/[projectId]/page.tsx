@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/Button'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { redirect } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
+import { hiddenInCorporate } from '@/lib/portal/guard'
 import { watermarkText } from '@/lib/investment/dataroom'
 import { dataroomDecision, logDataroom } from '@/lib/portal/dataroom'
 
@@ -30,6 +31,7 @@ export default async function DataroomPage({ params }: Props) {
   const { locale, projectId } = await params
   if (!hasLocale(routing.locales, locale) || !/^\d+$/.test(projectId)) notFound()
   setRequestLocale(locale)
+  hiddenInCorporate() // corporate режимінде кабинет беттері жоқ (404)
   const requestHeaders = await headers()
   const decision = await dataroomDecision(requestHeaders, projectId)
   if (decision.kind === 'unauthorized') {
