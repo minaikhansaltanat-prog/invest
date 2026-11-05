@@ -5,6 +5,7 @@ import { getPayload } from 'payload'
 import { isVisibleInLocale, type TranslationStatusMap } from '@/fields/translationStatus'
 import { type Locale, localeMeta, locales } from '@/i18n/config'
 import { getTranslationPolicy } from '@/lib/content'
+import { siteIndexable } from '@/lib/indexing'
 import { isCorporate, isPathVisible } from '@/lib/mode'
 import { localizedPath } from '@/lib/seo'
 
@@ -17,6 +18,7 @@ export const dynamic = 'force-dynamic'
 type Item = { path: string; updatedAt?: string; status?: unknown }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  if (!siteIndexable()) return [] // жабық орнатуда (Vercel preview) картаны жарияламаймыз
   const payload = await getPayload({ config })
   const policy = await getTranslationPolicy('kk')
   const base = siteUrl()

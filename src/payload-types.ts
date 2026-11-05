@@ -441,6 +441,8 @@ export interface Media {
   alt: string;
   credit?: string | null;
   license?: ('own' | 'stock' | 'partner' | 'ai-placeholder') | null;
+  prefix?: string | null;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -2094,6 +2096,8 @@ export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   credit?: T;
   license?: T;
+  prefix?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

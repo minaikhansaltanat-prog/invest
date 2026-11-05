@@ -12,7 +12,8 @@ if (process.env.NODE_ENV !== 'production') {
   process.env.PAYLOAD_SECRET ||= 'dev-only-placeholder-not-a-secret'
   process.env.DATABASE_URL ||= 'postgresql://kfca:kfca@127.0.0.1:54329/kfca'
 }
-process.env.NEXT_PUBLIC_SITE_URL ||= 'http://localhost:3000'
+// Vercel-де NEXT_PUBLIC_SITE_URL берілмесе, canonical/hreflang/sitemap осы орнатудың өз адресіне сүйенеді (VERCEL_URL)
+process.env.NEXT_PUBLIC_SITE_URL ||= process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 

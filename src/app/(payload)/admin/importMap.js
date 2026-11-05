@@ -26,6 +26,7 @@ import { AdminIcon as AdminIcon_c3544fd04a86558fd1f1e4a8d6afed38 } from '@/compo
 import { AdminLogo as AdminLogo_c3544fd04a86558fd1f1e4a8d6afed38 } from '@/components/admin/AdminBrand'
 import { KpiDashboard as KpiDashboard_05791ec70e7892dd649e2ebde08ee28e } from '@/components/admin/KpiDashboard'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
+import { VercelBlobClientUploadHandler as VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e } from '@payloadcms/storage-vercel-blob/client'
 
 /** @type import('payload').ImportMap */
 export const importMap = {
@@ -56,5 +57,6 @@ export const importMap = {
   "@/components/admin/AdminBrand#AdminIcon": AdminIcon_c3544fd04a86558fd1f1e4a8d6afed38,
   "@/components/admin/AdminBrand#AdminLogo": AdminLogo_c3544fd04a86558fd1f1e4a8d6afed38,
   "@/components/admin/KpiDashboard#KpiDashboard": KpiDashboard_05791ec70e7892dd649e2ebde08ee28e,
-  "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
+  "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1,
+  "@payloadcms/storage-vercel-blob/client#VercelBlobClientUploadHandler": VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e
 }

@@ -2,8 +2,10 @@ import { type NextRequest, NextResponse } from 'next/server'
 import createMiddleware from 'next-intl/middleware'
 
 import { routing } from './i18n/routing'
+import { noindexHeader, siteIndexable } from './lib/indexing'
 import { isCorporate, isHiddenApi } from './lib/mode'
 import { adminTwoFactorRequired } from './lib/portal/env'
+import { firstRegisterAllowed } from './lib/portal/setup'
 import { TWO_FACTOR_COOKIE, verifyTwoFactor } from './lib/portal/twofactor'
 
 // Next.js 16: middleware.ts орнына proxy.ts. Екі міндет: (1) сайт беттері үшін тіл маршрутизациясы, (2) әкімші панелінің 2FA қақпасы (ТТ 14.1).
@@ -22,8 +24,16 @@ function sessionClaims(token: string): { id: string | number; collection: string
   }
 }
 
-export default function proxy(request: NextRequest) {
+function handle(request: NextRequest) {
   const { pathname } = request.nextUrl
+
+  // Өндірісте бірінші әкімшіні ашық эндпойнт арқылы жасауға болмайды (src/lib/portal/setup.ts): `npm run create-admin`
+  if (pathname === '/api/admins/first-register') {
+    if (request.method === 'POST' && !firstRegisterAllowed(request.headers)) {
+      return NextResponse.json({ errors: [{ message: 'first-register-disabled' }] }, { status: 403 })
+    }
+    return NextResponse.next()
+  }
 
   // Corporate режимі: /api/portal/* ішінен тек байланыс формасы, ALTCHA және әкімші 2FA қалады (src/lib/mode.ts), қалғаны 404
   if (pathname.startsWith('/api/')) {
@@ -44,7 +54,14 @@ export default function proxy(request: NextRequest) {
   return intl(request)
 }
 
+/** Жабық орнатуларда (Vercel preview) әр жауапқа X-Robots-Tag қосылады (src/lib/indexing.ts) */
+export default function proxy(request: NextRequest) {
+  const response = handle(request)
+  if (!siteIndexable()) response.headers.set('X-Robots-Tag', noindexHeader)
+  return response
+}
+
 // /api, _next және файлдар (нүктесі барлар) қамтылмайды; /admin тек 2FA қақпасы үшін; /api/portal тек corporate режимінің жабық тізімі үшін
 export const config = {
-  matcher: ['/admin', '/admin/:path*', '/api/portal/:path*', '/((?!api|admin|_next|_vercel|.*\\..*).*)'],
+  matcher: ['/admin', '/admin/:path*', '/api/portal/:path*', '/api/admins/first-register', '/((?!api|admin|_next|_vercel|.*\\..*).*)'],
 }
