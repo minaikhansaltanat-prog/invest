@@ -66,7 +66,7 @@ export async function CorporateAbout({
 
         {shown.length > 0 ? (
           <Reveal delay={90}>
-            <p className="mb-4 text-[13px] font-semibold uppercase tracking-[0.14em] text-gold-700">{t('principles')}</p>
+            <p className="mb-4 text-base font-semibold uppercase tracking-[0.14em] text-gold-700 lg:text-[13px]">{t('principles')}</p>
             <ol className="grid border-l border-t border-line md:grid-cols-2">
               {shown.map((item, index) => (
                 <li
@@ -77,7 +77,7 @@ export async function CorporateAbout({
                     {String(index + 1).padStart(2, '0')}
                   </span>
                   <h3 className="t-h3 text-[21px] leading-[1.15] text-navy-900">{item.title}</h3>
-                  {item.text ? <p className="line-clamp-3 text-[15px] leading-[1.6] text-muted">{item.text}</p> : null}
+                  {item.text ? <p className="line-clamp-3 text-base leading-[1.6] text-muted lg:text-[15px]">{item.text}</p> : null}
                 </li>
               ))}
             </ol>
@@ -227,15 +227,15 @@ export async function CorporateContact({ locale, settings }: { locale: Locale; s
               </div>
 
               {rows.length > 0 ? (
-                <dl className="grid gap-px overflow-hidden rounded-card border border-white/15 bg-white/10">
+                <ul className="grid gap-px overflow-hidden rounded-card border border-white/15 bg-white/10">
                   {rows.map((row) => (
-                    <div key={`${row.icon}-${row.label}`} className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-4 bg-navy-900/80 px-5 py-4 lg:px-6">
+                    <li key={`${row.icon}-${row.label}`} className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-4 bg-navy-900/80 px-5 py-4 lg:px-6">
                       <span className="mt-0.5 grid size-10 place-items-center rounded-full bg-white/10 text-gold-300">
                         <Icon name={row.icon} size={18} />
                       </span>
                       <div className="grid gap-0.5">
-                        <dt className="text-[11.5px] uppercase tracking-[0.12em] text-gold-300">{row.label}</dt>
-                        <dd className="text-[15px] leading-snug text-white/90">
+                        <span className="text-[11.5px] uppercase tracking-[0.12em] text-gold-300">{row.label}</span>
+                        <span className="text-[15px] leading-snug text-white/90">
                           {row.href ? (
                             <a href={row.href} className="inline-flex min-h-11 items-center hover:text-gold-300 lg:min-h-8">
                               {row.value}
@@ -243,11 +243,11 @@ export async function CorporateContact({ locale, settings }: { locale: Locale; s
                           ) : (
                             row.value
                           )}
-                        </dd>
+                        </span>
                       </div>
-                    </div>
+                    </li>
                   ))}
-                </dl>
+                </ul>
               ) : null}
             </div>
           </div>
