@@ -22,7 +22,7 @@ const nextConfig: NextConfig = {
   devIndicators: false,
   images: {
     formats: ['image/avif', 'image/webp'],
-    qualities: [60, 75, 82, 90],
+    qualities: [60, 75, 78, 82, 90],
     deviceSizes: [360, 390, 640, 768, 1080, 1280, 1440, 1920],
     imageSizes: [48, 96, 168, 256, 384],
     localPatterns: [{ pathname: '/api/media/file/**' }, { pathname: '/**' }],

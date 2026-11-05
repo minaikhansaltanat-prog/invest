@@ -173,5 +173,75 @@
     "colAmount": "Size",
     "statusActive": "Active",
     "statusReview": "In review"
+  },
+  "page": {
+    "home": "Home",
+    "onThisPage": "On this page",
+    "learnMore": "Learn more",
+    "backToServices": "All services",
+    "backToNews": "All news",
+    "backToProjects": "Project catalogue",
+    "backToAlbums": "All albums",
+    "emptyTitle": "Nothing here yet",
+    "emptyText": "This section is updated regularly. The first items will appear here once published.",
+    "emptyAction": "Contact the association",
+    "upcoming": "Upcoming events",
+    "past": "Past events",
+    "register": "Register",
+    "docDraft": "Draft",
+    "docDownload": "Download PDF",
+    "docVersion": "Version {version}",
+    "docNoFile": "The file will be added soon",
+    "photoCount": "{count} photos",
+    "allSectors": "All sectors",
+    "filterSector": "Filter by sector",
+    "videoUnsupported": "Your browser does not support video",
+    "notFoundTitle": "Page not found",
+    "notFoundText": "The link may be out of date or the page may have moved. You can find what you need on the home page or in the section menu.",
+    "notFoundAction": "Back to the home page",
+    "format": {
+      "offline": "In person",
+      "online": "Online",
+      "hybrid": "Hybrid"
+    },
+    "partnerKind": {
+      "international": "International",
+      "state": "State",
+      "finance": "Financial",
+      "industry": "Industry",
+      "academic": "Academic",
+      "media": "Media"
+    },
+    "docCategory": {
+      "charter": "Charter",
+      "policy": "Policy",
+      "methodology": "Methodology",
+      "report": "Report",
+      "privacy": "Privacy",
+      "other": "Other"
+    },
+    "section": {
+      "about": "About",
+      "services": "Services",
+      "investors": "For investors",
+      "projects": "For projects",
+      "membership": "Membership",
+      "results": "Results",
+      "partners": "Partners",
+      "media": "Media",
+      "contacts": "Contacts",
+      "legal": "Legal"
+    },
+    "project": {
+      "summaryTitle": "About the project",
+      "factsTitle": "Key facts",
+      "sector": "Sector",
+      "stage": "Stage",
+      "level": "Level",
+      "ndaTitle": "The full passport opens after an NDA",
+      "ndaText": "The full project passport, financial model and data room open only after the investor is vetted and signs an NDA. This public page shows a short description only.",
+      "ndaAction": "Investor application",
+      "levelsLink": "How levels are determined"
+    }
   }
 }

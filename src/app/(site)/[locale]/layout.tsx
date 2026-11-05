@@ -52,6 +52,7 @@ export default async function LocaleLayout({
     // suppressHydrationWarning: <head> скрипті html-ге reveal-ready класын гидратацияға дейін қосады
     <html lang={localeMeta[locale].htmlLang} dir={localeMeta[locale].dir} suppressHydrationWarning>
       <head>
+        {/* Dev режимінде 404 бетінде React «script tag» ескертуін шығарады (next/script-пен де): тек dev, өндірісте жоқ */}
         <script dangerouslySetInnerHTML={{ __html: revealBootScript }} />
       </head>
       <body>

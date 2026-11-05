@@ -173,5 +173,75 @@
     "colAmount": "规模",
     "statusActive": "有效",
     "statusReview": "审核中"
+  },
+  "page": {
+    "home": "首页",
+    "onThisPage": "本页内容",
+    "learnMore": "了解更多",
+    "backToServices": "全部服务",
+    "backToNews": "全部新闻",
+    "backToProjects": "项目目录",
+    "backToAlbums": "全部相册",
+    "emptyTitle": "暂无内容",
+    "emptyText": "本栏目将持续更新，首批内容发布后将在此显示。",
+    "emptyAction": "联系协会",
+    "upcoming": "近期活动",
+    "past": "往期活动",
+    "register": "报名",
+    "docDraft": "草案",
+    "docDownload": "下载 PDF",
+    "docVersion": "版本 {version}",
+    "docNoFile": "文件即将上传",
+    "photoCount": "{count} 张照片",
+    "allSectors": "全部行业",
+    "filterSector": "按行业筛选",
+    "videoUnsupported": "您的浏览器不支持视频播放",
+    "notFoundTitle": "页面未找到",
+    "notFoundText": "链接可能已过期，或页面已迁移。您可以通过首页和栏目菜单找到所需信息。",
+    "notFoundAction": "返回首页",
+    "format": {
+      "offline": "线下",
+      "online": "线上",
+      "hybrid": "混合"
+    },
+    "partnerKind": {
+      "international": "国际",
+      "state": "政府",
+      "finance": "金融",
+      "industry": "行业",
+      "academic": "学术",
+      "media": "媒体"
+    },
+    "docCategory": {
+      "charter": "章程",
+      "policy": "政策",
+      "methodology": "方法论",
+      "report": "报告",
+      "privacy": "隐私",
+      "other": "其他"
+    },
+    "section": {
+      "about": "关于协会",
+      "services": "服务",
+      "investors": "致投资者",
+      "projects": "致项目方",
+      "membership": "会员",
+      "results": "成果",
+      "partners": "合作伙伴",
+      "media": "媒体",
+      "contacts": "联系方式",
+      "legal": "法律文件"
+    },
+    "project": {
+      "summaryTitle": "项目简介",
+      "factsTitle": "核心数据",
+      "sector": "行业",
+      "stage": "阶段",
+      "level": "级别",
+      "ndaTitle": "签署保密协议后开放完整项目档案",
+      "ndaText": "完整项目档案、财务模型和数据室仅在投资者通过审核并签署保密协议后开放。公开页面仅展示简要说明。",
+      "ndaAction": "投资者申请",
+      "levelsLink": "级别如何确定"
+    }
   }
 }

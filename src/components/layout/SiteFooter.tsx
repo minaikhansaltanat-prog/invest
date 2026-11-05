@@ -19,7 +19,7 @@ function Column({ title, links }: { title: string; links: FooterLink[] }) {
               href={link.href}
               locale={link.locale}
               lang={link.lang}
-              className="inline-flex min-h-11 items-center text-[14.5px] text-white/70 transition-colors duration-200 hover:text-gold-300 lg:min-h-8"
+              className="inline-flex min-h-11 min-w-11 items-center text-[14.5px] text-white/70 transition-colors duration-200 hover:text-gold-300 lg:min-h-8 lg:min-w-0"
             >
               {link.label}
             </Link>
