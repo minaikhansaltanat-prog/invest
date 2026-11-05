@@ -23,7 +23,8 @@ export function AudienceCard({
     <Link
       href={href}
       className={cn(
-        'group relative grid cursor-pointer gap-3 overflow-hidden rounded-card border border-line bg-paper p-[30px] pb-7 shadow-lift',
+        // Қатарлар: нөмір, тақырып, мәтін (қалған орынды алады), әрекет. Қысқа мәтінді карточкада тақырыптар көршілерімен бір сызықта қалады
+        'group relative grid cursor-pointer grid-rows-[auto_auto_1fr_auto] gap-3 overflow-hidden rounded-card border border-line bg-paper p-[30px] pb-7 shadow-lift',
         'transition-transform duration-300 ease-out-expo hover:-translate-y-1.5 active:translate-y-0',
         'before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:bg-linear-to-b before:from-gold-400 before:to-gold-600',
         'after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:opacity-0 after:shadow-float after:transition-opacity after:duration-300 hover:after:opacity-100',

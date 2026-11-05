@@ -12,7 +12,8 @@ export function GradeCards({ grades, className }: { grades: Grade[]; className?:
           <li
             key={grade.key}
             className={cn(
-              'grid gap-1 rounded-[12px] border p-4 transition-transform duration-300 ease-out-expo hover:-translate-y-0.5',
+              // Әріп пен балл диапазоны жоғарыда бір сызықта, атауы төменде: екі жолды атау көршілердің қатарын жылжытпайды
+              'grid grid-rows-[auto_1fr_auto] gap-1 rounded-[12px] border p-4 transition-transform duration-300 ease-out-expo hover:-translate-y-0.5',
               top ? 'border-navy-900 bg-navy-900 shadow-lift' : 'border-line bg-paper',
             )}
           >

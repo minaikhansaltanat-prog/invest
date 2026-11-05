@@ -7,6 +7,8 @@ const channel = process.env.PW_CHANNEL ?? (process.platform === 'win32' ? 'msedg
 
 export default defineConfig({
   testDir: './tests/e2e',
+  // Іске қосу соңында аудит журналындағы тест жазбаларын тазалайды (tests/e2e/global-setup.ts)
+  globalSetup: './tests/e2e/global-setup.ts',
   timeout: 90_000,
   expect: { timeout: 15_000 },
   forbidOnly: !!process.env.CI,

@@ -27,7 +27,8 @@ export const Media: CollectionConfig = {
   },
   upload: {
     staticDir: path.resolve(dirname, '../../.data/media'),
-    mimeTypes: ['image/*', 'application/pdf', 'video/mp4'],
+    // SVG әдейі жоқ: сол домен астынан берілсе XSS векторы және sharp/librsvg шабуыл беті (docs/PROGRESS.md, 55-тармақ)
+    mimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/avif', 'image/gif', 'application/pdf', 'video/mp4'],
     focalPoint: true,
     imageSizes: [{ name: 'thumbnail', width: 400, height: 300, position: 'centre' }],
     adminThumbnail: 'thumbnail',

@@ -22,6 +22,7 @@ npm run dev        # http://localhost:3000, әкімші: /admin (бірінші
 | `src/app/(site)/api/portal` | форма, тіркелу, 2FA, NDA, деректер бөлмесі, KPI, есептер API |
 | `src/app/(payload)` | Payload әкімші панелі мен REST/GraphQL |
 | `src/collections`, `src/globals` | Payload жинақтары мен глобалдары (ТТ 13.3) |
+| `src/migrations` | Payload DB миграциялары: өндірісте қосымша іске қосылғанда өздігінен орындалады |
 | `src/hooks`, `src/access` | бизнес-ережелер мен рұқсат функциялары (сервер) |
 | `src/lib/{scoring,investment,kpi}` | таза бизнес-логика: бағалау, жоба ережелері, NDA, сәйкестендіру, KPI |
 | `src/lib/{security,forms,portal}` | ALTCHA, TOTP, rate limit, формалар, сессия көмекшілері |
@@ -37,4 +38,5 @@ npm run dev        # http://localhost:3000, әкімші: /admin (бірінші
 - Құпия кілттер `.env` ішінде (git-ке түспейді), үлгі `.env.example`.
 - Тексерілмеген жоба ашық каталогқа түспейді; төрт сома ешқашан қосылмайды; деректер бөлмесі тек NDA-дан кейін.
 - Hook ішінде Local API шақыруына `req` беріледі (әйтпесе транзакция deadlock болады).
+- Коллекция немесе өріс өзгерсе: `npm run payload -- migrate:create <атау>` және `src/migrations` commit-ке қосылады (әзірлеуде схема `push` арқылы өздігінен жаңарады, өндірісте тек миграциямен).
 - Tailwind брейкпоинттері: `xs 390`, `md 768`, `lg 1080`, `xl 1440` (`sm` жоқ).
