@@ -1,0 +1,7 @@
+# Caddy: автоматты HTTPS (Let's Encrypt), сығу, қосымшаға reverse proxy. Домен SITE_DOMAIN айнымалысынан.
+{$SITE_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy app:3000
+	# Қауіпсіздік тақырыптарын қосымша өзі береді (next.config.ts); бұл жерде тек жасырын ақпаратты алып тастаймыз
+	header -Server
+}

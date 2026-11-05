@@ -1,0 +1,67 @@
+name: CI
+
+# Әр push және pull request: lint, typecheck, unit-тесттер, build. E2E бөлек job (Postgres қызметімен).
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - name: Build
+        run: npm run build
+        env:
+          PAYLOAD_SECRET: ci-build-placeholder-not-a-secret
+          DATABASE_URL: postgresql://kfca:kfca@127.0.0.1:5432/kfca
+      # 2026-11-05: 4 high (happy-dom -> @lexical/headless -> @payloadcms/richtext-lexical; sharp < 0.35.5). Түзету major жаңарту керек,
+      # сондықтан әзірше блоктамайды. Шешілгеннен кейін continue-on-error алып тасталады.
+      - name: Dependency audit (production)
+        run: npm audit --omit=dev --audit-level=high
+        continue-on-error: true
+
+  e2e:
+    runs-on: ubuntu-latest
+    needs: checks
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: kfca
+          POSTGRES_PASSWORD: kfca
+          POSTGRES_DB: kfca
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U kfca -d kfca"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 20
+    env:
+      DATABASE_URL: postgresql://kfca:kfca@127.0.0.1:5432/kfca
+      PAYLOAD_SECRET: ci-e2e-placeholder-not-a-secret
+      PW_CHANNEL: chromium
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run seed
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-traces
+          path: test-results

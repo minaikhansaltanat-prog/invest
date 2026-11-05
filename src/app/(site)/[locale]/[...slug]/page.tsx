@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation'
 import { FormRenderer } from '@/components/forms/FormRenderer'
 import { Blocks, tocItems } from '@/components/page/Blocks'
 import { CtaBand } from '@/components/page/CtaBand'
+import { breadcrumbSchema, JsonLd } from '@/components/page/JsonLd'
 import { AlbumBody, NewsBody, ProjectBody } from '@/components/page/details'
 import {
   AlbumsList,
@@ -218,6 +219,7 @@ export default async function InnerPage({ params, searchParams }: Props) {
 
   return (
     <main id="main">
+      <JsonLd data={breadcrumbSchema(locale, crumbs.map((crumb) => ({ name: crumb.label, path: crumb.href })).map((crumb, index, all) => (index === all.length - 1 ? { name: crumb.name, path: resolved.path } : crumb)))} />
       <PageHero
         eyebrow={eyebrow}
         title={titleOf(resolved)}

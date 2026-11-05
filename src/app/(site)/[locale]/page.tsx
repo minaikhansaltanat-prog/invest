@@ -10,6 +10,7 @@ import { CorridorsSection, ProjectsSection } from '@/components/home/ProjectsCor
 import { LeadershipSection, ScoringSection } from '@/components/home/ScoringLeadership'
 import { LifecycleSection, ServicesSection } from '@/components/home/ServicesLifecycle'
 import { MissingTranslation } from '@/components/layout/MissingTranslation'
+import { JsonLd, organizationSchema } from '@/components/page/JsonLd'
 import { routing } from '@/i18n/routing'
 import {
   getCatalogProjects,
@@ -55,6 +56,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   return (
     <main id="main">
+      <JsonLd data={organizationSchema({ name: (settings.brandName ?? '').split('\n').join(' '), phone: settings.phone, address: settings.legalAddress, locale })} />
       {home.hero ? <Hero data={home.hero} zhName={zh('siteName')} /> : null}
       {home.audience ? <AudienceCards data={home.audience} /> : null}
       {home.results ? <ResultsSection data={home.results} kpi={kpi} /> : null}

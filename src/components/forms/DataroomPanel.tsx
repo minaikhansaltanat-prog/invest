@@ -96,7 +96,7 @@ export function DataroomViewer({ files, watermark }: { files: FileItem[]; waterm
               // eslint-disable-next-line @next/next/no-img-element
               <img src={`/api/portal/dataroom/file/${current.id}`} alt={current.title} className="block w-full select-none" draggable={false} />
             ) : (
-              <iframe title={current.title} src={`/api/portal/dataroom/file/${current.id}#toolbar=0&navpanes=0`} className="block h-[70vh] w-full" sandbox="allow-same-origin" />
+              <iframe title={current.title} src={`/api/portal/dataroom/file/${current.id}#toolbar=0&navpanes=0`} className="block h-[70vh] w-full" />
             )}
             <div aria-hidden="true" className="pointer-events-none absolute inset-0 grid select-none grid-cols-2 content-around gap-y-16 overflow-hidden opacity-30 lg:grid-cols-3">
               {Array.from({ length: 12 }, (_, index) => (

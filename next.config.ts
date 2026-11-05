@@ -16,8 +16,42 @@ process.env.NEXT_PUBLIC_SITE_URL ||= 'http://localhost:3000'
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
+const isProd = process.env.NODE_ENV === 'production'
+
+// Қауіпсіздік тақырыптары (ТТ 14.1, 9-кезең). Сыртқы доменге рұқсат жоқ (Google/YouTube/CDN жоқ).
+// 'unsafe-inline' скрипт/стиль үшін Next-тің ішкі скрипттері мен reveal-boot үшін әлі қажет; nonce негізді қатаң CSP (proxy.ts ішінде nonce беру) 9-кезеңнің келесі қадамы.
+// Dev режимінде HMR үшін 'unsafe-eval' және ws қосылады.
+const csp = [
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline'${isProd ? '' : " 'unsafe-eval'"}`,
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob:",
+  "font-src 'self' data:",
+  "media-src 'self' blob:",
+  `connect-src 'self'${isProd ? '' : ' ws: wss:'}`,
+  "frame-src 'self'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'self'",
+].join('; ')
+
+const securityHeaders = [
+  { key: 'Content-Security-Policy', value: csp },
+  { key: 'X-Content-Type-Options', value: 'nosniff' },
+  { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+  { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+  { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), payment=(), usb=()' },
+  { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
+  // HSTS тек өндірісте (HTTPS): localhost-та браузерді http-ге қатып қалдырмау үшін
+  ...(isProd ? [{ key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' }] : []),
+]
+
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  async headers() {
+    return [{ source: '/:path*', headers: securityHeaders }]
+  },
   // Dev индикаторы скриншоттарда көрінбесін
   devIndicators: false,
   images: {

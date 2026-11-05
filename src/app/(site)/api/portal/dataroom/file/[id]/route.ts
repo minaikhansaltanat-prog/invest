@@ -58,7 +58,7 @@ export async function GET(request: Request, context: { params: Promise<{ id: str
       'content-disposition': 'inline',
       'cache-control': 'private, no-store',
       'x-content-type-options': 'nosniff',
-      'content-security-policy': "sandbox; default-src 'none'",
+      'x-frame-options': 'SAMEORIGIN',
     },
   })
 }
