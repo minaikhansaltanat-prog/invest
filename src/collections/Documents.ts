@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { contentEditors, publishedOrStaff, withRoles } from '@/access'
 import { checkbox, ltext, ltextarea, select, text } from '@/fields/helpers'
 import { translationStatusField } from '@/fields/translationStatus'
+import { adminGroups } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 
 export const documentCategories = ['charter', 'policy', 'methodology', 'report', 'privacy', 'other'] as const
@@ -17,7 +18,7 @@ export const Documents: CollectionConfig = {
   admin: {
     useAsTitle: 'slug',
     defaultColumns: ['title', 'category', 'version', 'publishedAt', '_status'],
-    group: l('Контент', 'Контент', 'Content', '内容'),
+    group: adminGroups.content,
   },
   versions: { drafts: true, maxPerDoc: 25 },
   access: {

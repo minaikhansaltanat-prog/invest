@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { withRoles } from '@/access'
 import { roleField } from '@/access/fields'
+import { hiddenInCorporate } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 
 // NDA жазбалары (ТТ 8.6): шаблон нұсқасы, қол қойған пайдаланушы, уақыт, IP, мерзімі (әдепкі 90 күн). Қол қоюды тек сервер жасайды
@@ -16,6 +17,7 @@ export const Ndas: CollectionConfig = {
     useAsTitle: 'id',
     defaultColumns: ['project', 'investor', 'signedAt', 'expiresAt', 'revokedAt'],
     group: l('Инвестициялық модуль', 'Инвестиционный модуль', 'Investment module', '投资模块'),
+    hidden: hiddenInCorporate,
   },
   access: {
     read: withRoles('secretariat', 'chair', 'compliance', 'auditor'),

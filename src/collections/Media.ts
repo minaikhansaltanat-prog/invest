@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url'
 import type { CollectionConfig } from 'payload'
 
 import { ltext } from '@/fields/helpers'
+import { adminGroups } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -16,7 +17,7 @@ export const Media: CollectionConfig = {
     plural: l('Медиафайлдар', 'Медиафайлы', 'Media files', '媒体文件'),
   },
   admin: {
-    group: l('Контент', 'Контент', 'Content', '内容'),
+    group: adminGroups.media,
     useAsTitle: 'filename',
   },
   access: {

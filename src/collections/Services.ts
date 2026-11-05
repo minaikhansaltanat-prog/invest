@@ -4,6 +4,7 @@ import { contentEditors, publishedOrStaff, withRoles } from '@/access'
 import { ctaGroup, pageBlocks } from '@/blocks/pageBlocks'
 import { checkbox, ltext, ltextarea, number, select, text } from '@/fields/helpers'
 import { translationStatusField } from '@/fields/translationStatus'
+import { adminGroups } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 
 export const serviceIcons = ['globe', 'layers', 'shield-check', 'factory', 'chart', 'columns', 'compass', 'leaf'] as const
@@ -19,7 +20,7 @@ export const Services: CollectionConfig = {
   admin: {
     useAsTitle: 'slug',
     defaultColumns: ['number', 'title', 'slug', 'highlight'],
-    group: l('Контент', 'Контент', 'Content', '内容'),
+    group: adminGroups.content,
   },
   versions: { drafts: true, maxPerDoc: 25 },
   access: {

@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url'
 import type { CollectionConfig } from 'payload'
 
 import { withRoles } from '@/access'
+import { hiddenInCorporate } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -21,6 +22,7 @@ export const DataroomFiles: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'project', 'category', 'filename'],
     group: l('Инвестициялық модуль', 'Инвестиционный модуль', 'Investment module', '投资模块'),
+    hidden: hiddenInCorporate,
   },
   access: {
     read: withRoles('secretariat', 'chair', 'compliance', 'auditor', 'expert'),

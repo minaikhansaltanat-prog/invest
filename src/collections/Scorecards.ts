@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { withRoles } from '@/access'
 import { applyScorecardToInvestor, scorecardRules } from '@/hooks/investment'
 import { dimensionKeys } from '@/globals/ScoringConfig'
+import { hiddenInCorporate } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 
 // 100 балдық бағалау (ТТ 8.2): әр өлшем бойынша балл, дәлелдеме мәтіні және файлдар міндетті; екі тұлға (сарапшы + комитет мүшесі) бекітеді.
@@ -17,6 +18,7 @@ export const Scorecards: CollectionConfig = {
     useAsTitle: 'id',
     defaultColumns: ['investor', 'total', 'grade', 'finalized', 'updatedAt'],
     group: l('Инвестициялық модуль', 'Инвестиционный модуль', 'Investment module', '投资模块'),
+    hidden: hiddenInCorporate,
   },
   access: {
     read: withRoles('expert', 'compliance', 'chair', 'auditor', 'secretariat'),

@@ -5,6 +5,7 @@ import { computedField, roleField } from '@/access/fields'
 import { checkbox, ltext, ltextarea, number, rows, select, text } from '@/fields/helpers'
 import { projectBusinessRules } from '@/hooks/investment'
 import { translationStatusField } from '@/fields/translationStatus'
+import { hiddenInCorporate } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 import { isCorporate } from '@/lib/mode'
 import { projectLevels, projectModels, projectStages, regions, sectors, toOptions } from '@/lib/taxonomy'
@@ -31,6 +32,7 @@ export const Projects: CollectionConfig = {
     useAsTitle: 'slug',
     defaultColumns: ['title', 'level', 'sector', 'region', 'publishToCatalog'],
     group: l('Инвестициялық модуль', 'Инвестиционный модуль', 'Investment module', '投资模块'),
+    hidden: hiddenInCorporate,
   },
   access: {
     read: ({ req }) => {

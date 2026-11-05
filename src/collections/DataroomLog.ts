@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { withRoles } from '@/access'
+import { hiddenInCorporate } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 
 // Деректер бөлмесінің қарау журналы (ТТ 8.6): әр ашу, қарау, жүктеу және бас тарту. Тек сервер жазады, өзгертілмейді және өшірілмейді.
@@ -14,6 +15,7 @@ export const DataroomLog: CollectionConfig = {
     useAsTitle: 'message',
     defaultColumns: ['at', 'action', 'user', 'project', 'reason'],
     group: l('Инвестициялық модуль', 'Инвестиционный модуль', 'Investment module', '投资模块'),
+    hidden: hiddenInCorporate,
   },
   access: {
     read: withRoles('compliance', 'chair', 'auditor'),

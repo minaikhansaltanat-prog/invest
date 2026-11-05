@@ -4,6 +4,7 @@ import { contentEditors, publishedOrStaff, withRoles } from '@/access'
 import { ctaGroup, pageBlocks } from '@/blocks/pageBlocks'
 import { ltext, ltextarea, select, text } from '@/fields/helpers'
 import { translationStatusField } from '@/fields/translationStatus'
+import { adminGroups } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 
 export const pageSections = [
@@ -43,7 +44,7 @@ export const Pages: CollectionConfig = {
   admin: {
     useAsTitle: 'path',
     defaultColumns: ['path', 'title', 'section', '_status'],
-    group: l('Контент', 'Контент', 'Content', '内容'),
+    group: adminGroups.content,
   },
   versions: { drafts: true, maxPerDoc: 25 },
   access: {

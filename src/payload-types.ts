@@ -68,20 +68,21 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    admins: Admin;
-    users: User;
-    media: Media;
     pages: Page;
-    people: Person;
-    services: Service;
-    projects: Project;
     news: News;
     events: Event;
-    videos: Video;
-    albums: Album;
+    services: Service;
     partners: Partner;
+    people: Person;
     documents: Document;
+    albums: Album;
+    videos: Video;
+    media: Media;
     submissions: Submission;
+    admins: Admin;
+    auditLog: AuditLog;
+    users: User;
+    projects: Project;
     organizations: Organization;
     investors: Investor;
     scorecards: Scorecard;
@@ -93,7 +94,6 @@ export interface Config {
     agreements: Agreement;
     members: Member;
     issues: Issue;
-    auditLog: AuditLog;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -101,20 +101,21 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    admins: AdminsSelect<false> | AdminsSelect<true>;
-    users: UsersSelect<false> | UsersSelect<true>;
-    media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
-    people: PeopleSelect<false> | PeopleSelect<true>;
-    services: ServicesSelect<false> | ServicesSelect<true>;
-    projects: ProjectsSelect<false> | ProjectsSelect<true>;
     news: NewsSelect<false> | NewsSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
-    videos: VideosSelect<false> | VideosSelect<true>;
-    albums: AlbumsSelect<false> | AlbumsSelect<true>;
+    services: ServicesSelect<false> | ServicesSelect<true>;
     partners: PartnersSelect<false> | PartnersSelect<true>;
+    people: PeopleSelect<false> | PeopleSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
+    albums: AlbumsSelect<false> | AlbumsSelect<true>;
+    videos: VideosSelect<false> | VideosSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
     submissions: SubmissionsSelect<false> | SubmissionsSelect<true>;
+    admins: AdminsSelect<false> | AdminsSelect<true>;
+    auditLog: AuditLogSelect<false> | AuditLogSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
+    projects: ProjectsSelect<false> | ProjectsSelect<true>;
     organizations: OrganizationsSelect<false> | OrganizationsSelect<true>;
     investors: InvestorsSelect<false> | InvestorsSelect<true>;
     scorecards: ScorecardsSelect<false> | ScorecardsSelect<true>;
@@ -126,7 +127,6 @@ export interface Config {
     agreements: AgreementsSelect<false> | AgreementsSelect<true>;
     members: MembersSelect<false> | MembersSelect<true>;
     issues: IssuesSelect<false> | IssuesSelect<true>;
-    auditLog: AuditLogSelect<false> | AuditLogSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -193,166 +193,6 @@ export interface UserAuthOperations {
   unlock: {
     email: string;
     password: string;
-  };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "admins".
- */
-export interface Admin {
-  id: number;
-  name: string;
-  roles: (
-    | 'super-admin'
-    | 'chair'
-    | 'secretariat'
-    | 'expert'
-    | 'compliance'
-    | 'auditor'
-    | 'content-manager'
-    | 'translator'
-    | 'regional-rep'
-    | 'analyst'
-  )[];
-  /**
-   * A regional representative sees only the projects and investors of this region.
-   */
-  region?:
-    | (
-        | 'astana'
-        | 'almaty-city'
-        | 'shymkent'
-        | 'abai'
-        | 'akmola'
-        | 'aktobe'
-        | 'almaty'
-        | 'atyrau'
-        | 'east-kazakhstan'
-        | 'zhambyl'
-        | 'zhetysu'
-        | 'west-kazakhstan'
-        | 'karaganda'
-        | 'kostanay'
-        | 'kyzylorda'
-        | 'mangystau'
-        | 'pavlodar'
-        | 'north-kazakhstan'
-        | 'turkistan'
-        | 'ulytau'
-      )
-    | null;
-  totpEnabled?: boolean | null;
-  totpSecret?: string | null;
-  totpPending?: string | null;
-  loginHistory?:
-    | {
-        at?: string | null;
-        ip?: string | null;
-        agent?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  resetPasswordRequestedAt?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
-  password?: string | null;
-  collection: 'admins';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
-export interface User {
-  id: number;
-  name: string;
-  roles: ('investor' | 'owner' | 'member')[];
-  status?: ('active' | 'blocked') | null;
-  locale?: ('kk' | 'ru' | 'en' | 'zh') | null;
-  organization?: string | null;
-  country?: string | null;
-  phone?: string | null;
-  /**
-   * The consent text version and time are stored (TZ 14.2).
-   */
-  consents?: {
-    privacyAt?: string | null;
-    privacyVersion?: string | null;
-  };
-  totpEnabled?: boolean | null;
-  totpSecret?: string | null;
-  totpPending?: string | null;
-  loginHistory?:
-    | {
-        at?: string | null;
-        ip?: string | null;
-        agent?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  deletionRequestedAt?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  resetPasswordRequestedAt?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
-  password?: string | null;
-  collection: 'users';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt: string;
-  credit?: string | null;
-  license?: ('own' | 'stock' | 'partner' | 'ai-placeholder') | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-  sizes?: {
-    thumbnail?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
   };
 }
 /**
@@ -552,29 +392,93 @@ export interface Page {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "people".
+ * via the `definition` "news".
  */
-export interface Person {
+export interface News {
   id: number;
   slug: string;
-  name: string;
-  position?: string | null;
-  group: 'leadership' | 'secretariat' | 'experts' | 'representatives';
-  photo?: (number | null) | Media;
-  photoAlt?: string | null;
+  title: string;
+  excerpt?: string | null;
+  category: 'strategy' | 'methodology' | 'projects' | 'china' | 'events' | 'analytics';
+  publishedAt: string;
+  image?: (number | null) | Media;
+  featured?: boolean | null;
+  isSample?: boolean | null;
+  body?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   /**
-   * Without this flag the site shows a monogram instead of the photo.
+   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
    */
-  photoConsent?: boolean | null;
-  photoConsentNote?: string | null;
-  photoConsentFile?: (number | null) | Media;
-  /**
-   * e.g. ҒЖ
-   */
-  monogram?: string | null;
-  bio?: string | null;
-  languages?: string | null;
-  order?: number | null;
+  translationStatus?: {
+    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
+    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
+    en?: ('none' | 'draft' | 'review' | 'approved') | null;
+    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt: string;
+  credit?: string | null;
+  license?: ('own' | 'stock' | 'partner' | 'ai-placeholder') | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: number;
+  slug: string;
+  title: string;
+  summary?: string | null;
+  startsAt: string;
+  endsAt?: string | null;
+  format: 'offline' | 'online' | 'hybrid';
+  location?: string | null;
+  registrationUrl?: string | null;
+  image?: (number | null) | Media;
+  isSample?: boolean | null;
   /**
    * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
    */
@@ -774,6 +678,342 @@ export interface Service {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partners".
+ */
+export interface Partner {
+  id: number;
+  slug: string;
+  name: string;
+  kind: 'international' | 'state' | 'finance' | 'industry' | 'academic' | 'media';
+  country?: string | null;
+  url?: string | null;
+  description?: string | null;
+  logo?: (number | null) | Media;
+  showLogo?: boolean | null;
+  permissionNote?: string | null;
+  order?: number | null;
+  isSample?: boolean | null;
+  /**
+   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
+   */
+  translationStatus?: {
+    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
+    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
+    en?: ('none' | 'draft' | 'review' | 'approved') | null;
+    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "people".
+ */
+export interface Person {
+  id: number;
+  slug: string;
+  name: string;
+  position?: string | null;
+  group: 'leadership' | 'secretariat' | 'experts' | 'representatives';
+  photo?: (number | null) | Media;
+  photoAlt?: string | null;
+  /**
+   * Without this flag the site shows a monogram instead of the photo.
+   */
+  photoConsent?: boolean | null;
+  photoConsentNote?: string | null;
+  photoConsentFile?: (number | null) | Media;
+  /**
+   * e.g. ҒЖ
+   */
+  monogram?: string | null;
+  bio?: string | null;
+  languages?: string | null;
+  order?: number | null;
+  /**
+   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
+   */
+  translationStatus?: {
+    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
+    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
+    en?: ('none' | 'draft' | 'review' | 'approved') | null;
+    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents".
+ */
+export interface Document {
+  id: number;
+  slug: string;
+  title: string;
+  summary?: string | null;
+  category: 'charter' | 'policy' | 'methodology' | 'report' | 'privacy' | 'other';
+  file?: (number | null) | Media;
+  version?: string | null;
+  isDraftMethod?: boolean | null;
+  publishedAt?: string | null;
+  /**
+   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
+   */
+  translationStatus?: {
+    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
+    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
+    en?: ('none' | 'draft' | 'review' | 'approved') | null;
+    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "albums".
+ */
+export interface Album {
+  id: number;
+  slug: string;
+  title: string;
+  description?: string | null;
+  cover?: (number | null) | Media;
+  photos?:
+    | {
+        image: number | Media;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  publishedAt: string;
+  /**
+   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
+   */
+  translationStatus?: {
+    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
+    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
+    en?: ('none' | 'draft' | 'review' | 'approved') | null;
+    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "videos".
+ */
+export interface Video {
+  id: number;
+  slug: string;
+  title: string;
+  summary?: string | null;
+  file?: (number | null) | Media;
+  poster?: (number | null) | Media;
+  publishedAt: string;
+  /**
+   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
+   */
+  translationStatus?: {
+    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
+    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
+    en?: ('none' | 'draft' | 'review' | 'approved') | null;
+    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "submissions".
+ */
+export interface Submission {
+  id: number;
+  reference: string;
+  kind: 'contact' | 'investor' | 'project' | 'membership';
+  status: 'new' | 'in-review' | 'accepted' | 'rejected' | 'spam';
+  contactName?: string | null;
+  email?: string | null;
+  locale?: string | null;
+  data:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  consent: {
+    at: string;
+    version: string;
+    ipHash?: string | null;
+  };
+  user?: (number | null) | User;
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: number;
+  name: string;
+  roles: ('investor' | 'owner' | 'member')[];
+  status?: ('active' | 'blocked') | null;
+  locale?: ('kk' | 'ru' | 'en' | 'zh') | null;
+  organization?: string | null;
+  country?: string | null;
+  phone?: string | null;
+  /**
+   * The consent text version and time are stored (TZ 14.2).
+   */
+  consents?: {
+    privacyAt?: string | null;
+    privacyVersion?: string | null;
+  };
+  totpEnabled?: boolean | null;
+  totpSecret?: string | null;
+  totpPending?: string | null;
+  loginHistory?:
+    | {
+        at?: string | null;
+        ip?: string | null;
+        agent?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  deletionRequestedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  resetPasswordRequestedAt?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
+  collection: 'users';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "admins".
+ */
+export interface Admin {
+  id: number;
+  name: string;
+  roles: (
+    | 'super-admin'
+    | 'chair'
+    | 'secretariat'
+    | 'expert'
+    | 'compliance'
+    | 'auditor'
+    | 'content-manager'
+    | 'translator'
+    | 'regional-rep'
+    | 'analyst'
+  )[];
+  /**
+   * A regional representative sees only the projects and investors of this region.
+   */
+  region?:
+    | (
+        | 'astana'
+        | 'almaty-city'
+        | 'shymkent'
+        | 'abai'
+        | 'akmola'
+        | 'aktobe'
+        | 'almaty'
+        | 'atyrau'
+        | 'east-kazakhstan'
+        | 'zhambyl'
+        | 'zhetysu'
+        | 'west-kazakhstan'
+        | 'karaganda'
+        | 'kostanay'
+        | 'kyzylorda'
+        | 'mangystau'
+        | 'pavlodar'
+        | 'north-kazakhstan'
+        | 'turkistan'
+        | 'ulytau'
+      )
+    | null;
+  totpEnabled?: boolean | null;
+  totpSecret?: string | null;
+  totpPending?: string | null;
+  loginHistory?:
+    | {
+        at?: string | null;
+        ip?: string | null;
+        agent?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  resetPasswordRequestedAt?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
+  collection: 'admins';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "auditLog".
+ */
+export interface AuditLog {
+  id: number;
+  at: string;
+  action: 'create' | 'update' | 'delete' | 'login' | 'export';
+  collection?: string | null;
+  docId?: string | null;
+  actorCollection?: string | null;
+  actorId?: string | null;
+  actorEmail?: string | null;
+  ip?: string | null;
+  changes?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  note?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "projects".
  */
 export interface Project {
@@ -908,221 +1148,6 @@ export interface Organization {
   beneficiary?: string | null;
   website?: string | null;
   users?: (number | User)[] | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "news".
- */
-export interface News {
-  id: number;
-  slug: string;
-  title: string;
-  excerpt?: string | null;
-  category: 'strategy' | 'methodology' | 'projects' | 'china' | 'events' | 'analytics';
-  publishedAt: string;
-  image?: (number | null) | Media;
-  featured?: boolean | null;
-  isSample?: boolean | null;
-  body?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  /**
-   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
-   */
-  translationStatus?: {
-    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
-    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
-    en?: ('none' | 'draft' | 'review' | 'approved') | null;
-    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "events".
- */
-export interface Event {
-  id: number;
-  slug: string;
-  title: string;
-  summary?: string | null;
-  startsAt: string;
-  endsAt?: string | null;
-  format: 'offline' | 'online' | 'hybrid';
-  location?: string | null;
-  registrationUrl?: string | null;
-  image?: (number | null) | Media;
-  isSample?: boolean | null;
-  /**
-   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
-   */
-  translationStatus?: {
-    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
-    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
-    en?: ('none' | 'draft' | 'review' | 'approved') | null;
-    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "videos".
- */
-export interface Video {
-  id: number;
-  slug: string;
-  title: string;
-  summary?: string | null;
-  file?: (number | null) | Media;
-  poster?: (number | null) | Media;
-  publishedAt: string;
-  /**
-   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
-   */
-  translationStatus?: {
-    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
-    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
-    en?: ('none' | 'draft' | 'review' | 'approved') | null;
-    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "albums".
- */
-export interface Album {
-  id: number;
-  slug: string;
-  title: string;
-  description?: string | null;
-  cover?: (number | null) | Media;
-  photos?:
-    | {
-        image: number | Media;
-        caption?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  publishedAt: string;
-  /**
-   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
-   */
-  translationStatus?: {
-    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
-    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
-    en?: ('none' | 'draft' | 'review' | 'approved') | null;
-    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "partners".
- */
-export interface Partner {
-  id: number;
-  slug: string;
-  name: string;
-  kind: 'international' | 'state' | 'finance' | 'industry' | 'academic' | 'media';
-  country?: string | null;
-  url?: string | null;
-  description?: string | null;
-  logo?: (number | null) | Media;
-  showLogo?: boolean | null;
-  permissionNote?: string | null;
-  order?: number | null;
-  isSample?: boolean | null;
-  /**
-   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
-   */
-  translationStatus?: {
-    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
-    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
-    en?: ('none' | 'draft' | 'review' | 'approved') | null;
-    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "documents".
- */
-export interface Document {
-  id: number;
-  slug: string;
-  title: string;
-  summary?: string | null;
-  category: 'charter' | 'policy' | 'methodology' | 'report' | 'privacy' | 'other';
-  file?: (number | null) | Media;
-  version?: string | null;
-  isDraftMethod?: boolean | null;
-  publishedAt?: string | null;
-  /**
-   * A record is hidden in a language unless its status is approved (or draft, per policy). Kazakh text is never used as a fallback.
-   */
-  translationStatus?: {
-    kk?: ('none' | 'draft' | 'review' | 'approved') | null;
-    ru?: ('none' | 'draft' | 'review' | 'approved') | null;
-    en?: ('none' | 'draft' | 'review' | 'approved') | null;
-    zh?: ('none' | 'draft' | 'review' | 'approved') | null;
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "submissions".
- */
-export interface Submission {
-  id: number;
-  reference: string;
-  kind: 'contact' | 'investor' | 'project' | 'membership';
-  status: 'new' | 'in-review' | 'accepted' | 'rejected' | 'spam';
-  contactName?: string | null;
-  email?: string | null;
-  locale?: string | null;
-  data:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  consent: {
-    at: string;
-    version: string;
-    ipHash?: string | null;
-  };
-  user?: (number | null) | User;
-  notes?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1385,31 +1410,6 @@ export interface Issue {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "auditLog".
- */
-export interface AuditLog {
-  id: number;
-  at: string;
-  action: 'create' | 'update' | 'delete' | 'login' | 'export';
-  collection?: string | null;
-  docId?: string | null;
-  actorCollection?: string | null;
-  actorId?: string | null;
-  actorEmail?: string | null;
-  ip?: string | null;
-  changes?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  note?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -1433,32 +1433,8 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: 'admins';
-        value: number | Admin;
-      } | null)
-    | ({
-        relationTo: 'users';
-        value: number | User;
-      } | null)
-    | ({
-        relationTo: 'media';
-        value: number | Media;
-      } | null)
-    | ({
         relationTo: 'pages';
         value: number | Page;
-      } | null)
-    | ({
-        relationTo: 'people';
-        value: number | Person;
-      } | null)
-    | ({
-        relationTo: 'services';
-        value: number | Service;
-      } | null)
-    | ({
-        relationTo: 'projects';
-        value: number | Project;
       } | null)
     | ({
         relationTo: 'news';
@@ -1469,24 +1445,52 @@ export interface PayloadLockedDocument {
         value: number | Event;
       } | null)
     | ({
-        relationTo: 'videos';
-        value: number | Video;
-      } | null)
-    | ({
-        relationTo: 'albums';
-        value: number | Album;
+        relationTo: 'services';
+        value: number | Service;
       } | null)
     | ({
         relationTo: 'partners';
         value: number | Partner;
       } | null)
     | ({
+        relationTo: 'people';
+        value: number | Person;
+      } | null)
+    | ({
         relationTo: 'documents';
         value: number | Document;
       } | null)
     | ({
+        relationTo: 'albums';
+        value: number | Album;
+      } | null)
+    | ({
+        relationTo: 'videos';
+        value: number | Video;
+      } | null)
+    | ({
+        relationTo: 'media';
+        value: number | Media;
+      } | null)
+    | ({
         relationTo: 'submissions';
         value: number | Submission;
+      } | null)
+    | ({
+        relationTo: 'admins';
+        value: number | Admin;
+      } | null)
+    | ({
+        relationTo: 'auditLog';
+        value: number | AuditLog;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: number | User;
+      } | null)
+    | ({
+        relationTo: 'projects';
+        value: number | Project;
       } | null)
     | ({
         relationTo: 'organizations';
@@ -1531,10 +1535,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'issues';
         value: number | Issue;
-      } | null)
-    | ({
-        relationTo: 'auditLog';
-        value: number | AuditLog;
       } | null);
   globalSlug?: string | null;
   user:
@@ -1587,125 +1587,6 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "admins_select".
- */
-export interface AdminsSelect<T extends boolean = true> {
-  name?: T;
-  roles?: T;
-  region?: T;
-  totpEnabled?: T;
-  totpSecret?: T;
-  totpPending?: T;
-  loginHistory?:
-    | T
-    | {
-        at?: T;
-        ip?: T;
-        agent?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  resetPasswordRequestedAt?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
-  sessions?:
-    | T
-    | {
-        id?: T;
-        createdAt?: T;
-        expiresAt?: T;
-      };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
- */
-export interface UsersSelect<T extends boolean = true> {
-  name?: T;
-  roles?: T;
-  status?: T;
-  locale?: T;
-  organization?: T;
-  country?: T;
-  phone?: T;
-  consents?:
-    | T
-    | {
-        privacyAt?: T;
-        privacyVersion?: T;
-      };
-  totpEnabled?: T;
-  totpSecret?: T;
-  totpPending?: T;
-  loginHistory?:
-    | T
-    | {
-        at?: T;
-        ip?: T;
-        agent?: T;
-        id?: T;
-      };
-  deletionRequestedAt?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  resetPasswordRequestedAt?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
-  sessions?:
-    | T
-    | {
-        id?: T;
-        createdAt?: T;
-        expiresAt?: T;
-      };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media_select".
- */
-export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
-  credit?: T;
-  license?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
-  sizes?:
-    | T
-    | {
-        thumbnail?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1863,22 +1744,45 @@ export interface PagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "people_select".
+ * via the `definition` "news_select".
  */
-export interface PeopleSelect<T extends boolean = true> {
+export interface NewsSelect<T extends boolean = true> {
   slug?: T;
-  name?: T;
-  position?: T;
-  group?: T;
-  photo?: T;
-  photoAlt?: T;
-  photoConsent?: T;
-  photoConsentNote?: T;
-  photoConsentFile?: T;
-  monogram?: T;
-  bio?: T;
-  languages?: T;
-  order?: T;
+  title?: T;
+  excerpt?: T;
+  category?: T;
+  publishedAt?: T;
+  image?: T;
+  featured?: T;
+  isSample?: T;
+  body?: T;
+  translationStatus?:
+    | T
+    | {
+        kk?: T;
+        ru?: T;
+        en?: T;
+        zh?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  slug?: T;
+  title?: T;
+  summary?: T;
+  startsAt?: T;
+  endsAt?: T;
+  format?: T;
+  location?: T;
+  registrationUrl?: T;
+  image?: T;
+  isSample?: T;
   translationStatus?:
     | T
     | {
@@ -2049,6 +1953,300 @@ export interface ServicesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partners_select".
+ */
+export interface PartnersSelect<T extends boolean = true> {
+  slug?: T;
+  name?: T;
+  kind?: T;
+  country?: T;
+  url?: T;
+  description?: T;
+  logo?: T;
+  showLogo?: T;
+  permissionNote?: T;
+  order?: T;
+  isSample?: T;
+  translationStatus?:
+    | T
+    | {
+        kk?: T;
+        ru?: T;
+        en?: T;
+        zh?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "people_select".
+ */
+export interface PeopleSelect<T extends boolean = true> {
+  slug?: T;
+  name?: T;
+  position?: T;
+  group?: T;
+  photo?: T;
+  photoAlt?: T;
+  photoConsent?: T;
+  photoConsentNote?: T;
+  photoConsentFile?: T;
+  monogram?: T;
+  bio?: T;
+  languages?: T;
+  order?: T;
+  translationStatus?:
+    | T
+    | {
+        kk?: T;
+        ru?: T;
+        en?: T;
+        zh?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents_select".
+ */
+export interface DocumentsSelect<T extends boolean = true> {
+  slug?: T;
+  title?: T;
+  summary?: T;
+  category?: T;
+  file?: T;
+  version?: T;
+  isDraftMethod?: T;
+  publishedAt?: T;
+  translationStatus?:
+    | T
+    | {
+        kk?: T;
+        ru?: T;
+        en?: T;
+        zh?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "albums_select".
+ */
+export interface AlbumsSelect<T extends boolean = true> {
+  slug?: T;
+  title?: T;
+  description?: T;
+  cover?: T;
+  photos?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
+  publishedAt?: T;
+  translationStatus?:
+    | T
+    | {
+        kk?: T;
+        ru?: T;
+        en?: T;
+        zh?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "videos_select".
+ */
+export interface VideosSelect<T extends boolean = true> {
+  slug?: T;
+  title?: T;
+  summary?: T;
+  file?: T;
+  poster?: T;
+  publishedAt?: T;
+  translationStatus?:
+    | T
+    | {
+        kk?: T;
+        ru?: T;
+        en?: T;
+        zh?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  credit?: T;
+  license?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "submissions_select".
+ */
+export interface SubmissionsSelect<T extends boolean = true> {
+  reference?: T;
+  kind?: T;
+  status?: T;
+  contactName?: T;
+  email?: T;
+  locale?: T;
+  data?: T;
+  consent?:
+    | T
+    | {
+        at?: T;
+        version?: T;
+        ipHash?: T;
+      };
+  user?: T;
+  notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "admins_select".
+ */
+export interface AdminsSelect<T extends boolean = true> {
+  name?: T;
+  roles?: T;
+  region?: T;
+  totpEnabled?: T;
+  totpSecret?: T;
+  totpPending?: T;
+  loginHistory?:
+    | T
+    | {
+        at?: T;
+        ip?: T;
+        agent?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  resetPasswordRequestedAt?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "auditLog_select".
+ */
+export interface AuditLogSelect<T extends boolean = true> {
+  at?: T;
+  action?: T;
+  collection?: T;
+  docId?: T;
+  actorCollection?: T;
+  actorId?: T;
+  actorEmail?: T;
+  ip?: T;
+  changes?: T;
+  note?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users_select".
+ */
+export interface UsersSelect<T extends boolean = true> {
+  name?: T;
+  roles?: T;
+  status?: T;
+  locale?: T;
+  organization?: T;
+  country?: T;
+  phone?: T;
+  consents?:
+    | T
+    | {
+        privacyAt?: T;
+        privacyVersion?: T;
+      };
+  totpEnabled?: T;
+  totpSecret?: T;
+  totpPending?: T;
+  loginHistory?:
+    | T
+    | {
+        at?: T;
+        ip?: T;
+        agent?: T;
+        id?: T;
+      };
+  deletionRequestedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  resetPasswordRequestedAt?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "projects_select".
  */
 export interface ProjectsSelect<T extends boolean = true> {
@@ -2133,188 +2331,6 @@ export interface ProjectsSelect<T extends boolean = true> {
         en?: T;
         zh?: T;
       };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "news_select".
- */
-export interface NewsSelect<T extends boolean = true> {
-  slug?: T;
-  title?: T;
-  excerpt?: T;
-  category?: T;
-  publishedAt?: T;
-  image?: T;
-  featured?: T;
-  isSample?: T;
-  body?: T;
-  translationStatus?:
-    | T
-    | {
-        kk?: T;
-        ru?: T;
-        en?: T;
-        zh?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "events_select".
- */
-export interface EventsSelect<T extends boolean = true> {
-  slug?: T;
-  title?: T;
-  summary?: T;
-  startsAt?: T;
-  endsAt?: T;
-  format?: T;
-  location?: T;
-  registrationUrl?: T;
-  image?: T;
-  isSample?: T;
-  translationStatus?:
-    | T
-    | {
-        kk?: T;
-        ru?: T;
-        en?: T;
-        zh?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "videos_select".
- */
-export interface VideosSelect<T extends boolean = true> {
-  slug?: T;
-  title?: T;
-  summary?: T;
-  file?: T;
-  poster?: T;
-  publishedAt?: T;
-  translationStatus?:
-    | T
-    | {
-        kk?: T;
-        ru?: T;
-        en?: T;
-        zh?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "albums_select".
- */
-export interface AlbumsSelect<T extends boolean = true> {
-  slug?: T;
-  title?: T;
-  description?: T;
-  cover?: T;
-  photos?:
-    | T
-    | {
-        image?: T;
-        caption?: T;
-        id?: T;
-      };
-  publishedAt?: T;
-  translationStatus?:
-    | T
-    | {
-        kk?: T;
-        ru?: T;
-        en?: T;
-        zh?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "partners_select".
- */
-export interface PartnersSelect<T extends boolean = true> {
-  slug?: T;
-  name?: T;
-  kind?: T;
-  country?: T;
-  url?: T;
-  description?: T;
-  logo?: T;
-  showLogo?: T;
-  permissionNote?: T;
-  order?: T;
-  isSample?: T;
-  translationStatus?:
-    | T
-    | {
-        kk?: T;
-        ru?: T;
-        en?: T;
-        zh?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "documents_select".
- */
-export interface DocumentsSelect<T extends boolean = true> {
-  slug?: T;
-  title?: T;
-  summary?: T;
-  category?: T;
-  file?: T;
-  version?: T;
-  isDraftMethod?: T;
-  publishedAt?: T;
-  translationStatus?:
-    | T
-    | {
-        kk?: T;
-        ru?: T;
-        en?: T;
-        zh?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "submissions_select".
- */
-export interface SubmissionsSelect<T extends boolean = true> {
-  reference?: T;
-  kind?: T;
-  status?: T;
-  contactName?: T;
-  email?: T;
-  locale?: T;
-  data?: T;
-  consent?:
-    | T
-    | {
-        at?: T;
-        version?: T;
-        ipHash?: T;
-      };
-  user?: T;
-  notes?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2536,22 +2552,6 @@ export interface IssuesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "auditLog_select".
- */
-export interface AuditLogSelect<T extends boolean = true> {
-  at?: T;
-  action?: T;
-  collection?: T;
-  docId?: T;
-  actorCollection?: T;
-  actorId?: T;
-  actorEmail?: T;
-  ip?: T;
-  changes?: T;
-  note?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -2614,12 +2614,12 @@ export interface Home {
     subtitle?: string | null;
     primaryCtaLabel?: string | null;
     /**
-     * Internal link, e.g. /investors. The language prefix is added automatically.
+     * Internal link, e.g. /services. The language prefix is added automatically.
      */
     primaryCtaHref?: string | null;
     secondaryCtaLabel?: string | null;
     /**
-     * Internal link, e.g. /investors. The language prefix is added automatically.
+     * Internal link, e.g. /services. The language prefix is added automatically.
      */
     secondaryCtaHref?: string | null;
     facts?:
@@ -2637,7 +2637,7 @@ export interface Home {
           text?: string | null;
           ctaLabel?: string | null;
           /**
-           * Internal link, e.g. /investors. The language prefix is added automatically.
+           * Internal link, e.g. /services. The language prefix is added automatically.
            */
           href?: string | null;
           id?: string | null;

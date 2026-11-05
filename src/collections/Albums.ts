@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { contentEditors, publishedOrStaff, withRoles } from '@/access'
 import { ltext, ltextarea, rows, text } from '@/fields/helpers'
 import { translationStatusField } from '@/fields/translationStatus'
+import { adminGroups } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 
 // Фотоальбомдар (ТТ 7.8). Әр суретте автор мен лицензия өрісі медиа жинағында (Media) сақталады.
@@ -15,7 +16,7 @@ export const Albums: CollectionConfig = {
   admin: {
     useAsTitle: 'slug',
     defaultColumns: ['title', 'publishedAt', '_status'],
-    group: l('Контент', 'Контент', 'Content', '内容'),
+    group: adminGroups.media,
   },
   versions: { drafts: true, maxPerDoc: 25 },
   access: {

@@ -4,6 +4,7 @@ import { hasAdminRole, isAdminUser, verifiedAdmin } from '@/access'
 import { roleField } from '@/access/fields'
 import { adminRoleLabels, adminRoles } from '@/access/roles'
 import { enforcePasswordPolicy, recordLogin } from '@/hooks/auth'
+import { adminGroups } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 import { regions, toOptions } from '@/lib/taxonomy'
 
@@ -19,7 +20,7 @@ export const Admins: CollectionConfig = {
   admin: {
     useAsTitle: 'email',
     defaultColumns: ['name', 'email', 'roles'],
-    group: l('Жүйе', 'Система', 'System', '系统'),
+    group: adminGroups.system,
   },
   auth: {
     // Сессия 30 минут белсенсіздіктен кейін аяқталады (ТТ 14.1)

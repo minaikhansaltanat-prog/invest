@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { contentEditors, publishedOrStaff, withRoles } from '@/access'
 import { ltext, ltextarea, text } from '@/fields/helpers'
 import { translationStatusField } from '@/fields/translationStatus'
+import { adminGroups } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 
 // Бейнелер (ТТ 7.8). YouTube/сыртқы embed жоқ (NIGHT_TASK 3.5): бейне өз серверімізде mp4 файл ретінде сақталады.
@@ -15,7 +16,7 @@ export const Videos: CollectionConfig = {
   admin: {
     useAsTitle: 'slug',
     defaultColumns: ['title', 'publishedAt', '_status'],
-    group: l('Контент', 'Контент', 'Content', '内容'),
+    group: adminGroups.media,
   },
   versions: { drafts: true, maxPerDoc: 25 },
   access: {

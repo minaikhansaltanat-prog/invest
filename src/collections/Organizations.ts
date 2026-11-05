@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { withRoles } from '@/access'
 import { select, text } from '@/fields/helpers'
+import { hiddenInCorporate } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 import { sectors, toOptions } from '@/lib/taxonomy'
 
@@ -16,6 +17,7 @@ export const Organizations: CollectionConfig = {
     useAsTitle: 'name',
     defaultColumns: ['name', 'country', 'registrationNumber', 'sector'],
     group: l('Инвестициялық модуль', 'Инвестиционный модуль', 'Investment module', '投资模块'),
+    hidden: hiddenInCorporate,
   },
   access: {
     read: withRoles('secretariat', 'chair', 'compliance', 'auditor', 'expert', 'regional-rep'),

@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { withRoles } from '@/access'
+import { adminGroups } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 
 export const submissionKinds = ['contact', 'investor', 'project', 'membership'] as const
@@ -17,7 +18,7 @@ export const Submissions: CollectionConfig = {
   admin: {
     useAsTitle: 'reference',
     defaultColumns: ['reference', 'kind', 'status', 'contactName', 'email', 'createdAt'],
-    group: l('Өтініштер', 'Заявки', 'Applications', '申请'),
+    group: adminGroups.requests,
   },
   access: {
     create: () => false,

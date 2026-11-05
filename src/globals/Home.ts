@@ -2,7 +2,9 @@ import type { GlobalConfig } from 'payload'
 
 import { checkbox, ltext, ltextarea, rows, text } from '@/fields/helpers'
 import { translationStatusField } from '@/fields/translationStatus'
+import { adminGroups } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
+import { isCorporate } from '@/lib/mode'
 
 const accentHint = l(
   'Алтын түсті бөлікті *жұлдызшамен* белгілеңіз. Жаңа жол: \\n.',
@@ -17,11 +19,15 @@ const lineHint = l(
   '换行（大屏幕）：\\n。',
 )
 const hrefHint = l(
-  'Ішкі сілтеме, мысалы: /investors. Тіл префиксі автоматты қосылады.',
-  'Внутренняя ссылка, например: /investors. Языковой префикс добавляется автоматически.',
-  'Internal link, e.g. /investors. The language prefix is added automatically.',
-  '站内链接，例如 /investors。语言前缀自动添加。',
+  'Ішкі сілтеме, мысалы: /services. Тіл префиксі автоматты қосылады.',
+  'Внутренняя ссылка, например: /services. Языковой префикс добавляется автоматически.',
+  'Internal link, e.g. /services. The language prefix is added automatically.',
+  '站内链接，例如 /services。语言前缀自动添加。',
 )
+
+// Басты беттің инвестициялық қойындылары (аудитория, нәтиже, цикл, жобалар, дәліздер, бағалау, мүшелік): corporate режимінде жасырын,
+// ішіндегі міндетті өрістер тексерілмейді. Corporate басты беті: hero, қызметтер, басшылық, медиа (docs/CORPORATE_MODE.md).
+const investmentTab = { condition: () => !isCorporate() }
 
 const eyebrow = ltext('eyebrow', l('Белгі (eyebrow)', 'Надпись (eyebrow)', 'Eyebrow', '小标题'))
 const sectionTitle = (hint = lineHint) =>
@@ -31,7 +37,7 @@ const sectionTitle = (hint = lineHint) =>
 export const Home: GlobalConfig = {
   slug: 'home',
   label: l('Басты бет', 'Главная страница', 'Home page', '首页'),
-  admin: { group: l('Беттер', 'Страницы', 'Pages', '页面') },
+  admin: { group: adminGroups.content },
   access: {
     read: () => true,
     update: ({ req }) => Boolean(req.user && req.user.collection === 'admins'),
@@ -72,6 +78,7 @@ export const Home: GlobalConfig = {
         {
           name: 'audience',
           label: l('Аудитория', 'Аудитория', 'Audience', '受众'),
+          admin: investmentTab,
           fields: [
             rows(
               'cards',
@@ -90,6 +97,7 @@ export const Home: GlobalConfig = {
         {
           name: 'results',
           label: l('Нәтиже ашықтығы', 'Прозрачность результатов', 'Results transparency', '成果透明'),
+          admin: investmentTab,
           fields: [
             eyebrow,
             sectionTitle(),
@@ -114,6 +122,7 @@ export const Home: GlobalConfig = {
         {
           name: 'lifecycle',
           label: l('Өмірлік цикл', 'Жизненный цикл', 'Lifecycle', '生命周期'),
+          admin: investmentTab,
           fields: [
             eyebrow,
             sectionTitle(),
@@ -142,6 +151,7 @@ export const Home: GlobalConfig = {
         {
           name: 'projects',
           label: l('Жобалар қоры', 'Пул проектов', 'Project pool', '项目库'),
+          admin: investmentTab,
           fields: [
             eyebrow,
             sectionTitle(),
@@ -161,6 +171,7 @@ export const Home: GlobalConfig = {
         {
           name: 'corridors',
           label: l('Дәліздер', 'Коридоры', 'Corridors', '走廊'),
+          admin: investmentTab,
           fields: [
             eyebrow,
             sectionTitle(),
@@ -211,6 +222,7 @@ export const Home: GlobalConfig = {
         {
           name: 'scoring',
           label: l('Бағалау', 'Оценка', 'Scoring', '评估'),
+          admin: investmentTab,
           fields: [
             eyebrow,
             sectionTitle(),
@@ -251,6 +263,7 @@ export const Home: GlobalConfig = {
         {
           name: 'membership',
           label: l('Мүшелік', 'Членство', 'Membership', '会员'),
+          admin: investmentTab,
           fields: [
             eyebrow,
             sectionTitle(),

@@ -4,6 +4,7 @@ import { hasAdminRole, withRoles } from '@/access'
 import { roleField } from '@/access/fields'
 import { investorRules } from '@/hooks/investment'
 import { number, select, text } from '@/fields/helpers'
+import { hiddenInCorporate } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 import { projectModels, regions, sectors, toOptions } from '@/lib/taxonomy'
 
@@ -19,6 +20,7 @@ export const Investors: CollectionConfig = {
     useAsTitle: 'displayName',
     defaultColumns: ['displayName', 'grade', 'status', 'direction', 'lastAssessedAt'],
     group: l('Инвестициялық модуль', 'Инвестиционный модуль', 'Investment module', '投资模块'),
+    hidden: hiddenInCorporate,
   },
   access: {
     // Өңірлік өкіл тек өз өңірін қызықтыратын инвесторларды көреді (ТТ 10: жазбаға қатынас)

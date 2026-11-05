@@ -1,6 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
 import { checkbox, ltext, ltextarea, number, rows, select, text } from '@/fields/helpers'
+import { hiddenInCorporate } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 
 // 100 балдық бағалаудың баптауы (ТТ 8.2): өлшемдер мен салмақтар кодқа қатаң жазылмайды, әр өзгеріс нұсқасы сақталады.
@@ -20,7 +21,7 @@ export const gradeKeys = ['A', 'B', 'C', 'D'] as const
 export const ScoringConfig: GlobalConfig = {
   slug: 'scoringConfig',
   label: l('Бағалау баптауы', 'Настройки оценки', 'Scoring configuration', '评分配置'),
-  admin: { group: l('Баптаулар', 'Настройки', 'Settings', '设置') },
+  admin: { group: l('Баптаулар', 'Настройки', 'Settings', '设置'), hidden: hiddenInCorporate },
   access: {
     read: () => true,
     update: ({ req }) => Boolean(req.user && req.user.collection === 'admins'),

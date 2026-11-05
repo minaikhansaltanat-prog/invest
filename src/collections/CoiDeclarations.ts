@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { hasAdminRole, isAdminUser, withRoles } from '@/access'
+import { hiddenInCorporate } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 
 // Мүдделер қақтығысы декларациялары (ТТ 10.2, 14.3): қақтығысы бар сарапшы жобаны көре алады, бірақ баға қоя алмайды.
@@ -15,6 +16,7 @@ export const CoiDeclarations: CollectionConfig = {
     useAsTitle: 'id',
     defaultColumns: ['person', 'investor', 'project', 'organization', 'declaredAt'],
     group: l('Инвестициялық модуль', 'Инвестиционный модуль', 'Investment module', '投资模块'),
+    hidden: hiddenInCorporate,
   },
   access: {
     read: ({ req }) => {

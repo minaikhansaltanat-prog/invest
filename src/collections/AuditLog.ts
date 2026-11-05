@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { withRoles } from '@/access'
+import { adminGroups } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 
 // Аудит журналы (ТТ 10.2, 14.1): кім, қашан, қандай жазбаны, қалай өзгертті (ескі және жаңа мән). Өшірілмейді және өзгертілмейді (append-only):
@@ -14,7 +15,7 @@ export const AuditLog: CollectionConfig = {
   admin: {
     useAsTitle: 'action',
     defaultColumns: ['at', 'action', 'collection', 'docId', 'actorEmail', 'ip'],
-    group: l('Жүйе', 'Система', 'System', '系统'),
+    group: adminGroups.system,
   },
   access: {
     read: withRoles('compliance', 'chair', 'auditor'),

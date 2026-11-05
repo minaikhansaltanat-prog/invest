@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { Payload } from 'payload'
 
 import { loadDashboard } from '@/lib/kpi/load'
+import { isCorporate } from '@/lib/mode'
 
 // Басқару дашборды (ТТ 10.2: 1-модуль), Payload админкасының басты бетінің үстінде. Төрт сома бөлек карточкада, ешқашан қосылмайды.
 // Көрсету: төраға, ревизор, аналитик, хатшылық (және супер-администратор). Жеке дерек жоқ: тек сандар мен жоба атаулары.
@@ -21,6 +22,8 @@ const label: React.CSSProperties = { fontSize: 12, letterSpacing: '0.06em', text
 const value: React.CSSProperties = { fontSize: 28, fontWeight: 700, color: 'var(--theme-elevation-900)', lineHeight: 1.15, marginTop: 4 }
 
 export async function KpiDashboard(props: { payload: Payload; user?: { roles?: string[] } | null; i18n?: { language?: string } }) {
+  // Corporate режимінде басқару дашборды жоқ (инвестициялық KPI жасырын); компонент importMap-та қалады, тек бос қайтарады
+  if (isCorporate()) return null
   const roles = props.user?.roles ?? []
   if (!roles.some((role) => allowed.includes(role))) return null
   const lang = (['kk', 'ru', 'en', 'zh'].includes(props.i18n?.language ?? '') ? props.i18n!.language : 'kk') as Lang

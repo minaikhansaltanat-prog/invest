@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { withRoles } from '@/access'
+import { hiddenInCorporate } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 
 const group = l('Инвестициялық модуль', 'Инвестиционный модуль', 'Investment module', '投资模块')
@@ -9,7 +10,7 @@ const group = l('Инвестициялық модуль', 'Инвестицио
 export const Agreements: CollectionConfig = {
   slug: 'agreements',
   labels: { singular: l('Келісім', 'Соглашение', 'Agreement', '协议'), plural: l('Келісімдер', 'Соглашения', 'Agreements', '协议') },
-  admin: { useAsTitle: 'title', defaultColumns: ['title', 'type', 'signedAt', 'validUntil', 'publishPermission'], group },
+  admin: { useAsTitle: 'title', defaultColumns: ['title', 'type', 'signedAt', 'validUntil', 'publishPermission'], group, hidden: hiddenInCorporate },
   access: { read: withRoles('secretariat', 'chair', 'auditor', 'compliance'), create: withRoles('secretariat', 'chair'), update: withRoles('secretariat', 'chair'), delete: withRoles('chair') },
   fields: [
     { name: 'title', type: 'text', required: true, label: l('Атауы', 'Название', 'Title', '名称') },
@@ -28,7 +29,7 @@ export const Agreements: CollectionConfig = {
 export const Members: CollectionConfig = {
   slug: 'members',
   labels: { singular: l('Мүше', 'Член', 'Member', '会员'), plural: l('Мүшелер', 'Члены', 'Members', '会员') },
-  admin: { useAsTitle: 'id', defaultColumns: ['organization', 'category', 'status', 'validUntil'], group },
+  admin: { useAsTitle: 'id', defaultColumns: ['organization', 'category', 'status', 'validUntil'], group, hidden: hiddenInCorporate },
   access: { read: withRoles('secretariat', 'chair', 'auditor'), create: withRoles('secretariat', 'chair'), update: withRoles('secretariat', 'chair'), delete: withRoles('chair') },
   fields: [
     { name: 'organization', type: 'relationship', relationTo: 'organizations', required: true, index: true, label: l('Ұйым', 'Организация', 'Organisation', '机构') },
@@ -51,7 +52,7 @@ export const Members: CollectionConfig = {
 export const Issues: CollectionConfig = {
   slug: 'issues',
   labels: { singular: l('Мәселе', 'Вопрос', 'Issue', '问题'), plural: l('Мәселелер тізілімі', 'Реестр вопросов', 'Issue register', '问题登记册') },
-  admin: { useAsTitle: 'id', defaultColumns: ['type', 'authority', 'status', 'createdAt'], group },
+  admin: { useAsTitle: 'id', defaultColumns: ['type', 'authority', 'status', 'createdAt'], group, hidden: hiddenInCorporate },
   access: { read: withRoles('secretariat', 'chair', 'regional-rep', 'auditor'), create: withRoles('secretariat', 'chair', 'regional-rep'), update: withRoles('secretariat', 'chair'), delete: withRoles('chair') },
   fields: [
     { name: 'organization', type: 'relationship', relationTo: 'organizations', label: l('Ұйым', 'Организация', 'Organisation', '机构') },

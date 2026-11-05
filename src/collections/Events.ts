@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { contentEditors, publishedOrStaff, withRoles } from '@/access'
 import { checkbox, ltext, ltextarea, select, text } from '@/fields/helpers'
 import { translationStatusField } from '@/fields/translationStatus'
+import { adminGroups } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 
 export const eventFormats = ['offline', 'online', 'hybrid'] as const
@@ -17,7 +18,7 @@ export const Events: CollectionConfig = {
   admin: {
     useAsTitle: 'slug',
     defaultColumns: ['title', 'startsAt', 'format', '_status'],
-    group: l('Контент', 'Контент', 'Content', '内容'),
+    group: adminGroups.content,
   },
   versions: { drafts: true, maxPerDoc: 25 },
   access: {

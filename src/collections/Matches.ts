@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { withRoles } from '@/access'
 import { matchRules, refreshInterestedCount } from '@/hooks/investment'
+import { hiddenInCorporate } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 
 export const matchStatuses = ['proposed', 'interested', 'negotiating', 'declined'] as const
@@ -18,6 +19,7 @@ export const Matches: CollectionConfig = {
     useAsTitle: 'id',
     defaultColumns: ['project', 'investor', 'status', 'proposedAt'],
     group: l('Инвестициялық модуль', 'Инвестиционный модуль', 'Investment module', '投资模块'),
+    hidden: hiddenInCorporate,
   },
   access: {
     read: withRoles('secretariat', 'chair', 'expert', 'regional-rep', 'compliance', 'auditor'),

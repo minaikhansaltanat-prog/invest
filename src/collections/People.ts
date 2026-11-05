@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { contentEditors, publishedOrStaff, withRoles } from '@/access'
 import { checkbox, ltext, ltextarea, number, select, text } from '@/fields/helpers'
 import { translationStatusField } from '@/fields/translationStatus'
+import { adminGroups } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 
 // Тұлғалар мен команда (ТТ 7.1, 13.3: people). Жариялау тек жазбаша келісіммен (consent).
@@ -15,7 +16,7 @@ export const People: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'group', 'position', 'photoConsent', '_status'],
-    group: l('Контент', 'Контент', 'Content', '内容'),
+    group: adminGroups.content,
   },
   versions: { drafts: true, maxPerDoc: 25 },
   access: {

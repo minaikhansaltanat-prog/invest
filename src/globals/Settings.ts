@@ -1,13 +1,14 @@
 import type { GlobalConfig } from 'payload'
 
 import { checkbox, group, ltext, ltextarea, select, text } from '@/fields/helpers'
+import { adminGroups } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 
 // Реквизиттер, байланыс, саясат (ТТ 2, 6: қызметтік жол, header, footer деректері).
 export const Settings: GlobalConfig = {
   slug: 'settings',
   label: l('Баптаулар', 'Настройки', 'Settings', '设置'),
-  admin: { group: l('Баптаулар', 'Настройки', 'Settings', '设置') },
+  admin: { group: adminGroups.system },
   access: {
     read: () => true,
     update: ({ req }) => Boolean(req.user && req.user.collection === 'admins'),

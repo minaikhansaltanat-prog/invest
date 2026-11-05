@@ -1,6 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
 import { checkbox, ltextarea, number } from '@/fields/helpers'
+import { hiddenInCorporate } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 
 // Нәтиже блогының межелері (ТТ 6: KPI жинағы). Нақты сандар 7-8-кезеңде расталған жазбалардан автоматты есептеледі;
@@ -8,7 +9,7 @@ import { l } from '@/lib/labels'
 export const KpiTargets: GlobalConfig = {
   slug: 'kpiTargets',
   label: l('KPI межелері', 'Целевые KPI', 'KPI targets', 'KPI 目标'),
-  admin: { group: l('Баптаулар', 'Настройки', 'Settings', '设置') },
+  admin: { group: l('Баптаулар', 'Настройки', 'Settings', '设置'), hidden: hiddenInCorporate },
   access: {
     read: () => true,
     update: ({ req }) => Boolean(req.user && req.user.collection === 'admins'),

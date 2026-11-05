@@ -4,6 +4,7 @@ import { userRoleLabels, userRoles } from '@/access/roles'
 import { hasAdminRole, isAdminUser, withRoles } from '@/access'
 import { enforcePasswordPolicy, recordLogin, requireTotpAfterLogin } from '@/hooks/auth'
 import { defaultLocale, locales } from '@/i18n/config'
+import { hiddenInCorporate } from '@/lib/admin-nav'
 import { l } from '@/lib/labels'
 
 const staffOnlyField: FieldAccess = ({ req }) => isAdminUser(req)
@@ -29,6 +30,7 @@ export const Users: CollectionConfig = {
     useAsTitle: 'email',
     defaultColumns: ['name', 'email', 'roles', 'status', 'locale'],
     group: l('Пайдаланушылар', 'Пользователи', 'Users', '用户'),
+    hidden: hiddenInCorporate,
   },
   auth: {
     tokenExpiration: 60 * 30,
