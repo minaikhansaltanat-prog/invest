@@ -1,17 +1,14 @@
 import { APIError, type CollectionAfterLoginHook, type CollectionBeforeValidateHook, ValidationError } from 'payload'
 
+import { writeAudit } from '@/hooks/audit'
 import { twoFactorEncryptionSecret } from '@/lib/portal/env'
+import { clientIp } from '@/lib/portal/ip'
 import { passwordProblems } from '@/lib/portal/password'
 import { rateLimit } from '@/lib/security/rateLimit'
 import { decryptSecret } from '@/lib/security/secretBox'
 import { verifyTotp } from '@/lib/security/totp'
 
-/** Сұраудың IP-ін алады (прокси арқылы x-forwarded-for). Жергілікті dev-те бос болуы мүмкін. */
-export const clientIp = (headers: Pick<Headers, 'get'> | undefined): string => {
-  // Тесттер әртүрлі IP-ді модельдей алуы үшін (rate limit тәуелсіз болсын): өндірісте бұл тақырып ескерілмейді
-  const simulated = process.env.NODE_ENV === 'production' ? null : headers?.get('x-test-client-ip')
-  return simulated || headers?.get('x-forwarded-for')?.split(',')[0]?.trim() || headers?.get('x-real-ip') || 'unknown'
-}
+export { clientIp }
 
 /** Құпия сөз саясаты (ТТ 14.1): әкімші мен пайдаланушы жинақтарында құпия сөз берілген кезде тексеріледі */
 export const enforcePasswordPolicy: CollectionBeforeValidateHook = ({ data, collection }) => {
@@ -72,9 +69,11 @@ export const recordLogin: CollectionAfterLoginHook = async ({ req, user, collect
       depth: 0,
       // req МІНДЕТТІ: кіру операциясы осы жолды транзакцияда ұстап тұр, бөлек қосылым өзін-өзі бұғаттап (deadlock) тастайды
       req,
+      context: { skipAudit: true },
     })
   } catch (error) {
     req.payload.logger.warn({ err: error }, 'login history not recorded')
   }
+  await writeAudit(req, { action: 'login', collection: collection.slug, docId: doc.id, note: entry.agent, actor: { collection: collection.slug, id: doc.id, email: (user as { email?: string }).email } })
   return user
 }

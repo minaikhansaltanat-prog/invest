@@ -93,6 +93,7 @@ export interface Config {
     agreements: Agreement;
     members: Member;
     issues: Issue;
+    auditLog: AuditLog;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -125,6 +126,7 @@ export interface Config {
     agreements: AgreementsSelect<false> | AgreementsSelect<true>;
     members: MembersSelect<false> | MembersSelect<true>;
     issues: IssuesSelect<false> | IssuesSelect<true>;
+    auditLog: AuditLogSelect<false> | AuditLogSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -212,6 +214,33 @@ export interface Admin {
     | 'regional-rep'
     | 'analyst'
   )[];
+  /**
+   * A regional representative sees only the projects and investors of this region.
+   */
+  region?:
+    | (
+        | 'astana'
+        | 'almaty-city'
+        | 'shymkent'
+        | 'abai'
+        | 'akmola'
+        | 'aktobe'
+        | 'almaty'
+        | 'atyrau'
+        | 'east-kazakhstan'
+        | 'zhambyl'
+        | 'zhetysu'
+        | 'west-kazakhstan'
+        | 'karaganda'
+        | 'kostanay'
+        | 'kyzylorda'
+        | 'mangystau'
+        | 'pavlodar'
+        | 'north-kazakhstan'
+        | 'turkistan'
+        | 'ulytau'
+      )
+    | null;
   totpEnabled?: boolean | null;
   totpSecret?: string | null;
   totpPending?: string | null;
@@ -1356,6 +1385,31 @@ export interface Issue {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "auditLog".
+ */
+export interface AuditLog {
+  id: number;
+  at: string;
+  action: 'create' | 'update' | 'delete' | 'login' | 'export';
+  collection?: string | null;
+  docId?: string | null;
+  actorCollection?: string | null;
+  actorId?: string | null;
+  actorEmail?: string | null;
+  ip?: string | null;
+  changes?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  note?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -1477,6 +1531,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'issues';
         value: number | Issue;
+      } | null)
+    | ({
+        relationTo: 'auditLog';
+        value: number | AuditLog;
       } | null);
   globalSlug?: string | null;
   user:
@@ -1537,6 +1595,7 @@ export interface PayloadMigration {
 export interface AdminsSelect<T extends boolean = true> {
   name?: T;
   roles?: T;
+  region?: T;
   totpEnabled?: T;
   totpSecret?: T;
   totpPending?: T;
@@ -2474,6 +2533,22 @@ export interface IssuesSelect<T extends boolean = true> {
   response?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "auditLog_select".
+ */
+export interface AuditLogSelect<T extends boolean = true> {
+  at?: T;
+  action?: T;
+  collection?: T;
+  docId?: T;
+  actorCollection?: T;
+  actorId?: T;
+  actorEmail?: T;
+  ip?: T;
+  changes?: T;
+  note?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

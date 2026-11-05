@@ -21,7 +21,7 @@ export const Submissions: CollectionConfig = {
   },
   access: {
     create: () => false,
-    read: withRoles('secretariat', 'chair', 'compliance', 'regional-rep', 'analyst'),
+    read: withRoles('secretariat', 'chair', 'compliance'),
     update: withRoles('secretariat', 'chair'),
     delete: withRoles('chair'),
   },

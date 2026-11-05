@@ -6,7 +6,7 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { en } from '@payloadcms/translations/languages/en'
 import { ru } from '@payloadcms/translations/languages/ru'
 import { zh } from '@payloadcms/translations/languages/zh'
-import { buildConfig, type Config } from 'payload'
+import { buildConfig, type CollectionConfig, type Config } from 'payload'
 import sharp from 'sharp'
 
 import { Admins } from './collections/Admins'
@@ -27,6 +27,7 @@ import { Partners } from './collections/Partners'
 import { People } from './collections/People'
 import { Projects } from './collections/Projects'
 import { Agreements, Issues, Members } from './collections/Registry'
+import { AuditLog } from './collections/AuditLog'
 import { Scorecards } from './collections/Scorecards'
 import { Services } from './collections/Services'
 import { Submissions } from './collections/Submissions'
@@ -36,6 +37,8 @@ import { Home } from './globals/Home'
 import { KpiTargets } from './globals/KpiTargets'
 import { ScoringConfig } from './globals/ScoringConfig'
 import { Settings } from './globals/Settings'
+import { withAudit } from './hooks/audit'
+import { withTranslator } from './hooks/roles'
 import { kk } from './i18n/admin-kk'
 import { defaultLocale, localeMeta, locales } from './i18n/config'
 
@@ -48,6 +51,17 @@ const isProd = process.env.NODE_ENV === 'production'
 const secret = process.env.PAYLOAD_SECRET || (isProd ? '' : 'dev-only-placeholder-not-a-secret')
 const connectionString =
   process.env.DATABASE_URL || (isProd ? '' : 'postgresql://kfca:kfca@127.0.0.1:54329/kfca')
+
+// Аудит (ТТ 10.2): барлық жинақтың жасау/өзгерту/өшіру әрекеті журналға түседі (журналдың өзі мен қарау журналы қоспағанда).
+// Аудармашы (ТТ 10.1): контент жинақтарында тек әдепкі емес тілдегі нұсқаны өзгерте алады.
+const contentSlugs = new Set(['pages', 'news', 'services', 'events', 'videos', 'albums', 'people', 'documents', 'partners'])
+const noAudit = new Set(['auditLog', 'dataroomLog', 'media'])
+function withCollectionPolicies(collections: CollectionConfig[]): CollectionConfig[] {
+  return collections.map((collection) => {
+    const translated = contentSlugs.has(collection.slug) ? withTranslator(collection) : collection
+    return noAudit.has(collection.slug) ? translated : withAudit(translated)
+  })
+}
 
 export default buildConfig({
   admin: {
@@ -63,9 +77,11 @@ export default buildConfig({
         Logo: '@/components/admin/AdminBrand#AdminLogo',
         Icon: '@/components/admin/AdminBrand#AdminIcon',
       },
+      // Басқару дашборды (ТТ 10.2): төрт сома бөлек, воронка, мерзімі өткен қадамдар
+      beforeDashboard: ['@/components/admin/KpiDashboard#KpiDashboard'],
     },
   },
-  collections: [
+  collections: withCollectionPolicies([
     Admins,
     Users,
     Media,
@@ -92,7 +108,8 @@ export default buildConfig({
     Agreements,
     Members,
     Issues,
-  ],
+    AuditLog,
+  ]),
   globals: [Home, Settings, KpiTargets, ScoringConfig],
   editor: lexicalEditor(),
   // Контент 4 тілде. Аударма жоқ жерде қазақша мәтін fallback болып көрінбейді (fallback: false).

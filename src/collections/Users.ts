@@ -1,7 +1,7 @@
 import type { Access, CollectionConfig, FieldAccess } from 'payload'
 
 import { userRoleLabels, userRoles } from '@/access/roles'
-import { isAdminUser, withRoles } from '@/access'
+import { hasAdminRole, isAdminUser, withRoles } from '@/access'
 import { enforcePasswordPolicy, recordLogin, requireTotpAfterLogin } from '@/hooks/auth'
 import { defaultLocale, locales } from '@/i18n/config'
 import { l } from '@/lib/labels'
@@ -11,7 +11,8 @@ const never: FieldAccess = () => false
 
 /** Пайдаланушы өз жазбасын, қызметкер барлығын көреді */
 const selfOrStaff: Access = ({ req }) => {
-  if (isAdminUser(req)) return true
+  // Портал пайдаланушыларының дербес деректерін тек хатшылық, төраға, комплаенс, ревизор көреді (ТТ 10.1, 14.2)
+  if (hasAdminRole(req, 'secretariat', 'chair', 'compliance', 'auditor')) return true
   if (req.user?.collection === 'users') return { id: { equals: req.user.id } }
   return false
 }
@@ -39,7 +40,7 @@ export const Users: CollectionConfig = {
     },
   },
   access: {
-    create: ({ req }) => isAdminUser(req),
+    create: withRoles('secretariat', 'chair'),
     read: selfOrStaff,
     update: selfOrStaff,
     delete: withRoles('chair'),

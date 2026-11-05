@@ -24,6 +24,7 @@ import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { AdminIcon as AdminIcon_c3544fd04a86558fd1f1e4a8d6afed38 } from '@/components/admin/AdminBrand'
 import { AdminLogo as AdminLogo_c3544fd04a86558fd1f1e4a8d6afed38 } from '@/components/admin/AdminBrand'
+import { KpiDashboard as KpiDashboard_05791ec70e7892dd649e2ebde08ee28e } from '@/components/admin/KpiDashboard'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 /** @type import('payload').ImportMap */
@@ -54,5 +55,6 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@/components/admin/AdminBrand#AdminIcon": AdminIcon_c3544fd04a86558fd1f1e4a8d6afed38,
   "@/components/admin/AdminBrand#AdminLogo": AdminLogo_c3544fd04a86558fd1f1e4a8d6afed38,
+  "@/components/admin/KpiDashboard#KpiDashboard": KpiDashboard_05791ec70e7892dd649e2ebde08ee28e,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

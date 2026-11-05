@@ -1,9 +1,11 @@
 import type { CollectionConfig, FieldAccess } from 'payload'
 
-import { isAdminUser } from '@/access'
+import { hasAdminRole, isAdminUser, verifiedAdmin } from '@/access'
+import { roleField } from '@/access/fields'
 import { adminRoleLabels, adminRoles } from '@/access/roles'
 import { enforcePasswordPolicy, recordLogin } from '@/hooks/auth'
 import { l } from '@/lib/labels'
+import { regions, toOptions } from '@/lib/taxonomy'
 
 const never: FieldAccess = () => false
 
@@ -32,6 +34,20 @@ export const Admins: CollectionConfig = {
   access: {
     // Әкімшілік панельге тек әкімші кіреді; 2FA міндетті болса (ТТ 14.1), TOTP расталғанша панель жабық.
     admin: ({ req }) => isAdminUser(req),
+    // Қызметкерлер тізімін төраға, комплаенс, ревизор көреді; қалғасы тек өз жазбасын. Рөл мен өңірді тек супер-администратор өзгертеді
+    // (әйтпесе кез келген әкімші өзіне супер-администратор рөлін бере алар еді).
+    read: ({ req }) => {
+      const admin = verifiedAdmin(req)
+      if (!admin) return false
+      return hasAdminRole(req, 'chair', 'compliance', 'auditor') ? true : { id: { equals: admin.id } }
+    },
+    create: ({ req }) => hasAdminRole(req),
+    update: ({ req }) => {
+      const admin = verifiedAdmin(req)
+      if (!admin) return false
+      return hasAdminRole(req) ? true : { id: { equals: admin.id } }
+    },
+    delete: ({ req }) => hasAdminRole(req),
   },
   hooks: {
     afterLogin: [recordLogin],
@@ -62,6 +78,15 @@ export const Admins: CollectionConfig = {
       defaultValue: ['content-manager'],
       label: l('Рөлдер', 'Роли', 'Roles', '角色'),
       options: adminRoles.map((value) => ({ value, label: adminRoleLabels[value] })),
+      access: { create: roleField(), update: roleField() },
+    },
+    {
+      name: 'region',
+      type: 'select',
+      options: toOptions(regions),
+      access: { create: roleField(), update: roleField() },
+      label: l('Өңір (өңірлік өкіл үшін)', 'Регион (для регионального представителя)', 'Region (for regional representatives)', '地区（地区代表适用）'),
+      admin: { description: l('Өңірлік өкіл тек осы өңірдің жобалары мен инвесторларын көреді.', 'Региональный представитель видит проекты и инвесторов только этого региона.', 'A regional representative sees only the projects and investors of this region.', '地区代表仅可查看该地区的项目与投资者。') },
     },
     {
       name: 'totpEnabled',

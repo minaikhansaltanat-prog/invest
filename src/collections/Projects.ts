@@ -1,7 +1,7 @@
 import type { CollectionConfig, Where } from 'payload'
 
 import { hasAdminRole, isAdminUser } from '@/access'
-import { computedField, roleField, staffField } from '@/access/fields'
+import { computedField, roleField } from '@/access/fields'
 import { checkbox, ltext, ltextarea, number, rows, select, text } from '@/fields/helpers'
 import { projectBusinessRules } from '@/hooks/investment'
 import { translationStatusField } from '@/fields/translationStatus'
@@ -9,6 +9,10 @@ import { l } from '@/lib/labels'
 import { projectLevels, projectModels, projectStages, regions, sectors, toOptions } from '@/lib/taxonomy'
 
 export const projectIcons = ['solar', 'port', 'factory', 'wind', 'agro', 'rail'] as const
+
+// Ішкі жоба деректері (иесі, сомалар, тәуекелдер): контент-менеджер мен аудармашыға керек емес, сондықтан көрсетілмейді
+const internalRead = roleField('chair', 'secretariat', 'expert', 'compliance', 'auditor', 'analyst', 'regional-rep')
+const internalWrite = roleField('chair', 'secretariat', 'expert', 'regional-rep')
 
 // Ашық каталог: тек жариялауға рұқсат берілген және 2-3 деңгейлі жобалар (ТТ 7.4, 8.3)
 const publicCatalogWhere: Where = {
@@ -28,7 +32,13 @@ export const Projects: CollectionConfig = {
     group: l('Инвестициялық модуль', 'Инвестиционный модуль', 'Investment module', '投资模块'),
   },
   access: {
-    read: ({ req }) => (isAdminUser(req) ? true : publicCatalogWhere),
+    read: ({ req }) => {
+      if (!isAdminUser(req)) return publicCatalogWhere
+      // Өңірлік өкіл тек өз өңірінің жобаларын көреді (ТТ 10)
+      if (hasAdminRole(req, 'chair', 'secretariat', 'expert', 'compliance', 'auditor', 'analyst', 'content-manager', 'translator')) return true
+      const region = (req.user as { region?: string } | null)?.region
+      return region ? { region: { equals: region } } : false
+    },
     create: ({ req }) => hasAdminRole(req, 'secretariat', 'chair', 'regional-rep'),
     update: ({ req }) => hasAdminRole(req, 'secretariat', 'chair', 'expert', 'regional-rep'),
     delete: ({ req }) => hasAdminRole(req, 'chair'),
@@ -81,7 +91,7 @@ export const Projects: CollectionConfig = {
       name: 'internal',
       type: 'group',
       label: l('Ішкі деректер (ашық емес)', 'Внутренние данные (не публикуются)', 'Internal data (not public)', '内部数据（不公开）'),
-      access: { read: staffField, create: staffField, update: staffField },
+      access: { read: internalRead, create: internalWrite, update: internalWrite },
       fields: [
         { name: 'ownerOrganization', type: 'relationship', relationTo: 'organizations', label: l('Иесі (ұйым)', 'Владелец (организация)', 'Owner (organisation)', '所有人（机构）') },
         text('ownerName', l('Иесінің аты', 'Имя владельца', 'Owner name', '所有人名称')),

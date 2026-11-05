@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import { withRoles } from '@/access'
+import { hasAdminRole, withRoles } from '@/access'
 import { roleField } from '@/access/fields'
 import { investorRules } from '@/hooks/investment'
 import { number, select, text } from '@/fields/helpers'
@@ -21,7 +21,15 @@ export const Investors: CollectionConfig = {
     group: l('Инвестициялық модуль', 'Инвестиционный модуль', 'Investment module', '投资模块'),
   },
   access: {
-    read: withRoles('secretariat', 'chair', 'compliance', 'auditor', 'expert', 'regional-rep'),
+    // Өңірлік өкіл тек өз өңірін қызықтыратын инвесторларды көреді (ТТ 10: жазбаға қатынас)
+    read: ({ req }) => {
+      if (hasAdminRole(req, 'secretariat', 'chair', 'compliance', 'auditor', 'expert')) return true
+      if (hasAdminRole(req, 'regional-rep')) {
+        const region = (req.user as { region?: string } | null)?.region
+        return region ? { regions: { contains: region } } : false
+      }
+      return false
+    },
     create: withRoles('secretariat', 'chair'),
     update: withRoles('secretariat', 'chair', 'compliance'),
     delete: withRoles('chair'),
