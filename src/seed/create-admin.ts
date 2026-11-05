@@ -36,6 +36,8 @@ async function main() {
 try {
   await main()
 } catch (error) {
-  console.error('[create-admin] қате:', error instanceof Error ? error.message : error)
+  const message = error instanceof Error ? error.message : String(error)
+  console.error('[create-admin] қате:', message)
+  if (/password/i.test(message)) console.error('[create-admin] Құпия сөз 12-128 таңба, әріп пен сан бар, ортақ емес және поштаға негізделмеген болуы тиіс.')
   process.exit(1)
 }

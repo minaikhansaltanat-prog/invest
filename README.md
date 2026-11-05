@@ -18,6 +18,8 @@ npm run dev        # http://localhost:3000, әкімші: /admin (бірінші
 
 `PORTAL_MODE=corporate` (әдепкі) қарапайым корпоративтік сайт пен қарапайым әкімші панелін береді, инвестициялық модуль жасырын. `PORTAL_MODE=full` инвестициялық порталдың толық нұсқасы (`npm run dev:full`, `npm run test:e2e:full`). Ештеңе жойылмаған. Толығырақ: [docs/CORPORATE_MODE.md](docs/CORPORATE_MODE.md). Нұсқалар: `full-v1` (тег), `night-build` (толық), `corporate-lite` (осы тармақ).
 
+Vercel preview (Neon + Blob): [docs/DEPLOY_VERCEL.md](docs/DEPLOY_VERCEL.md). Қазақстандағы өндіріс (Docker): [docs/DEPLOY.md](docs/DEPLOY.md).
+
 ## Құрылым
 
 | Жол | Мазмұны |
