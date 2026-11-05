@@ -20,6 +20,8 @@ npm run dev        # http://localhost:3000, әкімші: /admin (бірінші
 
 Vercel preview (Neon + Blob): [docs/DEPLOY_VERCEL.md](docs/DEPLOY_VERCEL.md). Қазақстандағы өндіріс (Docker): [docs/DEPLOY.md](docs/DEPLOY.md).
 
+Аударма толықтығын тексеру: `npm run audit:translations` (кілттер мен seed), `npm run audit:content` (дерекқор). Нәтиже: [docs/TRANSLATION_GAPS.md](docs/TRANSLATION_GAPS.md).
+
 ## Құрылым
 
 | Жол | Мазмұны |
