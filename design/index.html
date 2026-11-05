@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Қазақстандық шетелдік капитал қауымдастығы</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&family=Noto+Serif+SC:wght@600;700&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy-950:#071631; --navy-900:#0B1E3F; --navy-800:#12295A; --navy-700:#1B3A7A; --navy-600:#25508F;
+  --sky:#3BAEDC; --gold-300:#E6CE8E; --gold-400:#D7B868; --gold-500:#C49A3C; --gold-600:#A07A26;
+  --ivory:#FAF7F0; --paper:#FFFFFF; --sand:#F2ECDF; --ink:#0E1A2B; --muted:#5A6A80; --line:#E5DDCB; --line-dark:rgba(215,184,104,.22);
+  --serif:'Cormorant Garamond','Noto Serif SC',Georgia,serif; --sans:'Golos Text','Noto Sans SC',system-ui,sans-serif;
+  --r:14px; --wrap:1240px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-variant-numeric:lining-nums;font-feature-settings:'lnum' 1;font-family:var(--sans);color:var(--ink);background:var(--ivory);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 32px}
+.zh{font-family:'Noto Serif SC',serif}
+.eyebrow{font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--gold-500)}
+.h2{font-family:var(--serif);font-weight:600;font-size:46px;line-height:1.08;letter-spacing:-.01em;color:var(--navy-900)}
+.lead{color:var(--muted);font-size:17px;max-width:620px}
+.btn{white-space:nowrap;display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:15px;padding:15px 26px;border-radius:999px;transition:.25s}
+.btn-gold{background:linear-gradient(180deg,var(--gold-400),var(--gold-500));color:var(--navy-950);box-shadow:0 10px 24px -10px rgba(196,154,60,.7)}
+.btn-ghost{border:1px solid rgba(255,255,255,.35);color:#fff}
+.btn-navy{background:var(--navy-900);color:#fff}
+.btn-line{border:1px solid var(--navy-900);color:var(--navy-900)}
+.arrow{width:16px;height:16px}
+.orn{display:flex;align-items:center;gap:12px;color:var(--gold-500)}
+.orn i{height:1px;width:56px;background:linear-gradient(90deg,transparent,var(--gold-500))}
+.orn i:last-child{background:linear-gradient(90deg,var(--gold-500),transparent)}
+.sec{padding:110px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:52px}
+.sec-head .left{display:grid;gap:16px}
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px;background:var(--sand);color:var(--gold-600)}
+.link{font-weight:600;color:var(--navy-700);display:inline-flex;gap:8px;align-items:center;white-space:nowrap}
+
+/* utility bar */
+.util{background:var(--navy-950);color:rgba(255,255,255,.72);font-size:13px}
+.util .wrap{max-width:1380px;display:flex;justify-content:space-between;align-items:center;height:40px}
+.util .l,.util .r{display:flex;gap:22px;align-items:center}
+.langs{display:flex;gap:4px}
+.langs a{padding:3px 9px;border-radius:6px;font-weight:600;font-size:12px;letter-spacing:.04em}
+.langs a.on{background:var(--gold-500);color:var(--navy-950)}
+.util .sep{width:1px;height:14px;background:rgba(255,255,255,.2)}
+
+/* header */
+header.main{background:var(--paper);border-bottom:1px solid var(--line);position:relative;z-index:5}
+header.main .wrap{max-width:1380px;display:flex;align-items:center;justify-content:space-between;height:92px}
+.brand{display:flex;align-items:center;gap:14px}
+.brand img{height:66px;width:auto}
+.brand .t1{font-weight:700;font-size:13.5px;letter-spacing:.06em;color:var(--navy-900);line-height:1.25}
+.brand .t2{font-size:10px;letter-spacing:.06em;white-space:nowrap;color:var(--gold-600);font-weight:600;margin-top:3px}
+nav.menu{display:flex;gap:24px;font-weight:500;font-size:14.5px;white-space:nowrap;color:var(--navy-900)}
+nav.menu a{position:relative;padding:6px 0}
+nav.menu a.on::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--gold-500);border-radius:2px}
+.hdr-cta{display:flex;align-items:center;gap:14px}
+.burger{display:none}
+
+/* hero */
+.hero{position:relative;background:var(--navy-900);color:#fff;overflow:hidden}
+.hero .photo{position:absolute;inset:0 0 0 38%;background:url(assets/hero_web.jpg) center 40%/cover no-repeat}
+.hero .photo::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--navy-900) 0%,rgba(11,30,63,.86) 18%,rgba(11,30,63,.25) 52%,rgba(11,30,63,.05) 100%)}
+.hero .photo::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(7,22,49,.85),transparent 38%)}
+.hero .pattern{position:absolute;inset:0;width:46%;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23D7B868' stroke-width='1.4'%3E%3Cpath d='M60 18c-10 0-16 8-16 15s5 11 10 11 8-3 8-7-3-6-6-6M60 18c10 0 16 8 16 15s-5 11-10 11-8-3-8-7 3-6 6-6M60 102c-10 0-16-8-16-15s5-11 10-11 8 3 8 7-3 6-6 6M60 102c10 0 16-8 16-15s-5-11-10-11-8 3-8 7 3 6 6 6'/%3E%3Cpath d='M60 44v32M44 60h32'/%3E%3Cpath d='M0 60h14M106 60h14M60 0v8M60 112v8'/%3E%3C/g%3E%3C/svg%3E")}
+.hero .inner{position:relative;display:grid;grid-template-columns:minmax(0,640px) 1fr;min-height:700px;align-items:center;padding:90px 0 190px}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:68px;line-height:1.02;letter-spacing:-.015em;margin:22px 0 26px}
+.hero h1 em{font-style:normal;color:var(--gold-300)}
+.hero p.sub{font-size:18px;color:rgba(255,255,255,.78);max-width:560px}
+.hero .ctas{display:flex;gap:14px;margin-top:38px}
+.hero .vert{position:absolute;right:28px;top:90px;writing-mode:vertical-rl;font-family:'Noto Serif SC',serif;font-size:19px;letter-spacing:.5em;color:var(--gold-300);opacity:.9}
+.hero .vert::before{content:"";display:inline-block;width:1px;height:64px;background:var(--gold-400);margin-bottom:18px}
+.hero .meta{display:flex;gap:28px;margin-top:46px;font-size:13px;color:rgba(255,255,255,.62)}
+.hero .meta b{display:block;color:#fff;font-size:15px;font-weight:600;margin-bottom:2px}
+
+/* audience cards */
+.aud{position:relative;z-index:3;margin-top:-118px}
+.aud .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.aud .card{background:var(--paper);border-radius:var(--r);padding:30px 30px 28px;box-shadow:0 30px 60px -30px rgba(7,22,49,.35);border:1px solid var(--line);display:grid;gap:12px;position:relative;overflow:hidden}
+.aud .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(var(--gold-400),var(--gold-600))}
+.aud .num{font-family:var(--serif);font-size:15px;color:var(--gold-500);font-weight:700;letter-spacing:.1em}
+.aud h3{font-family:var(--serif);font-size:28px;font-weight:600;color:var(--navy-900);line-height:1.1}
+.aud p{color:var(--muted);font-size:15px}
+.aud .go{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-weight:600;font-size:14px;color:var(--navy-700)}
+.aud .go span.c{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center}
+
+/* results */
+.results .board{display:grid;grid-template-columns:1.05fr 2fr;gap:56px;align-items:start}
+.ledger{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:var(--r);background:var(--paper);overflow:hidden}
+.ledger .c{padding:30px 26px;border-right:1px solid var(--line);display:grid;gap:10px;align-content:start}
+.ledger .c:last-child{border-right:0;background:linear-gradient(180deg,#fff, #FBF6EA)}
+.ledger .k{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.ledger .v{font-family:var(--serif);font-size:58px;line-height:1;color:var(--navy-900);font-weight:600}
+.ledger .c:last-child .v{color:var(--gold-600)}
+.ledger .d{font-size:14px;color:var(--muted)}
+.ledger-note{grid-column:1/-1;display:flex;gap:10px;align-items:center;padding:14px 26px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);background:var(--ivory)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--gold-500);flex:none}
+
+/* services */
+.services{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.svc{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.svc .s{padding:34px 30px 36px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;gap:14px;align-content:start;transition:.3s;position:relative}
+.svc .s:hover{background:var(--ivory)}
+.svc .n{font-family:var(--serif);font-size:15px;color:var(--gold-500);font-weight:700;letter-spacing:.08em}
+.svc svg{width:38px;height:38px;stroke:var(--navy-700);fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.svc h3{font-size:18px;font-weight:600;color:var(--navy-900);line-height:1.3}
+.svc p{font-size:14.5px;color:var(--muted)}
+.svc .s.hl{background:var(--navy-900);color:#fff}
+.svc .s.hl h3{color:#fff}.svc .s.hl p{color:rgba(255,255,255,.7)}.svc .s.hl svg{stroke:var(--gold-300)}
+
+/* lifecycle */
+.life{background:var(--navy-950);color:#fff;position:relative;overflow:hidden}
+.life .h2{color:#fff}
+.life .lead{color:rgba(255,255,255,.66)}
+.steps{display:grid;grid-template-columns:repeat(8,1fr);position:relative;margin-top:24px}
+.steps::before{content:"";position:absolute;left:5%;right:5%;top:27px;height:1px;background:linear-gradient(90deg,var(--gold-500),rgba(215,184,104,.25))}
+.step{display:grid;justify-items:center;text-align:center;gap:14px;padding:0 8px;position:relative}
+.step .b{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--navy-900);border:1px solid var(--gold-500);font-family:var(--serif);font-size:22px;font-weight:700;color:var(--gold-300)}
+.step.done .b{background:linear-gradient(180deg,var(--gold-400),var(--gold-600));color:var(--navy-950);border-color:transparent}
+.step{align-content:start}.step h4{font-size:14.5px;font-weight:600;line-height:1.3;min-height:2.6em}
+.step p{font-size:12.5px;color:rgba(255,255,255,.55);line-height:1.4}
+.life .foot{display:flex;justify-content:space-between;align-items:center;margin-top:60px;padding-top:28px;border-top:1px solid var(--line-dark);font-size:14px;color:rgba(255,255,255,.65)}
+.levels{display:flex;gap:10px}
+.levels span{border:1px solid var(--line-dark);border-radius:999px;padding:6px 14px;font-size:13px}
+.levels span b{color:var(--gold-300);margin-right:6px}
+
+/* projects */
+.chips{display:flex;gap:8px;margin-bottom:28px}
+.chips span{padding:9px 16px;border-radius:999px;border:1px solid var(--line);font-size:14px;font-weight:500;background:var(--paper)}
+.chips span.on{background:var(--navy-900);color:#fff;border-color:var(--navy-900)}
+.proj{display:grid;grid-template-columns:1.35fr 1fr;gap:22px}
+.pcard{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
+.pcard .img{background-size:cover;background-position:center;position:relative}
+.pcard.big .img{height:330px}
+.pcard .img .lvl{position:absolute;left:18px;top:18px;background:rgba(7,22,49,.82);backdrop-filter:blur(6px);color:#fff;font-size:12.5px;font-weight:600;padding:7px 12px;border-radius:999px;display:flex;gap:8px;align-items:center}
+.pcard .img .lvl i{width:7px;height:7px;border-radius:50%;background:#5BD39A}
+.pcard .body{padding:26px 28px 28px;display:grid;gap:16px;flex:1}
+.pcard .sector{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-600);font-weight:700}
+.pcard h3{font-family:var(--serif);font-size:30px;font-weight:600;color:var(--navy-900);line-height:1.08}
+.kv{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);padding-top:16px}
+.kv div{display:grid;gap:2px}
+.kv small{font-size:12px;color:var(--muted)}
+.kv b{font-size:16px;color:var(--navy-900);font-weight:600}
+.pcard .act{display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;color:var(--navy-700)}
+.pcard .act .lock{display:flex;gap:8px;align-items:center;color:var(--muted);font-weight:500}
+.side{display:grid;gap:22px}
+.pcard.sm{flex-direction:row}
+.pcard.sm .img{width:168px;flex:none;background-color:var(--navy-800)}
+.pcard.sm .ic{width:168px;flex:none;background:radial-gradient(120% 90% at 30% 20%,var(--navy-700),var(--navy-950));display:grid;place-items:center;position:relative}
+.pcard.sm .ic svg{width:76px;height:76px;stroke:var(--gold-300);fill:none;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+.pcard.sm h3{font-size:24px}
+.pcard.sm .kv{grid-template-columns:repeat(2,1fr);gap:10px 0}
+.pcard.sm .body{gap:12px;padding:22px 24px}
+.badge{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;padding:5px 10px;border-radius:999px;background:#EEF4FB;color:var(--navy-700);justify-self:start}
+.badge.g{background:#E9F7EF;color:#1E7A4C}
+
+/* corridors */
+.corr{display:grid;grid-template-columns:1.5fr 1fr;gap:22px}
+.china{background:var(--navy-900);color:#fff;border-radius:18px;padding:52px 52px 48px;position:relative;overflow:hidden;min-height:470px;display:grid;align-content:space-between}
+.china::before{opacity:.7;content:"中";position:absolute;right:-30px;bottom:-110px;font-family:'Noto Serif SC',serif;font-size:420px;line-height:1;color:rgba(215,184,104,.07);font-weight:700}
+.china .eyebrow{color:var(--gold-300)}
+.china h3{font-family:var(--serif);font-size:52px;font-weight:600;line-height:1.02;margin:16px 0 8px}
+.china .zh-t{font-family:'Noto Serif SC',serif;font-size:26px;color:var(--gold-300);letter-spacing:.08em}
+.china p{color:rgba(255,255,255,.74);max-width:520px;margin-top:20px}
+.china ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:12px 28px;margin-top:28px;max-width:600px}
+.china li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;color:rgba(255,255,255,.86)}
+.china li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold-400);margin-top:8px;flex:none}
+.china .ctas{display:flex;gap:12px;margin-top:36px;position:relative}
+.ocards{display:grid;gap:22px}
+.oc{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:34px;display:grid;gap:12px;align-content:start}
+.oc h3{font-family:var(--serif);font-size:30px;font-weight:600;color:var(--navy-900);line-height:1.1}
+.oc p{color:var(--muted);font-size:15px}
+.oc .ar{font-size:20px;color:var(--gold-600);font-family:'Noto Serif SC',serif}
+
+/* scoring */
+.score{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.score .g{display:grid;grid-template-columns:1fr 1.15fr;gap:70px;align-items:center}
+.bars{display:grid;gap:14px}
+.bar{display:grid;grid-template-columns:210px 1fr 38px;gap:16px;align-items:center;font-size:14.5px}
+.bar .t{color:var(--navy-900);font-weight:500}
+.bar .tr{height:10px;border-radius:99px;background:var(--sand);overflow:hidden}
+.bar .tr i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--navy-700),var(--navy-600))}
+.bar.top .tr i{background:linear-gradient(90deg,var(--gold-600),var(--gold-400))}
+.bar .p{font-family:var(--serif);font-weight:700;font-size:20px;color:var(--navy-900);text-align:right}
+.grades{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:30px}
+.grade{border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:4px}
+.grade b{font-family:var(--serif);font-size:34px;line-height:1;color:var(--navy-900)}
+.grade small{font-size:12.5px;color:var(--muted)}
+.grade span{font-size:13px;font-weight:600;color:var(--navy-700)}
+.grade.a{background:var(--navy-900);border-color:var(--navy-900)}.grade.a b{color:var(--gold-300)}.grade.a span{color:#fff}.grade.a small{color:rgba(255,255,255,.6)}
+.veto{margin-top:22px;display:flex;gap:12px;align-items:flex-start;padding:16px 18px;border-radius:12px;background:#FBF6EA;border:1px solid #EADBB5;font-size:14px;color:#6B5320}
+
+/* leadership */
+.lead-sec .q{display:grid;grid-template-columns:1.6fr 1fr;gap:60px;align-items:center}
+blockquote{font-family:var(--serif);font-size:40px;line-height:1.16;color:var(--navy-900);font-weight:500;position:relative;padding-left:40px;border-left:2px solid var(--gold-500)}
+.qsrc{margin-top:22px;padding-left:42px;font-size:14px;color:var(--muted)}
+.person{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:30px;display:grid;grid-template-columns:96px 1fr;gap:22px;align-items:center}
+.mono{width:96px;height:96px;border-radius:50%;background:radial-gradient(circle at 30% 25%,var(--navy-700),var(--navy-950));display:grid;place-items:center;font-family:var(--serif);font-size:36px;color:var(--gold-300);font-weight:700;box-shadow:0 0 0 4px #fff,0 0 0 5px var(--gold-400)}
+.person h4{font-family:var(--serif);font-size:28px;color:var(--navy-900);font-weight:600;line-height:1.1}
+.person p{font-size:14px;color:var(--muted);margin-top:4px}
+.person a{display:inline-flex;margin-top:12px;font-size:14px;font-weight:600;color:var(--navy-700);gap:8px}
+
+/* media */
+.media .g{display:grid;grid-template-columns:1.25fr 1fr;gap:22px}
+.feat{border-radius:18px;overflow:hidden;position:relative;min-height:470px;background:url(assets/news_baiterek.jpg) center/cover;display:flex;align-items:flex-end;color:#fff}
+.feat::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(7,22,49,.95) 8%,rgba(7,22,49,.1) 64%)}
+.feat .c{position:relative;padding:36px;display:grid;gap:12px}
+.feat .dt{font-size:13px;color:var(--gold-300);font-weight:600;letter-spacing:.06em}
+.feat h3{font-family:var(--serif);font-size:36px;font-weight:600;line-height:1.08;max-width:560px}
+.nlist{display:grid;gap:0;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:8px 30px}
+.ni{padding:22px 0;border-bottom:1px solid var(--line);display:grid;gap:6px}
+.ni:last-child{border-bottom:0}
+.ni .dt{font-size:12.5px;color:var(--gold-600);font-weight:600;letter-spacing:.05em}
+.ni h4{font-size:17px;font-weight:600;color:var(--navy-900);line-height:1.35}
+.gal{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:22px}
+.gal a{border-radius:14px;padding:22px 24px;display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--navy-900);background:var(--paper);border:1px solid var(--line)}
+.gal a .l{display:flex;gap:14px;align-items:center}
+.gal svg{width:26px;height:26px;stroke:var(--gold-600);fill:none;stroke-width:1.5}
+
+/* membership */
+.mem{background:linear-gradient(120deg,var(--navy-950),var(--navy-800));color:#fff;border-radius:22px;padding:64px;display:grid;grid-template-columns:1.1fr 1fr;gap:50px;align-items:center;position:relative;overflow:hidden}
+.mem::after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;border:1px solid var(--line-dark);box-shadow:0 0 0 60px rgba(215,184,104,.03),0 0 0 120px rgba(215,184,104,.025)}
+.mem .h2{color:#fff}
+.mem p{color:rgba(255,255,255,.72);margin-top:16px}
+.mem .ctas{display:flex;gap:12px;margin-top:30px}
+.cats{display:grid;gap:10px;position:relative;z-index:1}
+.cat{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:15px}
+.cat b{font-family:var(--serif);color:var(--gold-300);font-size:18px;margin-right:12px}
+
+/* footer */
+footer{background:var(--navy-950);color:rgba(255,255,255,.7);margin-top:110px;padding:76px 0 0;font-size:14.5px}
+footer .top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1.4fr;gap:40px;padding-bottom:56px}
+footer .fb{display:grid;gap:18px;align-content:start}
+footer .fb .e{width:92px;height:92px;border-radius:50%;background:#fff;display:grid;place-items:center;padding:8px}
+footer .fb .e img{width:100%}
+footer .fb .nm{color:#fff;font-weight:700;letter-spacing:.05em;font-size:14px;line-height:1.35}
+footer .fb .sl{font-family:var(--serif);font-size:22px;color:var(--gold-300);font-style:italic}
+footer h5{color:#fff;font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:18px}
+footer ul{list-style:none;display:grid;gap:10px}
+footer .ct{display:grid;gap:14px}
+footer .ct small{display:block;color:var(--gold-300);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:2px}
+footer .bot{border-top:1px solid rgba(255,255,255,.1);padding:22px 0 30px;display:grid;gap:10px;font-size:12.5px;color:rgba(255,255,255,.5)}
+footer .bot .row{display:flex;justify-content:space-between}
+
+@media (max-width:1080px){
+  nav.menu{display:none}.burger{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;border:1px solid var(--line)}
+  .hdr-cta .btn{display:none}
+  .hero .inner{grid-template-columns:1fr}
+}
+@media (max-width:760px){
+  .wrap{padding:0 18px}
+  .util .l{display:none}.util .wrap{justify-content:flex-end}
+  header.main .wrap{height:72px}.brand img{height:50px}.brand .t1{font-size:11px}.brand .t2{display:none}
+  .hero .photo{inset:0 0 auto 0;height:360px;background-position:64% 55%}
+  .hero .photo::before{background:linear-gradient(0deg,var(--navy-900) 2%,rgba(11,30,63,.35) 45%,rgba(11,30,63,.1))}
+  .hero .photo::after{display:none}
+  .hero .pattern{width:100%}
+  .hero .inner{min-height:0;padding:300px 0 140px}
+  .hero h1{font-size:42px}.hero p.sub{font-size:16px}
+  .hero .ctas{flex-direction:column}.hero .ctas .btn{justify-content:center}
+  .hero .vert{right:14px;top:30px;font-size:15px}
+  .hero .meta{flex-wrap:wrap;gap:16px 24px}
+  .aud{margin-top:-90px}.aud .grid{grid-template-columns:1fr;gap:14px}
+  .sec{padding:72px 0}.h2{font-size:34px}
+  .sec-head{flex-direction:column;align-items:flex-start;gap:18px;margin-bottom:32px}
+  .results .board{grid-template-columns:1fr;gap:28px}
+  .ledger{grid-template-columns:1fr 1fr}.ledger .c{border-bottom:1px solid var(--line)}.ledger .c:nth-child(2){border-right:0}.ledger .v{font-size:44px}
+  .svc{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr;gap:18px}.steps::before{left:27px;right:auto;top:10px;bottom:10px;width:1px;height:auto;background:var(--gold-500)}
+  .step{grid-template-columns:56px 1fr;justify-items:start;text-align:left;align-items:center;padding:0}.step p{grid-column:2}
+  .life .foot{flex-direction:column;gap:16px;align-items:flex-start}.levels{flex-wrap:wrap}
+  .chips{overflow:hidden;flex-wrap:wrap}
+  .proj{grid-template-columns:1fr}.pcard.big .img{height:220px}.pcard.sm{flex-direction:column}.pcard.sm .ic{width:auto;height:120px}
+  .kv{grid-template-columns:1fr 1fr;gap:10px}
+  .corr{grid-template-columns:1fr}.china{padding:34px 26px}.china h3{font-size:38px}.china ul{grid-template-columns:1fr}.china .ctas{flex-direction:column}
+  .score .g{grid-template-columns:1fr;gap:36px}.bar{grid-template-columns:1fr 38px}.bar .tr{grid-column:1/-1;grid-row:2}
+  .grades{grid-template-columns:1fr 1fr}
+  .lead-sec .q{grid-template-columns:1fr;gap:30px}blockquote{font-size:28px;padding-left:22px}.qsrc{padding-left:24px}
+  .media .g{grid-template-columns:1fr}.feat{min-height:360px}.feat h3{font-size:28px}.gal{grid-template-columns:1fr}
+  .mem{grid-template-columns:1fr;padding:36px 24px}.mem .ctas{flex-direction:column}
+  footer .top{grid-template-columns:1fr 1fr}footer .fb,footer .ct{grid-column:1/-1}footer .bot .row{flex-direction:column;gap:6px}
+}
+</style>
+</head>
+<body>
+
+<div class="util"><div class="wrap">
+  <div class="l"><span>Астана · Алматы</span><span class="sep"></span><span>+7 700 386 66 32</span><span class="sep"></span><span>WeChat</span></div>
+  <div class="r"><div class="langs"><a class="on" href="#">ҚАЗ</a><a href="#">РУС</a><a href="#">ENG</a><a href="#" class="zh">中文</a></div><span class="sep"></span><a href="#">Жеке кабинет</a></div>
+</div></div>
+
+<header class="main"><div class="wrap">
+  <a class="brand" href="#"><img src="assets/emblem.png" alt="Қауымдастық логотипі">
+    <div><div class="t1">ҚАЗАҚСТАНДЫҚ ШЕТЕЛДІК<br>КАПИТАЛ ҚАУЫМДАСТЫҒЫ</div><div class="t2">KAZAKHSTAN ASSOCIATION OF FOREIGN CAPITAL</div></div></a>
+  <nav class="menu"><a href="#">Қауымдастық</a><a href="#">Қызметтер</a><a class="on" href="#">Инвесторларға</a><a href="#">Жобалар</a><a href="#">Мүшелік</a><a href="#">Медиа</a><a href="#">Байланыс</a></nav>
+  <div class="hdr-cta"><a class="btn btn-gold" href="#">Өтініш беру</a><span class="burger"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B1E3F" stroke-width="2"><path d="M3 7h18M3 12h18M3 17h18"/></svg></span></div>
+</div></header>
+
+<section class="hero">
+  <div class="photo"></div><div class="pattern"></div>
+  <div class="vert">哈萨克斯坦外国资本协会</div>
+  <div class="wrap"><div class="inner"><div>
+    <div class="orn"><span class="eyebrow">Халықаралық инвестициялық ынтымақтастық платформасы</span></div>
+    <h1>Шетелдік капитал мен Қазақстанның <em>нақты жобаларын</em> байланыстырамыз</h1>
+    <p class="sub">Инвесторларды тексереміз, жобаларды іріктейміз және келіссөзден бастап іске асыруға дейін сүйемелдейміз. Нәтижені <span style="white-space:nowrap">іс-шаралар</span> санымен емес, нақты инвестициямен өлшейміз.</p>
+    <div class="ctas"><a class="btn btn-gold" href="#">Инвесторға арналған жол <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn-ghost" href="#">Жобаны ұсыну</a></div>
+    <div class="meta"><div><b>2017 жылдан</b>заңды тұлғалар бірлестігі</div><div><b>4 тіл</b>KZ · RU · EN · 中文</div><div><b>8 бағыт</b>кәсіби қызметтер</div></div>
+  </div></div></div>
+</section>
+
+<section class="aud"><div class="wrap"><div class="grid">
+  <a class="card" href="#"><span class="num">01</span><h3>Инвесторларға</h3><p>Тексерілген жобалар қоры, жергілікті серіктестер және құқықтық бағдар бір терезеде.</p><div class="go">Инвестор өтініші <span class="c">→</span></div></a>
+  <a class="card" href="#"><span class="num">02</span><h3>Жоба иелеріне</h3><p>Жобаны сараптамадан өткізіп, оның ауқымы мен саласына сай инвесторды табамыз.</p><div class="go">Жобаны ұсыну <span class="c">→</span></div></a>
+  <a class="card" href="#"><span class="num">03</span><h3>Мүшелерге</h3><p>Салалық желі, мүдделерді білдіру және мемлекетпен сындарлы диалог алаңы.</p><div class="go">Мүшелік шарттары <span class="c">→</span></div></a>
+</div></div></section>
+
+<section class="sec results"><div class="wrap"><div class="board">
+  <div class="left" style="display:grid;gap:16px">
+    <span class="eyebrow">Нәтиже ашықтығы</span>
+    <h2 class="h2">Нәтижені төрт бөлек есеппен көрсетеміз</h2>
+    <p class="lead">Мәлімделген сома, ниет құжаты, ресми шарт және іс жүзінде түскен инвестиция ешқашан бір санға біріктірілмейді.</p>
+  </div>
+  <div class="ledger">
+    <div class="c"><span class="k">Деректер базасы</span><span class="v">30</span><span class="d">әлеуетті инвестор тіркелді</span></div>
+    <div class="c"><span class="k">Тексеру</span><span class="v">10</span><span class="d">инвестор бастапқы тексеруден өтті</span></div>
+    <div class="c"><span class="k">Сараптама</span><span class="v">5</span><span class="d">жоба алдын ала бағаланды</span></div>
+    <div class="c"><span class="k">Расталған</span><span class="v">1</span><span class="d">жобаның инвестициясы құжатпен расталды</span></div>
+    <div class="ledger-note"><span class="dot"></span>2026 жылғы IV тоқсанның мақсатты көрсеткіштері. Деректер тоқсан сайын жаңартылады.</div>
+  </div>
+</div></div></section>
+
+<section class="sec services"><div class="wrap">
+  <div class="sec-head"><div class="left"><span class="eyebrow">Қызметтер</span><h2 class="h2">Инвестицияның бүкіл жолын<br>қамтитын сегіз бағыт</h2></div><a class="link" href="#">Барлық қызметтер →</a></div>
+  <div class="svc">
+    <div class="s hl"><span class="n">01</span><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="15"/><path d="M5 20h30M20 5c5 4 7 9 7 15s-2 11-7 15c-5-4-7-9-7-15s2-11 7-15"/></svg><h3>Халықаралық инвестиция тарту</h3><p>Қытай, Орталық Азия, Еуропа және Таяу Шығыс нарықтарымен тұрақты арналар.</p></div>
+    <div class="s"><span class="n">02</span><svg viewBox="0 0 40 40"><path d="M20 6 34 13 20 20 6 13z"/><path d="m6 20 14 7 14-7M6 27l14 7 14-7"/></svg><h3>Жобалар қорын қалыптастыру</h3><p>Жобаларды төрт деңгейлі жүйемен іріктеу және бірыңғай стандартпен рәсімдеу.</p></div>
+    <div class="s"><span class="n">03</span><svg viewBox="0 0 40 40"><path d="M20 5 33 10v9c0 8-5.5 13.5-13 16-7.5-2.5-13-8-13-16v-9z"/><path d="m14 20 4 4 8-8"/></svg><h3>Инвесторды тексеру</h3><p>100 балдық ішкі бағалау және заңды тәсілдермен жүргізілетін due diligence.</p></div>
+    <div class="s"><span class="n">04</span><svg viewBox="0 0 40 40"><path d="M5 34V18l9 5v-5l9 5v-5l9 5V8h3v26z"/><path d="M11 29h3M18 29h3M25 29h3"/></svg><h3>Өнеркәсіптік кооперация</h3><p>Бірлескен кәсіпорын, технология трансферті және жергілікті өндірісті оқшаулау.</p></div>
+    <div class="s"><span class="n">05</span><svg viewBox="0 0 40 40"><path d="M6 33h28"/><path d="M10 33V22M17 33V15M24 33V19M31 33V9"/><path d="m8 16 8-7 7 5 9-7"/></svg><h3>Жобалық қаржыландыру</h3><p>EPC, EPC+F, BOT, МЖӘ модельдері және капитал құрылымын жобалау.</p></div>
+    <div class="s"><span class="n">06</span><svg viewBox="0 0 40 40"><path d="M5 14 20 6l15 8z"/><path d="M8 14v16M14 14v16M20 14v16M26 14v16M32 14v16M5 33h30"/></svg><h3>Мемлекетпен және өңірлермен жұмыс</h3><p>Инвестор мәселелерін ресми арналар арқылы жеткізу және шешілуін бақылау.</p></div>
+    <div class="s"><span class="n">07</span><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="15"/><path d="m26 14-4 8-8 4 4-8z"/></svg><h3>Нарыққа кіру және сүйемелдеу</h3><p>Тіркеу, құқық, салық, логистика және кадр бойынша сенімді кәсіби серіктестер.</p></div>
+    <div class="s"><span class="n">08</span><svg viewBox="0 0 40 40"><path d="M9 31C9 17 18 9 33 8c-1 15-9 24-23 23z"/><path d="M9 31 22 18"/></svg><h3>Жасыл инвестиция және инновация</h3><p>Жаңартылатын энергетика, қалдықтарды қайта өңдеу және терең өңдеу жобалары.</p></div>
+  </div>
+</div></section>
+
+<section class="sec life"><div class="wrap">
+  <div class="sec-head"><div class="left"><span class="eyebrow">Жоба өмірлік циклі</span><h2 class="h2">Ниеттен өндіріске дейінгі<br>сегіз кезеңдік жол</h2></div><p class="lead" style="max-width:420px">Әр басым жобаның жауапты тұлғасы, мерзімі, тәуекелдер тізілімі және электрондық мұрағаты болады.</p></div>
+  <div class="steps">
+    <div class="step done"><span class="b">1</span><h4>Жобаны қабылдау</h4><p>Иесі, орны, қажеттілігі</p></div>
+    <div class="step done"><span class="b">2</span><h4>Бастапқы іріктеу</h4><p>Құжат, жер, рұқсат</p></div>
+    <div class="step done"><span class="b">3</span><h4>Сараптама</h4><p>Қаржы, құқық, техника</p></div>
+    <div class="step"><span class="b">4</span><h4>Инвесторды сәйкестендіру</h4><p>Ауқым, сала, тәуекел</p></div>
+    <div class="step"><span class="b">5</span><h4>Келіссөздер</h4><p>NDA, сапар, шарттар</p></div>
+    <div class="step"><span class="b">6</span><h4>Құрылым және келісу</h4><p>Қаржыландыру моделі</p></div>
+    <div class="step"><span class="b">7</span><h4>Іске асыру мониторингі</h4><p>Қаражат, құрылыс, жабдық</p></div>
+    <div class="step"><span class="b">8</span><h4>Нәтижені бағалау</h4><p>Инвестиция, жұмыс орны</p></div>
+  </div>
+  <div class="foot"><span>Жоба дайындығының төрт деңгейі:</span><div class="levels"><span><b>1</b>Тұжырымдама</span><span><b>2</b>Алдын ала бағаланған</span><span><b>3</b>Инвестицияға дайын</span><span><b>4</b>Іске асырылуда</span></div></div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+  <div class="sec-head"><div class="left"><span class="eyebrow">Жобалар қоры</span><h2 class="h2">Инвестицияға дайын жобалар</h2></div><div style="display:flex;gap:14px;align-items:center"><span class="tag">Мысал ретінде көрсетілген</span><a class="link" href="#">Барлық жобалар →</a></div></div>
+  <div class="chips"><span class="on">Барлығы</span><span>Өнеркәсіп</span><span>Энергетика</span><span>Логистика</span><span>Агроөнеркәсіп</span><span>Инфрақұрылым</span></div>
+  <div class="proj">
+    <article class="pcard big"><div class="img" style="background-image:url(assets/industry_web.jpg)"><span class="lvl"><i></i>3-деңгей · Инвестицияға дайын</span></div>
+      <div class="body"><span class="sector">Өнеркәсіп · Терең өңдеу</span><h3>Тау-кен шикізатын терең өңдеу кешені</h3>
+        <div class="kv"><div><small>Өңір</small><b>Қарағанды облысы</b></div><div><small>Инвестиция көлемі</small><b>45 млн $</b></div><div><small>Модель</small><b>Бірлескен кәсіпорын</b></div></div>
+        <div class="act"><span class="lock"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Толық деректер NDA арқылы</span><span>Жоба паспорты →</span></div></div></article>
+    <div class="side">
+      <article class="pcard sm"><div class="ic"><svg viewBox="0 0 60 60"><circle cx="30" cy="20" r="8"/><path d="M30 4v4M30 32v4M14 20h4M42 20h4M19 9l3 3M38 28l3 3M41 9l-3 3M22 28l-3 3"/><path d="M10 54l6-14h28l6 14z"/><path d="M13 47h34M27 40l-2 14M33 40l2 14"/></svg></div>
+        <div class="body"><span class="badge">2-деңгей · Алдын ала бағаланған</span><h3>Күн электр станциясы, 50 МВт</h3><div class="kv"><div><small>Өңір</small><b>Түркістан облысы</b></div><div><small>Көлемі · Модель</small><b>38 млн $ · EPC+F</b></div></div></div></article>
+      <article class="pcard sm"><div class="ic"><svg viewBox="0 0 60 60"><path d="M6 46h48"/><rect x="10" y="30" width="14" height="10"/><rect x="26" y="30" width="14" height="10"/><rect x="18" y="20" width="14" height="10"/><path d="M46 46V10M46 12h-12M40 12v8"/><circle cx="14" cy="50" r="2.5"/><circle cx="30" cy="50" r="2.5"/></svg></div>
+        <div class="body"><span class="badge g">3-деңгей · Инвестицияға дайын</span><h3>Құрғақ порт және логистикалық хаб</h3><div class="kv"><div><small>Өңір</small><b>Алматы облысы</b></div><div><small>Көлемі · Модель</small><b>60 млн $ · BOT</b></div></div></div></article>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><div class="left"><span class="eyebrow">Инвестициялық дәліздер</span><h2 class="h2">Басым бағыттар</h2></div></div>
+  <div class="corr">
+    <div class="china">
+      <div><span class="eyebrow">Басты бағыт</span><h3>Қытай Халық Республикасы</h3><div class="zh-t">中国投资者服务中心</div>
+        <p>Қытай инвесторларына арналған жеке бөлім: қытай тіліндегі толық ақпарат, WeChat арқылы байланыс және «Белдеу және жол» бастамасы мен «Нұрлы жол» бағдарламасының үйлесімі аясындағы жобалар.</p>
+        <ul><li>Қытай тіліндегі инвестор анықтамалығы</li><li>Өндірістік кооперация жобалары</li><li>Индустриялық аймақтар мен АЭА</li><li>Мемлекеттік институттармен жұмыс арналары</li></ul></div>
+      <div class="ctas"><a class="btn btn-gold" href="#"><span class="zh">进入中文版</span> →</a><a class="btn btn-ghost" href="#">WeChat арқылы байланысу</a></div>
+    </div>
+    <div class="ocards">
+      <div class="oc"><span class="ar">الخليج</span><h3>Парсы шығанағы елдері</h3><p>Егемен қорлармен бірлескен инвестиция, ислам қаржысы құралдары және АХҚО алаңындағы құрылымдау.</p><a class="link" href="#">Толығырақ →</a></div>
+      <div class="oc"><span class="ar" style="font-family:var(--serif)">EU · TR · KR · JP</span><h3>Еуропа және Азия</h3><p>Технология трансферті, жасыл энергетика және экспортқа бағытталған өндіріс жобалары.</p><a class="link" href="#">Толығырақ →</a></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec score"><div class="wrap"><div class="g">
+  <div style="display:grid;gap:16px"><span class="eyebrow">Сенім стандарты</span><h2 class="h2">Инвесторды бағалаудың 100 балдық жүйесі</h2><p class="lead">Әр инвестор жеті өлшем бойынша бағаланады. Басым жобаларға тек тексеруден өткен серіктестер жіберіледі.</p>
+    <div class="veto"><span class="dot" style="margin-top:6px"></span><span><b>Комплаенс бойынша вето:</b> қаражат көзі күмәнді болса, санкциялық тәуекел немесе жалған құжат анықталса, жалпы балға қарамастан басым мәртебе берілмейді. Бұл ішкі басқару құралы, ресми рейтинг немесе қаржылық кепілдік емес.</span></div>
+  </div>
+  <div>
+    <div class="bars">
+      <div class="bar top"><span class="t">Қаржылық әлеует</span><span class="tr"><i style="width:100%"></i></span><span class="p">25</span></div>
+      <div class="bar"><span class="t">Инвестициялық ниет</span><span class="tr"><i style="width:60%"></i></span><span class="p">15</span></div>
+      <div class="bar"><span class="t">Салалық тәжірибе</span><span class="tr"><i style="width:60%"></i></span><span class="p">15</span></div>
+      <div class="bar"><span class="t">Іскерлік бедел</span><span class="tr"><i style="width:60%"></i></span><span class="p">15</span></div>
+      <div class="bar"><span class="t">Жергілікті үлес</span><span class="tr"><i style="width:40%"></i></span><span class="p">10</span></div>
+      <div class="bar"><span class="t">Комплаенс және тәуекел</span><span class="tr"><i style="width:40%"></i></span><span class="p">10</span></div>
+      <div class="bar"><span class="t">Жоспардың дайындығы</span><span class="tr"><i style="width:40%"></i></span><span class="p">10</span></div>
+    </div>
+    <div class="grades">
+      <div class="grade a"><b>A</b><small>80-100 балл</small><span>Басым серіктес</span></div>
+      <div class="grade"><b>B</b><small>65-79 балл</small><span>Шартты серіктес</span></div>
+      <div class="grade"><b>C</b><small>50-64 балл</small><span>Бақылау тобы</span></div>
+      <div class="grade"><b>D</b><small>50 баллдан төмен</small><span>Кейінге қалдырылады</span></div>
+    </div>
+  </div>
+</div></div></section>
+
+<section class="sec lead-sec"><div class="wrap"><div class="q">
+  <div><blockquote>Қауымдастықтың беделі өткізілген <span style="white-space:nowrap">іс-шаралар</span> санымен емес, тексерілген инвесторлармен, нақты жобалармен және іс жүзінде тартылған инвестициялармен өлшенеді.</blockquote><div class="qsrc">2026-2028 жылдарға арналған стратегиялық даму жоспарының негізгі қағидаты</div></div>
+  <div class="person"><div class="mono">ҒЖ</div><div><h4>Ғалым Жанар</h4><p>Қауымдастық президенті әрі төрағасы</p><a href="#">Басқару құрылымы →</a></div></div>
+</div></div></section>
+
+<section class="sec media" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><div class="left"><span class="eyebrow">Медиа орталығы</span><h2 class="h2">Жаңалықтар мен оқиғалар</h2></div><div style="display:flex;gap:14px;align-items:center"><span class="tag">Мысал ретінде көрсетілген</span><a class="link" href="#">Барлық жаңалықтар →</a></div></div>
+  <div class="g">
+    <a class="feat" href="#"><div class="c"><span class="dt">28 ҚАЗАН 2026 · СТРАТЕГИЯ</span><h3>Қауымдастық 2026-2028 жылдарға арналған стратегиялық даму жоспарын таныстырды</h3></div></a>
+    <div>
+      <div class="nlist">
+        <a class="ni" href="#"><span class="dt">21 ҚАЗАН 2026 · ӘДІСТЕМЕ</span><h4>Инвесторларды бағалаудың бірыңғай әдістемесі талқылауға ұсынылды</h4></a>
+        <a class="ni" href="#"><span class="dt">14 ҚАЗАН 2026 · ЖОБАЛАР</span><h4>Өңірлік инвестициялық жобаларды іріктеудің алғашқы кезеңі басталды</h4></a>
+        <a class="ni" href="#"><span class="dt">07 ҚАЗАН 2026 · ҚЫТАЙ</span><h4>Қытай инвесторларына арналған қытай тіліндегі анықтамалық әзірленуде</h4></a>
+      </div>
+      <div class="gal"><a href="#"><span class="l"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z"/></svg>Видеогалерея</span>→</a><a href="#"><span class="l"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-8 8"/></svg>Фотогалерея</span>→</a></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="wrap"><div class="mem">
+  <div><span class="eyebrow">Мүшелік</span><h2 class="h2" style="margin-top:14px">Қауымдастыққа мүше болыңыз</h2><p>Мүшелік санаттары қажеттілікке қарай бөлінеді. Мүшелік жарнасы мен жобалық қызметтер бөлек есепке алынады және ашық жарияланады.</p>
+    <div class="ctas"><a class="btn btn-gold" href="#">Мүшелікке өтініш</a><a class="btn btn-ghost" href="#">Шарттармен танысу</a></div></div>
+  <div class="cats">
+    <div class="cat"><span><b>I</b>Шетелдік инвестор компаниялар</span>→</div>
+    <div class="cat"><span><b>II</b>Халықаралық инвестициялық институттар</span>→</div>
+    <div class="cat"><span><b>III</b>Отандық өнеркәсіп компаниялары</span>→</div>
+    <div class="cat"><span><b>IV</b>Кәсіби қызмет көрсетушілер</span>→</div>
+    <div class="cat"><span><b>V</b>Стратегиялық серіктестер</span>→</div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="top">
+    <div class="fb"><span class="e"><img src="assets/emblem.png" alt=""></span><div class="nm">ҚАЗАҚСТАНДЫҚ ШЕТЕЛДІК<br>КАПИТАЛ ҚАУЫМДАСТЫҒЫ</div><div class="sl">Бірге тұрақты даму үшін</div></div>
+    <div><h5>Қауымдастық</h5><ul><li>Біз туралы</li><li>Басқару құрылымы</li><li>Құжаттар</li><li>Жылдық есептер</li></ul></div>
+    <div><h5>Инвесторларға</h5><ul><li>Жобалар қоры</li><li>Инвестор өтініші</li><li>Нарыққа кіру</li><li class="zh">中文版</li></ul></div>
+    <div><h5>Мүшелерге</h5><ul><li>Санаттар</li><li>Мүшелікке өтініш</li><li>Жеке кабинет</li><li>Медиа</li></ul></div>
+    <div class="ct"><div><small>Заңды мекенжай</small>Астана қ., Нұра ауданы, Әнет баба к-сі, 11/3 ғимарат, 7 т.е.б.</div><div><small>Кеңсе</small>Алматы қ., Жамбыл к-сі, 150</div><div><small>Байланыс</small>+7 700 386 66 32 · WeChat</div></div>
+  </div>
+  <div class="bot"><div class="row"><span>© 2026 «Қазақстандық шетелдік капитал қауымдастығы» заңды тұлғалар бірлестігі · БСН 170140015381</span><span>Құпиялылық саясаты · Пайдалану шарттары</span></div>
+  <span>Қауымдастық мемлекеттік орган емес және мемлекеттік органдардың атынан әрекет етпейді. Мүшелік пен ішкі бағалау инвестициялық кепілдік болып табылмайды.</span></div>
+</div></footer>
+</body>
+</html>
