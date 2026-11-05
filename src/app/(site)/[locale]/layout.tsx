@@ -14,6 +14,10 @@ import { routing } from '@/i18n/routing'
 
 import './globals.css'
 
+// Шапка мен төменгі колонтитул Payload дерекқорынан оқиды (баптаулар, мәзір): беттер құрастыру кезінде емес, әр сұраныста жасалады.
+// Әйтпесе `next build` дерекқорсыз (Docker образын жинағанда) құлайды, ал дерекқормен жиналса, баптаулар жаңартылмай қалады.
+export const dynamic = 'force-dynamic'
+
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }))
 }

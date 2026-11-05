@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 import { locales } from '@/i18n/config'
+import '@/lib/forms/zod-config'
 import { type L4, l } from '@/lib/labels'
 import { projectModels, regions, sectors } from '@/lib/taxonomy'
 

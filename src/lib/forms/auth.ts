@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 import { userRoles } from '@/access/roles'
 import { locales } from '@/i18n/config'
+import '@/lib/forms/zod-config'
 import { passwordProblems } from '@/lib/portal/password'
 
 // Тіркелу мен кіру схемалары (ТТ 9): сервер де, браузер де қолданады. Қате «код» ретінде қайтады, мәтінді интерфейс көрсетеді.

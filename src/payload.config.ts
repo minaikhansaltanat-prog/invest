@@ -67,6 +67,8 @@ function withCollectionPolicies(collections: CollectionConfig[]): CollectionConf
 export default buildConfig({
   admin: {
     user: Admins.slug,
+    // Әдепкіде Payload аватарды Gravatar-дан жүктейді: әкімші поштасының хэші үшінші жаққа кетеді (дербес деректер) және CSP блоктайды
+    avatar: 'default',
     importMap: {
       baseDir: path.resolve(dirname),
     },
